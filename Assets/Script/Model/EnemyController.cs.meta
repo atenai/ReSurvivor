@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: fd95e371e37d74feb8d081e447512049
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - player: {fileID: 5677903069887496490, guid: 3c055139d776f68479ab293a7a91d815,
+      type: 3}
+  - bulletPrefab: {fileID: 6489205084943374234, guid: ef373b714ea6c4f48af6be0856db1c8c,
+      type: 3}
+  - cartridgePrefab: {instanceID: 0}
+  - muzzleFlashLeftPrefab: {fileID: 8188280761437228391, guid: 99491738355cb114882de23e0bf0fc07,
+      type: 3}
+  - muzzleFlashRightPrefab: {fileID: 2634986708114487617, guid: 22763f97336c3864f94d73bdd2efc4f9,
+      type: 3}
+  - grenadePrefab: {fileID: 7120408033818788480, guid: 2e9b9b09a2d81443f9510509c95b928b,
+      type: 3}
+  - hitPrefab: {instanceID: 0}
+  - fireSE: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
