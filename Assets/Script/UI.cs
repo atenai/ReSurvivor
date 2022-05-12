@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    //public float fadeInSpeed = 0.05f; //フェードインのスピード
 
     private Color _reloadColor = new Color(255.0f, 255.0f, 255.0f);　　//Area1ディレクターテキストのカラー変数
 
@@ -11,12 +10,9 @@ public class UI : MonoBehaviour
     private GameObject _imageReloadObject;
 
 
-    //bool b_testUI = false;
-
     // Start is called before the first frame update
     private void Start()
     {
-        //b_testUI = false;
         //称号のカラーを取得してアルファを０に初期化
         //エリア1
         _reloadColor = new Color(255.0f, 255.0f, 255.0f);
@@ -33,13 +29,8 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //if (Input.GetKey(KeyCode.R))
-        //{
-        //    b_testUI = true;
-        //}
 
-
-        if (Player3D.b_ReloadTime)
+        if (Player3D.b_ReloadTimeActive)
         {
             if (_reloadColor.a <= 1)
             {
@@ -52,7 +43,7 @@ public class UI : MonoBehaviour
             }
         }
 
-        if (Player3D.b_ReloadTime == false)
+        if (Player3D.b_ReloadTimeActive == false)
         {
             if (_reloadColor.a >= 0)
             {
