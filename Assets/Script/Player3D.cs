@@ -39,7 +39,7 @@ public class Player3D : MonoBehaviour
     //弾数
     public static int Magazine;//残弾数
     private int MagazineDefine = 20;
-    public static bool b_ReloadTime;//リロードのオン/オフ
+    public static bool b_ReloadTimeActive;//リロードのオン/オフ
     public static float Riro;
     private float RiroDefine = 1.5f;//リロード時間
 
@@ -147,7 +147,7 @@ public class Player3D : MonoBehaviour
 
         //弾数
         Magazine = MagazineDefine;//残弾数
-        b_ReloadTime = false;//リロードのオン/オフ
+        b_ReloadTimeActive = false;//リロードのオン/オフ
         Riro = 0.0f;//リロードタイム
         RiroDefine = 1.5f;
 
@@ -212,7 +212,7 @@ public class Player3D : MonoBehaviour
                 rigid.AddForce(moveForce * Vector3.right);
             }
             //transform.position += transform.forward * speed * Time.deltaTime;
-            
+
         }
         if (Input.GetKey("a") && b_GameOverTrigger == false)
         {
@@ -246,7 +246,7 @@ public class Player3D : MonoBehaviour
                 rigid.AddForce(moveForce * Vector3.left);
             }
             //transform.position += transform.forward * speed * Time.deltaTime;
-            
+
         }
 
         if (b_animRun == false)
@@ -273,7 +273,7 @@ public class Player3D : MonoBehaviour
             JumpTime += Time.deltaTime;
         }
 
-        if(JumpTime >= 0.1f)
+        if (JumpTime >= 0.1f)
         {
             b_animJump = false;
         }
@@ -282,7 +282,7 @@ public class Player3D : MonoBehaviour
         //Debug.Log("ジャンプタイム" + JumpTime);
 
         //弾
-        if (Input.GetKeyDown(KeyCode.K) && (Magazine != 0) && b_ReloadTime == false && b_GameOverTrigger == false)
+        if (Input.GetKeyDown(KeyCode.K) && (Magazine != 0) && b_ReloadTimeActive == false && b_GameOverTrigger == false)
         {
             //待機アニメーション
             b_animIdle = false;
@@ -298,7 +298,7 @@ public class Player3D : MonoBehaviour
             var PositionX = gameObject.transform.position.x;
             var PositionY = gameObject.transform.position.y;
             var PositionZ = gameObject.transform.position.z;
-            if(b_rot)
+            if (b_rot)
             {
 
                 //マズルフラッシュエフェクトオブジェクトを生成する	
@@ -324,7 +324,7 @@ public class Player3D : MonoBehaviour
                 newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
                 Destroy(newCartridge, CartridgeDestroyTime);//DestroyTime後削除
             }
-            else if(b_rot == false)
+            else if (b_rot == false)
             {
 
                 //マズルフラッシュエフェクトオブジェクトを生成する	
@@ -344,16 +344,16 @@ public class Player3D : MonoBehaviour
                 newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
                 Destroy(newCartridge, CartridgeDestroyTime);//DestroyTime後削除
             }
-            
+
         }
 
         //リロードシステム
         if (Magazine == 0 || (Magazine != 20 && Input.GetKey(KeyCode.R)) && b_GameOverTrigger == false)
         {
-            b_ReloadTime = true;//リロードのオン
+            b_ReloadTimeActive = true;//リロードのオン
         }
 
-        if (b_ReloadTime)//リロードがオンになったら
+        if (b_ReloadTimeActive)//リロードがオンになったら
         {
             if (Riro == 0)
             {
@@ -377,7 +377,7 @@ public class Player3D : MonoBehaviour
             {
                 Magazine = MagazineDefine;//弾リセット
                 Riro = 0.0f;//リロードタイムをリセット
-                b_ReloadTime = false;//リロードのオフ
+                b_ReloadTimeActive = false;//リロードのオフ
                 b_animReload = false;//リロードアニメーションのオフ
                 anim.SetBool("b_Reload", b_animReload);
             }
@@ -437,7 +437,7 @@ public class Player3D : MonoBehaviour
 
         //Debug.Log(HP);
 
-        if(b_HealEffect)
+        if (b_HealEffect)
         {
             //ヒールエフェクトオブジェクトを生成する	
             //ヒールエフェクト座標
@@ -447,11 +447,11 @@ public class Player3D : MonoBehaviour
             Destroy(HealEffect, HealEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
         }
 
-        if(HealTime <= HealTimeDefine)
+        if (HealTime <= HealTimeDefine)
         {
             b_HealEffect = true;
         }
-        
+
 
         if (HealTimeDefine <= HealTime)
         {
