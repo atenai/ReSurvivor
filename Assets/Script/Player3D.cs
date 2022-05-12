@@ -268,8 +268,6 @@ public class Player3D : MonoBehaviour
 
         if (JumpTime <= JumpTimeDefine)
         {
-            //JumpTime++;
-
             JumpTime += Time.deltaTime;
         }
 
