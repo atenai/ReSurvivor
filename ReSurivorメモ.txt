@@ -1,0 +1,5 @@
+Assertion failed on expression: 'VCCache::instance != NULL'
+UnityEditor.VersionControl.Provider:PromptAndCheckoutIfNeeded(String[], String, ChangeSet)
+UnityEditorInternal.VR.XRProjectSettings:Internal_SaveSettings() (at C:/buildslave/unity/build/Modules/VREditor/Mono/XRPackageSettings.cs:101)
+UnityEditorInternal.VR.XRProjectSettings:OnDisable() (at C:/buildslave/unity/build/Modules/VREditor/Mono/XRPackageSettings.cs:61)
+のエラーはGitHubに上げる前からあったエラーで問題は無いから気にしなくて大丈夫！
