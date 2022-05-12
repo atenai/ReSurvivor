@@ -6488,7 +6488,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ' 20'
+  m_Text: 20
 --- !u!222 &1063994023
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6513,7 +6513,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 60, y: -110}
+  m_AnchoredPosition: {x: 65, y: -110}
   m_SizeDelta: {x: 1000, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1063994027
@@ -13743,7 +13743,7 @@ PrefabInstance:
     - target: {fileID: 6725740619751686828, guid: b4634e1036d0e124fbb8ed1a7ed1f488,
         type: 3}
       propertyPath: m_Text
-      value: "\u64CD\u4F5C\u65B9\u6CD5\n\u30B9\u30DA\u30FC\u30B9\u30AD\u30FC\uFF1A\u30B8\u30E3\u30F3\u30D7\nA\u30FBD\u30AD\u30FC\uFF1A\u5DE6\u53F3\u79FB\u52D5\nK\u30AD\u30FC\uFF1A\u5F3E\u306E\u767A\u5C04\nR\u30AD\u30FC\uFF1A\u30EA\u30ED\u30FC\u30C9\nESC\u30AD\u30FC\uFF1A\u30B2\u30FC\u30E0\u7D42\u4E86"
+      value: "\u64CD\u4F5C\u65B9\u6CD5\nSpace\u30AD\u30FC\uFF1A\u30B8\u30E3\u30F3\u30D7\nA\u30FBD\u30AD\u30FC\uFF1A\u5DE6\u53F3\u79FB\u52D5\nK\u30AD\u30FC\uFF1A\u5F3E\u306E\u767A\u5C04\nR\u30AD\u30FC\uFF1A\u30EA\u30ED\u30FC\u30C9\nESC\u30AD\u30FC\uFF1A\u30B2\u30FC\u30E0\u7D42\u4E86"
       objectReference: {fileID: 0}
     - target: {fileID: 6725740619751686828, guid: b4634e1036d0e124fbb8ed1a7ed1f488,
         type: 3}
