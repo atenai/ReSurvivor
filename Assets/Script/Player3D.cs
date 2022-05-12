@@ -40,8 +40,8 @@ public class Player3D : MonoBehaviour
     public static int Magazine;//残弾数
     private int MagazineDefine = 20;
     public static bool b_ReloadTimeActive;//リロードのオン/オフ
-    public static float Riro;
-    private float RiroDefine = 1.5f;//リロード時間
+    public static float ReloadTime;
+    private float ReloadTimeDefine = 1.5f;//リロード時間の固定
 
     //薬莢
     public GameObject Cartridge;
@@ -148,8 +148,8 @@ public class Player3D : MonoBehaviour
         //弾数
         Magazine = MagazineDefine;//残弾数
         b_ReloadTimeActive = false;//リロードのオン/オフ
-        Riro = 0.0f;//リロードタイム
-        RiroDefine = 1.5f;
+        ReloadTime = 0.0f;//リロードタイム
+        ReloadTimeDefine = 1.5f;
 
         //マズルフラッシュデストロイタイム
         RightMuzzleflashEffectDestroyTime = 0.5f;
@@ -355,7 +355,7 @@ public class Player3D : MonoBehaviour
 
         if (b_ReloadTimeActive)//リロードがオンになったら
         {
-            if (Riro == 0)
+            if (ReloadTime == 0)
             {
                 //待機アニメーション
                 b_animIdle = false;
@@ -371,12 +371,12 @@ public class Player3D : MonoBehaviour
                 anim.SetBool("b_Reload", b_animReload);
             }
             //リロード中画像
-            Riro += Time.deltaTime;//リロードタイムをプラス
+            ReloadTime += Time.deltaTime;//リロードタイムをプラス
             //Debug.Log("リロードタイム" + Riro);
-            if (RiroDefine <= Riro)//リロードタイムが10以上になったら
+            if (ReloadTimeDefine <= ReloadTime)//リロードタイムが10以上になったら
             {
                 Magazine = MagazineDefine;//弾リセット
-                Riro = 0.0f;//リロードタイムをリセット
+                ReloadTime = 0.0f;//リロードタイムをリセット
                 b_ReloadTimeActive = false;//リロードのオフ
                 b_animReload = false;//リロードアニメーションのオフ
                 anim.SetBool("b_Reload", b_animReload);
@@ -395,8 +395,6 @@ public class Player3D : MonoBehaviour
             b_GameOverTrigger = true;
             StageSceneController.GameOver(GameOverDelay);
         }
-
-
 
         //プレイヤーダメージSE
         PlayerDamageTime += Time.deltaTime;
