@@ -101,9 +101,12 @@ public class Player3D : MonoBehaviour
     private float HealTime;
 
     //回転
-    public static bool b_rot = true;
+    bool b_rot = true;
 
     private IHidable[] hidables;
+
+    //カメラ
+    CameraController cameraController;
 
     // Start is called before the first frame update
     private void Start()
@@ -156,6 +159,9 @@ public class Player3D : MonoBehaviour
         LeftMuzzleflashEffectDestroyTime = 0.5f;
 
         hidables = GameObject.Find("Hidable").GetComponentsInChildren<IHidable>();
+
+        //カメラ
+        cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
     }
 
     // Update is called once per frame
@@ -528,6 +534,9 @@ public class Player3D : MonoBehaviour
             }
 
             b_DamageEffect = true;
+
+            cameraController.Shake(0.25f, 0.1f);
+
             //SetPlayerDamage(50);
         }
 
