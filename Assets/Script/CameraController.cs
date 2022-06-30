@@ -34,6 +34,7 @@ public class CameraController : MonoBehaviour
         StartCoroutine(DoShake(duration, magnitude));
     }
 
+    //スクリプトの修正が必要
     private IEnumerator DoShake(float duration, float magnitude)
     {
         var pos = transform.localPosition;

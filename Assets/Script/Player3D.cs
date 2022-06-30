@@ -535,7 +535,7 @@ public class Player3D : MonoBehaviour
 
             b_DamageEffect = true;
 
-            cameraController.Shake(0.25f, 0.1f);
+            //cameraController.Shake(0.25f, 0.1f);
 
             //SetPlayerDamage(50);
         }
