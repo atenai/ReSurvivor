@@ -13,14 +13,14 @@ public class MouseCursorOff : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     private void Update()
     {
         //Escapeキーでマウスカーソルを出す
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             //Cursor.visible = true;
             //Cursor.lockState = CursorLockMode.None;

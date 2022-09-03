@@ -108,7 +108,6 @@ public class Player3D : MonoBehaviour
     //カメラ
     CameraController cameraController;
 
-    // Start is called before the first frame update
     private void Start()
     {
         //ジャンプ
@@ -164,7 +163,6 @@ public class Player3D : MonoBehaviour
         cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (b_GameOverTrigger) return;
@@ -286,7 +284,7 @@ public class Player3D : MonoBehaviour
         //Debug.Log("ジャンプタイム" + JumpTime);
 
         //弾
-        if (Input.GetKeyDown(KeyCode.K) && (Magazine != 0) && b_ReloadTimeActive == false && b_GameOverTrigger == false)
+        if ((Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(0)) && (Magazine != 0) && b_ReloadTimeActive == false && b_GameOverTrigger == false)
         {
             //待機アニメーション
             b_animIdle = false;

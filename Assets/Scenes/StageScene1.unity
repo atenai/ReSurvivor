@@ -13677,22 +13677,22 @@ PrefabInstance:
     - target: {fileID: 6725740619751686827, guid: b4634e1036d0e124fbb8ed1a7ed1f488,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 180
+      value: 210
       objectReference: {fileID: 0}
     - target: {fileID: 6725740619751686827, guid: b4634e1036d0e124fbb8ed1a7ed1f488,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -250
+      value: -280
       objectReference: {fileID: 0}
     - target: {fileID: 6725740619751686827, guid: b4634e1036d0e124fbb8ed1a7ed1f488,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1200
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 6725740619751686827, guid: b4634e1036d0e124fbb8ed1a7ed1f488,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 800
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 6725740619751686827, guid: b4634e1036d0e124fbb8ed1a7ed1f488,
         type: 3}
@@ -13743,7 +13743,8 @@ PrefabInstance:
     - target: {fileID: 6725740619751686828, guid: b4634e1036d0e124fbb8ed1a7ed1f488,
         type: 3}
       propertyPath: m_Text
-      value: "\u64CD\u4F5C\u65B9\u6CD5\nSpace\u30AD\u30FC\uFF1A\u30B8\u30E3\u30F3\u30D7\nA\u30FBD\u30AD\u30FC\uFF1A\u5DE6\u53F3\u79FB\u52D5\nK\u30AD\u30FC\uFF1A\u5F3E\u306E\u767A\u5C04\nR\u30AD\u30FC\uFF1A\u30EA\u30ED\u30FC\u30C9\nESC\u30AD\u30FC\uFF1A\u30B2\u30FC\u30E0\u7D42\u4E86"
+      value: "\u64CD\u4F5C\u65B9\u6CD5\nK\u30AD\u30FC or \u5DE6\u30AF\u30EA\u30C3\u30AF
+        : \u5C04\u6483\nSpace\u30AD\u30FC\uFF1A\u30B8\u30E3\u30F3\u30D7\nA\u30FBD\u30AD\u30FC\uFF1A\u5DE6\u53F3\u79FB\u52D5\nR\u30AD\u30FC\uFF1A\u30EA\u30ED\u30FC\u30C9\nESC\u30AD\u30FC\uFF1A\u30B2\u30FC\u30E0\u7D42\u4E86"
       objectReference: {fileID: 0}
     - target: {fileID: 6725740619751686828, guid: b4634e1036d0e124fbb8ed1a7ed1f488,
         type: 3}
@@ -13758,6 +13759,11 @@ PrefabInstance:
     - target: {fileID: 6725740619751686828, guid: b4634e1036d0e124fbb8ed1a7ed1f488,
         type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3722126204666000987, guid: b4634e1036d0e124fbb8ed1a7ed1f488,
+        type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -14644,7 +14650,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
