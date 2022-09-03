@@ -101,7 +101,7 @@ public class Player3D : MonoBehaviour
     private float HealTime;
 
     //回転
-    bool b_rot = true;
+    bool rot = true;
 
     private IHidable[] hidables;
 
@@ -133,7 +133,7 @@ public class Player3D : MonoBehaviour
         HealTime = HealTimeDefine;
 
         //回転
-        b_rot = true;
+        rot = true;
 
         //アニメーション
         anim = GetComponent<Animator>();//アニメーションのコンポーネントを探す
@@ -192,15 +192,15 @@ public class Player3D : MonoBehaviour
             IdleTime = 0.0f;
 
             //回転
-            b_rot = true;
+            rot = true;
 
-            if (b_rot)
+            if (rot)
             {
                 // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
                 var rot = Quaternion.Euler(0, 90, 0);
                 transform.rotation = rot;
             }
-            else if (b_rot == false)
+            else if (rot == false)
             {
                 // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
                 var rot = Quaternion.Euler(0, 270, 0);
@@ -226,15 +226,15 @@ public class Player3D : MonoBehaviour
             IdleTime = 0.0f;
 
             //回転
-            b_rot = false;
+            rot = false;
 
-            if (b_rot)
+            if (rot)
             {
                 // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
                 var rot = Quaternion.Euler(0, 90, 0);
                 transform.rotation = rot;
             }
-            else if (b_rot == false)
+            else if (rot == false)
             {
                 // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
                 var rot = Quaternion.Euler(0, 270, 0);
@@ -300,7 +300,7 @@ public class Player3D : MonoBehaviour
             var PositionX = gameObject.transform.position.x;
             var PositionY = gameObject.transform.position.y;
             var PositionZ = gameObject.transform.position.z;
-            if (b_rot)
+            if (rot)
             {
 
                 //マズルフラッシュエフェクトオブジェクトを生成する	
@@ -326,7 +326,7 @@ public class Player3D : MonoBehaviour
                 newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
                 Destroy(newCartridge, CartridgeDestroyTime);//DestroyTime後削除
             }
-            else if (b_rot == false)
+            else if (rot == false)
             {
 
                 //マズルフラッシュエフェクトオブジェクトを生成する	
