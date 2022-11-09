@@ -1976,6 +1976,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4783957883413168740, guid: 03b1312f3f1ff694db4914f1eaea253e,
+        type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6721947831627192274, guid: 03b1312f3f1ff694db4914f1eaea253e,
         type: 3}
       propertyPath: m_Name
@@ -9671,6 +9676,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameOver
+      objectReference: {fileID: 0}
+    - target: {fileID: 4935152958769235838, guid: 4f6e263b0fbd56d4d8af91063b702c87,
+        type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f6e263b0fbd56d4d8af91063b702c87, type: 3}
