@@ -3,27 +3,16 @@ using UnityEngine.UI;
 
 public class FadeGameOver : MonoBehaviour
 {
-    private float _alfa;
-    //private float _speed = 0.0275f;
-    private float _red, _green, _blue;
+    float alfa = 0.0f;
+    [SerializeField] float fadeSpeed = 0.4f;
+    [SerializeField] Player3D player;
 
-    // Start is called before the first frame update
-    private void Start()
+    void Update()
     {
-        _alfa = 0.0f;
-        _red = GetComponent<Image>().color.r;
-        _green = GetComponent<Image>().color.g;
-        _blue = GetComponent<Image>().color.b;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        if (Player3D.b_GameOverTrigger)
+        if (player.isGameOverTrigger)
         {
-            GetComponent<Image>().color = new Color(_red, _green, _blue, _alfa);
-            _alfa += Time.deltaTime * 0.4f;
-
+            GetComponent<Image>().color = new Color(this.GetComponent<Image>().color.r, this.GetComponent<Image>().color.g, this.GetComponent<Image>().color.b, alfa);
+            alfa += Time.deltaTime * fadeSpeed;
         }
     }
 }

@@ -551,8 +551,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u64CD\u4F5C\u65B9\u6CD5\nK\u30AD\u30FC or \u5DE6\u30AF\u30EA\u30C3\u30AF
-    : \u5C04\u6483\nSpace\u30AD\u30FC\uFF1A\u30B8\u30E3\u30F3\u30D7\nA\u30FBD\u30AD\u30FC\uFF1A\u5DE6\u53F3\u79FB\u52D5\nR\u30AD\u30FC\uFF1A\u30EA\u30ED\u30FC\u30C9\nESC\u30AD\u30FC\uFF1A\u30B2\u30FC\u30E0\u7D42\u4E86"
+  m_Text: "Operation\nK or LeftClick : Shoot\nSpace : Jump\nA\u30FBD : Move\nR :
+    Reload\nESC : Exit"
 --- !u!114 &1686536764359923531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -953,6 +953,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48c4b1340b309854dafbffc1c2f2cd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeSpeed: 0.4
+  player: {fileID: 0}
 --- !u!1 &4673506653293220514
 GameObject:
   m_ObjectHideFlags: 0

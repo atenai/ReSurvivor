@@ -65,7 +65,7 @@ public class Player3D : MonoBehaviour
     private int HP = 100;
 
     //ゲームオーバータイム
-    public static bool b_GameOverTrigger;
+    public bool isGameOverTrigger = false;
     private const float GameOverDelay = 2.0f;
 
 
@@ -117,9 +117,6 @@ public class Player3D : MonoBehaviour
         //体力
         HP = 100;
 
-        //ゲームオーバータイム
-        b_GameOverTrigger = false;
-
         //ダメージエフェクト
         DamageEffectimg = GameObject.Find("PlayerDamageImage").GetComponent<Image>();
         DamageEffectimg.color = Color.clear;
@@ -165,7 +162,7 @@ public class Player3D : MonoBehaviour
 
     private void Update()
     {
-        if (b_GameOverTrigger) return;
+        if (isGameOverTrigger) return;
         rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
 
         //現在のアニメーション（"Speed"）の値を持ってくる
@@ -184,73 +181,77 @@ public class Player3D : MonoBehaviour
         }
 
         //移動
-        if (Input.GetKey("d") && b_GameOverTrigger == false)
+        if (!isGameOverTrigger)
         {
-            //待機アニメーション
-            b_animIdle = false;
-            anim.SetBool("b_Idle", b_animIdle);
-            IdleTime = 0.0f;
-
-            //回転
-            rot = true;
-
-            if (rot)
+            if (Input.GetKey("d"))
             {
-                // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
-                var rot = Quaternion.Euler(0, 90, 0);
-                transform.rotation = rot;
-            }
-            else if (rot == false)
-            {
-                // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
-                var rot = Quaternion.Euler(0, 270, 0);
-                transform.rotation = rot;
-            }
+                //待機アニメーション
+                b_animIdle = false;
+                anim.SetBool("b_Idle", b_animIdle);
+                IdleTime = 0.0f;
 
-            b_animRun = true;
-            anim.SetFloat("Speed", current_speed + Time.deltaTime * 1.0f);
+                //回転
+                rot = true;
 
-            //移動
-            if (speedX < speed)
-            {
-                rigid.AddForce(moveForce * Vector3.right);
-            }
-            //transform.position += transform.forward * speed * Time.deltaTime;
+                if (rot)
+                {
+                    // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
+                    var rot = Quaternion.Euler(0, 90, 0);
+                    transform.rotation = rot;
+                }
+                else if (rot == false)
+                {
+                    // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
+                    var rot = Quaternion.Euler(0, 270, 0);
+                    transform.rotation = rot;
+                }
 
-        }
-        if (Input.GetKey("a") && b_GameOverTrigger == false)
-        {
-            //待機アニメーション
-            b_animIdle = false;
-            anim.SetBool("b_Idle", b_animIdle);
-            IdleTime = 0.0f;
+                b_animRun = true;
+                anim.SetFloat("Speed", current_speed + Time.deltaTime * 1.0f);
 
-            //回転
-            rot = false;
+                //移動
+                if (speedX < speed)
+                {
+                    rigid.AddForce(moveForce * Vector3.right);
+                }
+                //transform.position += transform.forward * speed * Time.deltaTime;
 
-            if (rot)
-            {
-                // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
-                var rot = Quaternion.Euler(0, 90, 0);
-                transform.rotation = rot;
-            }
-            else if (rot == false)
-            {
-                // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
-                var rot = Quaternion.Euler(0, 270, 0);
-                transform.rotation = rot;
             }
 
-            b_animRun = true;
-            anim.SetFloat("Speed", current_speed + Time.deltaTime * 1.0f);
-
-            //移動
-            if (speedX > -speed)
+            if (Input.GetKey("a"))
             {
-                rigid.AddForce(moveForce * Vector3.left);
-            }
-            //transform.position += transform.forward * speed * Time.deltaTime;
+                //待機アニメーション
+                b_animIdle = false;
+                anim.SetBool("b_Idle", b_animIdle);
+                IdleTime = 0.0f;
 
+                //回転
+                rot = false;
+
+                if (rot)
+                {
+                    // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
+                    var rot = Quaternion.Euler(0, 90, 0);
+                    transform.rotation = rot;
+                }
+                else if (rot == false)
+                {
+                    // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
+                    var rot = Quaternion.Euler(0, 270, 0);
+                    transform.rotation = rot;
+                }
+
+                b_animRun = true;
+                anim.SetFloat("Speed", current_speed + Time.deltaTime * 1.0f);
+
+                //移動
+                if (speedX > -speed)
+                {
+                    rigid.AddForce(moveForce * Vector3.left);
+                }
+                //transform.position += transform.forward * speed * Time.deltaTime;
+
+            }
         }
 
         if (b_animRun == false)
@@ -259,7 +260,7 @@ public class Player3D : MonoBehaviour
         }
 
         //ジャンプ
-        if (Input.GetKeyDown(KeyCode.Space) && JumpTimeDefine <= JumpTime && b_GameOverTrigger == false)
+        if (Input.GetKeyDown(KeyCode.Space) && JumpTimeDefine <= JumpTime && isGameOverTrigger == false)
         {
             //アニメーション
             b_animJump = true;
@@ -284,7 +285,7 @@ public class Player3D : MonoBehaviour
         //Debug.Log("ジャンプタイム" + JumpTime);
 
         //弾
-        if ((Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(0)) && (Magazine != 0) && b_ReloadTimeActive == false && b_GameOverTrigger == false)
+        if ((Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(0)) && (Magazine != 0) && b_ReloadTimeActive == false && isGameOverTrigger == false)
         {
             //待機アニメーション
             b_animIdle = false;
@@ -350,7 +351,7 @@ public class Player3D : MonoBehaviour
         }
 
         //リロードシステム
-        if (Magazine == 0 || (Magazine != 20 && Input.GetKey(KeyCode.R)) && b_GameOverTrigger == false)
+        if (Magazine == 0 || (Magazine != 20 && Input.GetKey(KeyCode.R)) && isGameOverTrigger == false)
         {
             b_ReloadTimeActive = true;//リロードのオン
         }
@@ -389,12 +390,12 @@ public class Player3D : MonoBehaviour
         b_animRun = false;//アニメーションの移動をFalseにする
 
         //体力
-        if (!b_GameOverTrigger && HP <= 0)
+        if (!isGameOverTrigger && HP <= 0)
         {
             //アニメーション
             b_animDie = true;
             anim.SetBool("b_Die", b_animDie);
-            b_GameOverTrigger = true;
+            isGameOverTrigger = true;
             StageSceneController.GameOver(GameOverDelay);
         }
 
@@ -520,7 +521,7 @@ public class Player3D : MonoBehaviour
     //↓当たり判定
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EnemyBullet") && b_GameOverTrigger == false || other.CompareTag("Mine") && b_GameOverTrigger == false)
+        if (other.CompareTag("EnemyBullet") && isGameOverTrigger == false || other.CompareTag("Mine") && isGameOverTrigger == false)
         {
             if (PlayerDamageTimeDefine <= PlayerDamageTime)
             {
@@ -538,7 +539,7 @@ public class Player3D : MonoBehaviour
             //SetPlayerDamage(50);
         }
 
-        if (other.CompareTag("First aid kit") && HP < 100 && b_GameOverTrigger == false)
+        if (other.CompareTag("First aid kit") && HP < 100 && isGameOverTrigger == false)
         {
             //SEオブジェクトを生成する
             var SE = Instantiate(HealSEPrefab, gameObject.transform.position, Quaternion.identity);
