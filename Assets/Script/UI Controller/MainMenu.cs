@@ -16,15 +16,14 @@ namespace UI_Controller
         public GameObject loadingImage;
         public GameObject buttons;
 
-        private GameObject _selectedButton;
+        GameObject selectedButton;
 
-        public static bool BFade;
+        //bool isFade = false;
 
-        private float _alfa;
-        private float _speed = 0.025f;
-        private float _red, _green, _blue;
+        //float alfa = 0.0f;
+        //[SerializeField] float speed = 0.025f;
+        //float red, green, blue;
     
-        // Start is called before the first frame update
         private void Start()
         {
             Cursor.visible = false;
@@ -33,34 +32,31 @@ namespace UI_Controller
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(startButton);
 
-            _alfa = 0.0f;
-            BFade = false;
-            _red = fadeToGame.GetComponent<Image>().color.r;
-            _green = fadeToGame.GetComponent<Image>().color.g;
-            _blue = fadeToGame.GetComponent<Image>().color.b;
+            //red = fadeToGame.GetComponent<Image>().color.r;
+            //green = fadeToGame.GetComponent<Image>().color.g;
+            //blue = fadeToGame.GetComponent<Image>().color.b;
         }
 
-        // Update is called once per frame
         private void Update()
         {
-            _selectedButton = EventSystem.current.currentSelectedGameObject;
-            if(_selectedButton == null)
+            selectedButton = EventSystem.current.currentSelectedGameObject;
+            if(selectedButton == null)
             {
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(startButton);
             }
 
-            if (BFade)
-            {
-                fadeToGame.GetComponent<Image>().color = new Color(_red, _green, _blue, _alfa);
-                _alfa += _speed;
-            }
-            if (_alfa >= 1)
-            {
-                //ステージ１シーンへ
-                SceneManager.LoadScene("StageScene1");
-                BFade = false;
-            }
+            //if (isFade)
+            //{
+            //    fadeToGame.GetComponent<Image>().color = new Color(red, green, blue, alfa);
+            //    alfa += speed * Time.deltaTime;
+            //}
+            //if (alfa >= 1)
+            //{
+            //    //ステージ１シーンへ
+            //    //SceneManager.LoadScene("StageScene1");
+            //    isFade = false;
+            //}
         }
 
         public void PlayGame()
