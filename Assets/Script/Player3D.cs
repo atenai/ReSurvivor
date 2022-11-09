@@ -39,7 +39,7 @@ public class Player3D : MonoBehaviour
     //弾数
     public static int Magazine;//残弾数
     readonly int magazineDefine = 20;
-    public static bool b_ReloadTimeActive;//リロードのオン/オフ
+    public bool isReloadTimeActive;//リロードのオン/オフ
     public static float ReloadTime;
     readonly float reloadTimeDefine = 1.5f;//リロード時間の固定
 
@@ -130,7 +130,7 @@ public class Player3D : MonoBehaviour
 
         //弾数
         Magazine = magazineDefine;//残弾数
-        b_ReloadTimeActive = false;//リロードのオン/オフ
+        isReloadTimeActive = false;//リロードのオン/オフ
         ReloadTime = 0.0f;//リロードタイム
 
         hidables = GameObject.Find("Hidable").GetComponentsInChildren<IHidable>();
@@ -293,7 +293,7 @@ public class Player3D : MonoBehaviour
     void Shoot()
     {
         //弾
-        if ((Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(0)) && (Magazine != 0) && b_ReloadTimeActive == false && isGameOverTrigger == false)
+        if ((Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(0)) && (Magazine != 0) && isReloadTimeActive == false && isGameOverTrigger == false)
         {
             //待機アニメーション
             isAnimIdle = false;
@@ -358,10 +358,10 @@ public class Player3D : MonoBehaviour
         //リロードシステム
         if (Magazine == 0 || (Magazine != 20 && Input.GetKey(KeyCode.R)) && isGameOverTrigger == false)
         {
-            b_ReloadTimeActive = true;//リロードのオン
+            isReloadTimeActive = true;//リロードのオン
         }
 
-        if (b_ReloadTimeActive)//リロードがオンになったら
+        if (isReloadTimeActive)//リロードがオンになったら
         {
             if (ReloadTime == 0)
             {
@@ -385,7 +385,7 @@ public class Player3D : MonoBehaviour
             {
                 Magazine = magazineDefine;//弾リセット
                 ReloadTime = 0.0f;//リロードタイムをリセット
-                b_ReloadTimeActive = false;//リロードのオフ
+                isReloadTimeActive = false;//リロードのオフ
                 isAnimReload = false;//リロードアニメーションのオフ
                 anim.SetBool("b_Reload", isAnimReload);
             }
