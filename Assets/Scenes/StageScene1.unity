@@ -684,6 +684,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyTrigger (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1291953508622026631, guid: 637ec8c6ebe8d68498b563f39f1176e6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1291953508622026651, guid: 637ec8c6ebe8d68498b563f39f1176e6,
         type: 3}
       propertyPath: m_RootOrder
@@ -782,6 +787,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyTrigger (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345831494312317792, guid: 7c5ab0f96bb493b41af84796696535f6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1345831494312317820, guid: 7c5ab0f96bb493b41af84796696535f6,
         type: 3}
@@ -882,6 +892,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyTrigger (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 2292656215400122606, guid: 0da98b14f71218b4a9ce8c8da20a44b5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2292656215400122610, guid: 0da98b14f71218b4a9ce8c8da20a44b5,
         type: 3}
       propertyPath: m_RootOrder
@@ -960,6 +975,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyTrigger (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 645526339168360973, guid: 1fb216e6aafd4804fba20024951ffcaa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 645526339168360977, guid: 1fb216e6aafd4804fba20024951ffcaa,
         type: 3}
@@ -1114,6 +1134,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyTrigger (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 740906555025810162, guid: 306cbe62b4c700649aa74ff41c968efc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 306cbe62b4c700649aa74ff41c968efc, type: 3}
@@ -1368,6 +1393,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyTrigger (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 8640793782477749367, guid: 5e054c9b04873ea44a6a4c1b1bf74056,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e054c9b04873ea44a6a4c1b1bf74056, type: 3}
 --- !u!1001 &5443203826683185176
@@ -1575,6 +1605,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyTrigger (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6172488064340932498, guid: 5188ecaf509e0e74bbf957dfb22a8629,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7773230475269456626, guid: 5188ecaf509e0e74bbf957dfb22a8629,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1687,6 +1722,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyTrigger (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5979853017420145864, guid: d038d481d410b87448128d12609df193,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5979853017420145876, guid: d038d481d410b87448128d12609df193,
         type: 3}
@@ -1842,6 +1882,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyTrigger (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4706112469073041491, guid: dbfc6ac941a50cf46b548b5f38e0fdd7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7230455152494175257, guid: dbfc6ac941a50cf46b548b5f38e0fdd7,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1959,6 +2004,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015005353775072482, guid: a92e719e9ace8344dba4c7945712124f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9015005353775072510, guid: a92e719e9ace8344dba4c7945712124f,
         type: 3}

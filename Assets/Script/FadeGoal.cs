@@ -22,7 +22,6 @@ public class FadeGoal : MonoBehaviour
 
         if (alfa >= 1)
         {
-            //ステージ１シーンへ
             StageSceneController.GameClear();
             isFade = false;
         }

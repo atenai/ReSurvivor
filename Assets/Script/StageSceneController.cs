@@ -34,7 +34,6 @@ public class StageSceneController : MonoBehaviour
         IsBossAlive = true;
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
         gameOverObject.SetActive(false);

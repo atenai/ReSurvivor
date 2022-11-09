@@ -2,25 +2,22 @@
 
 public class GoalPlaneController : MonoBehaviour
 {
-    private float VelocityX => _rigid.velocity.x;
+    float VelocityX => rigid.velocity.x;
 
-    private float _maxSpeed;
-    private Rigidbody _rigid;
-    private float _moveForce;
-    private float _liftCoefficient;
-    private Rotator _propellerRotator;
+    float maxSpeed = 30.0f;
+    Rigidbody rigid;
+    float moveForce = 20000.0f;
+    float liftCoefficient = 800.0f;
+    Rotator propellerRotator;
 
-    private void Awake()
+    void Awake()
     {
-        _maxSpeed = 30.0f;
-        _rigid = GetComponent<Rigidbody>();
-        _moveForce = 20000.0f;
-        _liftCoefficient = 800.0f;
+        rigid = this.GetComponent<Rigidbody>();
     }
 
     void Start()
     {
-        _propellerRotator = transform.Find("propeller").GetComponent<Rotator>();
+        propellerRotator = transform.Find("propeller").GetComponent<Rotator>();
     }
 
     void Update()
@@ -31,22 +28,22 @@ public class GoalPlaneController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         if (Goal.isGOAL)
         {
-            _propellerRotator.Run();
+            propellerRotator.Run();
             TakeOff();
         }
     }
 
-    private void TakeOff()
+    void TakeOff()
     {
-        if (VelocityX < _maxSpeed)
+        if (VelocityX < maxSpeed)
         {
-            _rigid.AddForce(_moveForce * Vector3.right);
+            rigid.AddForce(moveForce * Vector3.right);
         }
 
-        _rigid.AddForce(VelocityX * _liftCoefficient * Vector3.up);
+        rigid.AddForce(VelocityX * liftCoefficient * Vector3.up);
     }
 }
