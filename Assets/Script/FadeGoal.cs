@@ -3,19 +3,12 @@ using UnityEngine.UI;
 
 public class FadeGoal : MonoBehaviour
 {
-    private float alfa = 0.0f ;
+    float alfa = 0.0f ;
+    bool isFade = false;
 
-
-    private bool isFade = false;
-
-    private void Start()
+    void Update()
     {
-
-    }
-
-    private void Update()
-    {
-        if (Goal.b_GOAL)
+        if (Goal.isGOAL)
         {
             isFade = true;
         }

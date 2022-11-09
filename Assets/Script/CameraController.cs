@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (!Goal.b_GOAL)
+        if (!Goal.isGOAL)
         {
             var tmp = _player.transform.position;
             var x = tmp.x + 5.0f;

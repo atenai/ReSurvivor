@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class Goal : MonoBehaviour
 {
     private Text GOAL_text;
-    public static bool b_GOAL;
+    public static bool isGOAL;
     private float ResultTime;
 
     //サウンド
@@ -13,10 +13,8 @@ public class Goal : MonoBehaviour
 
     public GameObject arrow;
 
-    // Start is called before the first frame update
     private void Start()
     {
-
         //Componentを取得
         audioSource = GetComponent<AudioSource>();
 
@@ -24,14 +22,13 @@ public class Goal : MonoBehaviour
         GOAL_text = GameObject.Find("TextGOAL").GetComponent<Text>();
         GOAL_text.text = "";
 
-        b_GOAL = false;
+        isGOAL = false;
         ResultTime = 0.0f;
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        if (b_GOAL)
+        if (isGOAL)
         {
             //Debug.Log("ゴール当たっているよ");
             ResultTime -= Time.deltaTime;
@@ -55,12 +52,12 @@ public class Goal : MonoBehaviour
 
             GOAL_text.text = "GOAL";
 
-            if (b_GOAL == false)
+            if (isGOAL == false)
             {
                 //SE再生
                 //音(GOALSound)を鳴らす
                 audioSource.PlayOneShot(GOALSound);
-                b_GOAL = true;
+                isGOAL = true;
             }
             other.gameObject.SetActive(false);
         }

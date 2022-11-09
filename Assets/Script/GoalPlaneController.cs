@@ -18,14 +18,14 @@ public class GoalPlaneController : MonoBehaviour
         _liftCoefficient = 800.0f;
     }
 
-    private void Start()
+    void Start()
     {
         _propellerRotator = transform.Find("propeller").GetComponent<Rotator>();
     }
 
-    private void Update()
+    void Update()
     {
-        if (Goal.b_GOAL)
+        if (Goal.isGOAL)
         {
             TakeOff();
         }
@@ -33,7 +33,7 @@ public class GoalPlaneController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Goal.b_GOAL)
+        if (Goal.isGOAL)
         {
             _propellerRotator.Run();
             TakeOff();
