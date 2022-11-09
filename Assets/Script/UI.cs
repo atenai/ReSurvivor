@@ -5,16 +5,18 @@ public class UI : MonoBehaviour
 {
     Color reloadColor = new Color(255.0f, 255.0f, 255.0f, 0.0f);
 
-    [SerializeField] Image imageReload;
+    [SerializeField] GameObject imageReload;
     [SerializeField] Player3D player;
+    [SerializeField] float RotateSpeed = -500.0f;
 
     void Start()
     {
         imageReload.GetComponent<Image>().color = reloadColor;
     }
 
-    void Update()
+    void LateUpdate()
     {
+        imageReload.GetComponent<RectTransform>().transform.Rotate(0.0f, 0.0f, RotateSpeed* Time.deltaTime);
 
         if (player.isReloadTimeActive == true)
         {
@@ -22,7 +24,6 @@ public class UI : MonoBehaviour
             {
                 reloadColor.a += Time.deltaTime * 2.0f; //アルファ値を徐々に＋する
                 imageReload.GetComponent<Image>().color = reloadColor; //画像の透明度を変える
-
             }
         }
 
@@ -32,7 +33,6 @@ public class UI : MonoBehaviour
             {
                 reloadColor.a -= Time.deltaTime * 2.0f; //アルファ値を徐々に-する
                 imageReload.GetComponent<Image>().color = reloadColor; //画像の透明度を変える
-
             }
         }
 
