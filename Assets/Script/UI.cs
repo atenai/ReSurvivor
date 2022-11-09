@@ -9,9 +9,12 @@ public class UI : MonoBehaviour
     [SerializeField] Player3D player;
     [SerializeField] float RotateSpeed = -500.0f;
 
+    [SerializeField] Text textMagazine;
+
     void Start()
     {
         imageReload.GetComponent<Image>().color = reloadColor;
+        textMagazine.text = player.magazine.ToString();
     }
 
     void LateUpdate()
@@ -36,5 +39,6 @@ public class UI : MonoBehaviour
             }
         }
 
+        textMagazine.text = player.magazine.ToString();
     }
 }

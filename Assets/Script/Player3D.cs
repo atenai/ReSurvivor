@@ -37,10 +37,10 @@ public class Player3D : MonoBehaviour
     [SerializeField] float bulletSEDestroyTime = 1.0f;
 
     //弾数
-    public static int Magazine;//残弾数
+    public int magazine;//残弾数
     readonly int magazineDefine = 20;
-    public bool isReloadTimeActive;//リロードのオン/オフ
-    public static float ReloadTime;
+    public bool isReloadTimeActive = false;//リロードのオン・オフ
+    float reloadTime = 0.0f;
     readonly float reloadTimeDefine = 1.5f;//リロード時間の固定
 
     //薬莢
@@ -129,9 +129,7 @@ public class Player3D : MonoBehaviour
         anim = this.GetComponent<Animator>();//アニメーションのコンポーネントを探す
 
         //弾数
-        Magazine = magazineDefine;//残弾数
-        isReloadTimeActive = false;//リロードのオン/オフ
-        ReloadTime = 0.0f;//リロードタイム
+        magazine = magazineDefine;//残弾数
 
         hidables = GameObject.Find("Hidable").GetComponentsInChildren<IHidable>();
 
@@ -293,14 +291,14 @@ public class Player3D : MonoBehaviour
     void Shoot()
     {
         //弾
-        if ((Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(0)) && (Magazine != 0) && isReloadTimeActive == false && isGameOverTrigger == false)
+        if ((Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(0)) && (magazine != 0) && isReloadTimeActive == false && isGameOverTrigger == false)
         {
             //待機アニメーション
             isAnimIdle = false;
             anim.SetBool("b_Idle", isAnimIdle);
             idleTime = 0.0f;
 
-            Magazine = Magazine - 1;//残弾数を-1する
+            magazine = magazine - 1;//残弾数を-1する
 
             //SEオブジェクトを生成する
             var se = Instantiate(BulletSEPrefab, gameObject.transform.position, Quaternion.identity);
@@ -356,14 +354,14 @@ public class Player3D : MonoBehaviour
     void Reload()
     {
         //リロードシステム
-        if (Magazine == 0 || (Magazine != 20 && Input.GetKey(KeyCode.R)) && isGameOverTrigger == false)
+        if (magazine == 0 || (magazine != 20 && Input.GetKey(KeyCode.R)) && isGameOverTrigger == false)
         {
             isReloadTimeActive = true;//リロードのオン
         }
 
         if (isReloadTimeActive)//リロードがオンになったら
         {
-            if (ReloadTime == 0)
+            if (reloadTime == 0)
             {
                 //待機アニメーション
                 isAnimIdle = false;
@@ -379,12 +377,12 @@ public class Player3D : MonoBehaviour
                 anim.SetBool("b_Reload", isAnimReload);
             }
             //リロード中画像
-            ReloadTime += Time.deltaTime;//リロードタイムをプラス
-            //Debug.Log("リロードタイム" + Riro);
-            if (reloadTimeDefine <= ReloadTime)//リロードタイムが10以上になったら
+            reloadTime += Time.deltaTime;//リロードタイムをプラス
+
+            if (reloadTimeDefine <= reloadTime)//リロードタイムが10以上になったら
             {
-                Magazine = magazineDefine;//弾リセット
-                ReloadTime = 0.0f;//リロードタイムをリセット
+                magazine = magazineDefine;//弾リセット
+                reloadTime = 0.0f;//リロードタイムをリセット
                 isReloadTimeActive = false;//リロードのオフ
                 isAnimReload = false;//リロードアニメーションのオフ
                 anim.SetBool("b_Reload", isAnimReload);
