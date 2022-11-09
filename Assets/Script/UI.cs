@@ -4,10 +4,9 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     Color reloadColor = new Color(255.0f, 255.0f, 255.0f, 0.0f);
-
     [SerializeField] GameObject imageReload;
     [SerializeField] Player3D player;
-    [SerializeField] float RotateSpeed = -500.0f;
+    float RotateSpeed = -500.0f;
 
     [SerializeField] Text textMagazine;
 

@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 1246734806695053977}
   - component: {fileID: 1246734806695053976}
   m_Layer: 5
-  m_Name: PlayerDamageImage
+  m_Name: Image_Damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -369,10 +369,10 @@ RectTransform:
   m_Father: {fileID: 6290957553602711064}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 5000, y: 5000}
+  m_SizeDelta: {x: 3080, y: 3920}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1246734806695053977
 CanvasRenderer:
@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 2708573771750967140}
   - component: {fileID: 2708573771750967139}
   m_Layer: 5
-  m_Name: FirstaidkitImage
+  m_Name: Image_Heal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -444,10 +444,10 @@ RectTransform:
   m_Father: {fileID: 6290957553602711064}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 5000, y: 5000}
+  m_SizeDelta: {x: 3080, y: 3920}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2708573771750967140
 CanvasRenderer:
@@ -948,7 +948,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageReload: {fileID: 1224680352602633798}
   player: {fileID: 0}
-  RotateSpeed: -500
   textMagazine: {fileID: 67995285233532129}
 --- !u!114 &6290957553602711071
 MonoBehaviour:

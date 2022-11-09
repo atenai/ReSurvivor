@@ -16,13 +16,13 @@ public class Player3D : MonoBehaviour
 
     //移動
     public float speed = 4.0f;
-    private float moveForce = 50.0f;
-    private float speedX => rigid.velocity.x;
+    float moveForce = 50.0f;
+    float speedX => rigid.velocity.x;
 
     //ジャンプ
     Rigidbody rigid;
     float jumpForce = 570.0f;//ジャンプのy軸に加える力
-    readonly float jumpTimeDefine = 1.2f;
+    readonly float jumpLoadTimeDefine = 1.2f;
     float jumpLoadTime;//ジャンプの再使用までのロードタイム
     /// <summary>
     /// 重力補正
@@ -34,7 +34,7 @@ public class Player3D : MonoBehaviour
 
     //弾発射のSE
     public GameObject BulletSEPrefab;
-    [SerializeField] float bulletSEDestroyTime = 1.0f;
+    float bulletSEDestroyTime = 1.0f;
 
     //弾数
     public int magazine;//残弾数
@@ -45,64 +45,63 @@ public class Player3D : MonoBehaviour
 
     //薬莢
     public GameObject Cartridge;
-    public float CartridgeDestroyTime;
+    float CartridgeDestroyTime = 1.0f;
 
     //リロードのSE
     public GameObject ReloadSEPrefab;
-    public float ReloadSE_Endtime;
+    float ReloadSEDestroyTime = 1.0f;
 
     //右マズルフラッシュエフェクトのプレファブ
     public GameObject RightMuzzleflashEffectPrefab;
     private Vector3 RightMuzzleflashEffectPosition;
-    [SerializeField] float MuzzleflashEffectDestroyTime = 0.5f;
+    float MuzzleflashEffectDestroyTime = 0.5f;
 
     //左マズルフラッシュエフェクトのプレファブ
     public GameObject LeftMuzzleflashEffectPrefab;
     private Vector3 LeftMuzzleflashEffectPosition;
 
     //体力
-    [SerializeField] int hp = 100;
+    int hp = 100;
 
     //ゲームオーバー
     public bool isGameOverTrigger = false;
-    private const float GameOverDelay = 2.0f;
-
+    const float GameOverDelay = 2.0f;
 
     //プレイヤーダメージSE
     public GameObject PlayerDamageSEPrefab;
-    public float PlayerDamageSE_Endtime;
-    private float PlayerDamageTime;
-    private float PlayerDamageTimeDefine = 1.0f;
+    float playerDamageSEDestroyTime = 1.0f;
+    float PlayerDamageTime;
+    float PlayerDamageTimeDefine = 1.0f;
 
-    //ダメージエフェクト
-    static public bool b_DamageEffect;
-    private Image DamageEffectimg;
+    //ダメージ画像
+    public bool isImageDamage = false;
+    [SerializeField] Image imageDamage;
 
-    //血エフェクトのプレファブ
+    //血エフェクト
     public GameObject BloodEffectPrefab;
-    private Vector3 BloodEffectPosition;
-    public float BloodEffectDestroyTime;
+    Vector3 BloodEffectPosition;
+    float bloodEffectDestroyTime = 1.0f;
 
-    //救急箱エフェクト
-    public bool b_Firstaidkit;
-    private Image Firstaidkitimg;
+    //ヒール画像
+    bool isImageHeal;
+    [SerializeField] Image imageHeal;
 
     //ヒールSE
     public GameObject HealSEPrefab;
-    public float HealSE_Endtime;
+    float healSEDestroyTime = 1.0f;
 
     //ヒールエフェクトのプレファブ
     public GameObject HealEffectPrefab;
-    private Vector3 HealEffectPosition;
-    public float HealEffectDestroyTime;
-    public bool b_HealEffect;
+    Vector3 HealEffectPosition;
+    float HealEffectDestroyTime = 1.0f;
+    bool isHealEffect = false;
     readonly float healTimeDefine = 0.2f;
     float HealTime;
 
     //回転
     bool rot = true;
 
-    private IHidable[] hidables;
+    IHidable[] hidables;
 
     //カメラ
     CameraController cameraController;
@@ -111,18 +110,14 @@ public class Player3D : MonoBehaviour
     {
         //ジャンプ
         rigid = this.GetComponent<Rigidbody>();
-        jumpLoadTime = jumpTimeDefine;//ジャンプの再使用までのロードタイム
+        jumpLoadTime = jumpLoadTimeDefine;//ジャンプの再使用までのロードタイム
 
-        //ダメージエフェクト
-        DamageEffectimg = GameObject.Find("PlayerDamageImage").GetComponent<Image>();
-        DamageEffectimg.color = Color.clear;
-        b_DamageEffect = false;
+        //ダメージ画像
+        imageDamage.color = Color.clear;
 
-        //救急箱エフェクト
-        Firstaidkitimg = GameObject.Find("FirstaidkitImage").GetComponent<Image>();
-        Firstaidkitimg.color = Color.clear;
+        //ヒール画像
+        imageHeal.color = Color.clear;
         //ヒールエフェクト
-        b_HealEffect = false;
         HealTime = healTimeDefine;
 
         //アニメーション
@@ -266,7 +261,7 @@ public class Player3D : MonoBehaviour
         rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
 
         //ジャンプ
-        if (Input.GetKeyDown(KeyCode.Space) && jumpTimeDefine <= jumpLoadTime && isGameOverTrigger == false)
+        if (Input.GetKeyDown(KeyCode.Space) && jumpLoadTimeDefine <= jumpLoadTime && isGameOverTrigger == false)
         {
             //アニメーション
             isAnimJump = true;
@@ -276,7 +271,7 @@ public class Player3D : MonoBehaviour
             jumpLoadTime = 0.0f;
         }
 
-        if (jumpLoadTime <= jumpTimeDefine)
+        if (jumpLoadTime <= jumpLoadTimeDefine)
         {
             jumpLoadTime += Time.deltaTime;
         }
@@ -370,7 +365,7 @@ public class Player3D : MonoBehaviour
 
                 //SEオブジェクトを生成する
                 var ReloadSE = Instantiate(ReloadSEPrefab, gameObject.transform.position, Quaternion.identity);
-                Destroy(ReloadSE, ReloadSE_Endtime);//SEをSE_Endtime後削除
+                Destroy(ReloadSE, ReloadSEDestroyTime);//SEをSE_Endtime後削除
 
                 //アニメーション
                 isAnimReload = true;
@@ -407,40 +402,40 @@ public class Player3D : MonoBehaviour
         PlayerDamageTime += Time.deltaTime;
         //Debug.Log("プレイヤーダメージSE" + PlayerDamageTime);
 
-        //ダメージエフェクト
-        if (b_DamageEffect)
+        //ダメージ画像
+        if (isImageDamage)
         {
-            DamageEffectimg.color = new Color(0.5f, 0f, 0f, 0.5f);
+            imageDamage.color = new Color(0.5f, 0f, 0f, 0.5f);
             //血エフェクトオブジェクトを生成する	
             //血エフェクト座標
             BloodEffectPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1.0f, gameObject.transform.position.z);
-            var Effect = Instantiate(BloodEffectPrefab, BloodEffectPosition, Quaternion.identity);
-            Destroy(Effect, BloodEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+            var effect = Instantiate(BloodEffectPrefab, BloodEffectPosition, Quaternion.identity);
+            Destroy(effect, bloodEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
         }
 
-        if (b_DamageEffect == false)
+        if (isImageDamage == false)
         {
-            DamageEffectimg.color = Color.Lerp(DamageEffectimg.color, Color.clear, Time.deltaTime);
+            imageDamage.color = Color.Lerp(imageDamage.color, Color.clear, Time.deltaTime);
         }
 
-        b_DamageEffect = false;
+        isImageDamage = false;
 
         //救急箱エフェクト
-        if (b_Firstaidkit)
+        if (isImageHeal)
         {
-            Firstaidkitimg.color = new Color(0f, 0.5f, 0f, 0.5f);
+            imageHeal.color = new Color(0f, 0.5f, 0f, 0.5f);
 
             HealTime = 0.0f;
         }
 
-        if (b_Firstaidkit == false)
+        if (isImageHeal == false)
         {
-            Firstaidkitimg.color = Color.Lerp(Firstaidkitimg.color, Color.clear, Time.deltaTime);
+            imageHeal.color = Color.Lerp(imageHeal.color, Color.clear, Time.deltaTime);
         }
 
-        b_Firstaidkit = false;
+        isImageHeal = false;
 
-        if (b_HealEffect)
+        if (isHealEffect)
         {
             HealEffectPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1.0f, gameObject.transform.position.z - 1.0f);
 
@@ -450,13 +445,13 @@ public class Player3D : MonoBehaviour
 
         if (HealTime <= healTimeDefine)
         {
-            b_HealEffect = true;
+            isHealEffect = true;
         }
 
 
         if (healTimeDefine <= HealTime)
         {
-            b_HealEffect = false;
+            isHealEffect = false;
         }
 
         HealTime += Time.deltaTime;
@@ -508,23 +503,23 @@ public class Player3D : MonoBehaviour
         {
             if (PlayerDamageTimeDefine <= PlayerDamageTime)
             {
-                var SE = Instantiate(PlayerDamageSEPrefab, gameObject.transform.position, Quaternion.identity);
-                Destroy(SE, PlayerDamageSE_Endtime);
+                var se = Instantiate(PlayerDamageSEPrefab, gameObject.transform.position, Quaternion.identity);
+                Destroy(se, playerDamageSEDestroyTime);
 
                 PlayerDamageTime = 0.0f;
             }
 
-            b_DamageEffect = true;
+            isImageDamage = true;
 
             //cameraController.Shake(0.25f, 0.1f);
         }
 
         if (other.CompareTag("First aid kit") && hp < 100 && isGameOverTrigger == false)
         {
-            var SE = Instantiate(HealSEPrefab, gameObject.transform.position, Quaternion.identity);
-            Destroy(SE, HealSE_Endtime);
+            var se = Instantiate(HealSEPrefab, gameObject.transform.position, Quaternion.identity);
+            Destroy(se, healSEDestroyTime);
 
-            b_Firstaidkit = true;
+            isImageHeal = true;
             SetPlayerHeal(100);
         }
     }

@@ -2,23 +2,11 @@
 
 public class ExplosiveBarrelController : MonoBehaviour
 {
-    private Player3D _player;
+    private Player3D player;
     
     public GameObject explosionEffect;
 
     public float radius = 5f;
-    
-    // Start is called before the first frame update
-    private void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -47,13 +35,11 @@ public class ExplosiveBarrelController : MonoBehaviour
             {
                 if(nearbyObject.CompareTag("Player"))
                 {
-                    //Debug.Log("Player in Range");
-                    Player3D.b_DamageEffect = true;
+                    player.isImageDamage = true;
                     player.SetPlayerDamage(50);
                 }
                 if(nearbyObject.CompareTag("Enemy"))
                 {
-                    //Debug.Log("Enemy in Range");
                     Destroy(GameObject.FindWithTag("Enemy"));
                 }
             }

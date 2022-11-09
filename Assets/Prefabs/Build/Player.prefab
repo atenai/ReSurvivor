@@ -405,41 +405,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 1592775475300458051}
-  b_animJump: 0
-  b_animReload: 0
-  b_animDie: 0
   speed: 3
   gravityScale: 2
   Bullet: {fileID: 8896390708366579688, guid: 97bf0210de421a442a5c28de333b9567, type: 3}
   BulletSEPrefab: {fileID: 7745047431966298687, guid: 1f3f20138ad2b7440a2dc8a58cd3b05c,
     type: 3}
-  BulletSE_Endtime: 1
+  magazine: 0
+  isReloadTimeActive: 0
   Cartridge: {fileID: 8432168509019524890, guid: 0b90fa4732ef6134e9629700c3e02d80,
     type: 3}
-  CartridgeDestroyTime: 1
   ReloadSEPrefab: {fileID: 3222061081758656403, guid: cf99a948bb2d3234eb4418a9e1a92e76,
     type: 3}
-  ReloadSE_Endtime: 1
   RightMuzzleflashEffectPrefab: {fileID: 2634986708114487617, guid: 22763f97336c3864f94d73bdd2efc4f9,
     type: 3}
-  RightMuzzleflashEffectDestroyTime: 0.5
   LeftMuzzleflashEffectPrefab: {fileID: 8188280761437228391, guid: 99491738355cb114882de23e0bf0fc07,
     type: 3}
-  LeftMuzzleflashEffectDestroyTime: 0.5
+  isGameOverTrigger: 0
   PlayerDamageSEPrefab: {fileID: 6230833164883063529, guid: 558ffb0d698e0e74183cbe0ac778dd47,
     type: 3}
-  PlayerDamageSE_Endtime: 1
+  isImageDamage: 0
+  imageDamage: {fileID: 0}
   BloodEffectPrefab: {fileID: 3269373705177894080, guid: 135f480b730dfb84f8fe208174fb766b,
     type: 3}
-  BloodEffectDestroyTime: 1
-  b_Firstaidkit: 0
+  imageHeal: {fileID: 0}
   HealSEPrefab: {fileID: 487633246165827512, guid: 571d9e79ce35d6247aad0cc73b6151f2,
     type: 3}
-  HealSE_Endtime: 1
   HealEffectPrefab: {fileID: 2074689200564775272, guid: c75bea83f70bf2545b106049132e7b96,
     type: 3}
-  HealEffectDestroyTime: 1
-  b_HealEffect: 0
 --- !u!1 &5865283273152084737
 GameObject:
   m_ObjectHideFlags: 0
