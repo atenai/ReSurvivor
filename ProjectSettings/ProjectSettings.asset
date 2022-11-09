@@ -738,8 +738,14 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Analytics: 1
+    Build: 0
     Collab: 0
+    Game Performance: 0
+    Purchasing: 0
+    UDP: 0
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -753,11 +759,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: 4482881d-cc21-457f-8515-007683d68acc
+  cloudProjectId: ef3b3fab-499a-4ea1-ae14-bcf5858c821f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: Re:Survivor
-  organizationId: grmagicdog
+  organizationId: atenai47
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   virtualTexturingSupportEnabled: 0

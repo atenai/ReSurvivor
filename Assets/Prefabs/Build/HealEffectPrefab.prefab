@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2074689200551047174}
   - component: {fileID: 2074689200551004582}
   m_Layer: 0
-  m_Name: par2
+  m_Name: HealEffectPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

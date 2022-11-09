@@ -6,13 +6,13 @@ public class Player3D : MonoBehaviour
 {
     //アニメーション
     public Animator anim;//Unityアニメーション用変数
-    public bool b_animJump;
-    public bool b_animReload;
-    public bool b_animDie;
-    bool b_animRun;
-    bool b_animIdle;
-    float IdleTimeDefine = 1.0f;//待機アニメーションへ行こうする時間
-    float IdleTime;
+    bool isAnimJump = false;
+    bool isAnimReload = false;
+    bool isAnimDie = false;
+    bool isAnimRun = false;
+    bool isAnimIdle = false;
+    readonly float idleTimeDefine = 2.0f;//待機アニメーションへ行こうする時間
+    float idleTime;
 
     //移動
     public float speed = 4.0f;
@@ -20,10 +20,10 @@ public class Player3D : MonoBehaviour
     private float speedX => rigid.velocity.x;
 
     //ジャンプ
-    private Rigidbody rigid;
-    private float jumpForce = 570.0f;//ジャンプのy軸に加える力
-    private float JumpTimeDefine = 1.2f;
-    private float JumpTime;//ジャンプの再使用までのロードタイム
+    Rigidbody rigid;
+    float jumpForce = 570.0f;//ジャンプのy軸に加える力
+    readonly float jumpTimeDefine = 1.2f;
+    float jumpLoadTime;//ジャンプの再使用までのロードタイム
     /// <summary>
     /// 重力補正
     /// </summary>
@@ -34,14 +34,14 @@ public class Player3D : MonoBehaviour
 
     //弾発射のSE
     public GameObject BulletSEPrefab;
-    public float BulletSE_Endtime = 1.0f;
+    [SerializeField] float bulletSEDestroyTime = 1.0f;
 
     //弾数
     public static int Magazine;//残弾数
-    private int MagazineDefine = 20;
+    readonly int magazineDefine = 20;
     public static bool b_ReloadTimeActive;//リロードのオン/オフ
     public static float ReloadTime;
-    private float ReloadTimeDefine = 1.5f;//リロード時間の固定
+    readonly float reloadTimeDefine = 1.5f;//リロード時間の固定
 
     //薬莢
     public GameObject Cartridge;
@@ -54,17 +54,16 @@ public class Player3D : MonoBehaviour
     //右マズルフラッシュエフェクトのプレファブ
     public GameObject RightMuzzleflashEffectPrefab;
     private Vector3 RightMuzzleflashEffectPosition;
-    public float RightMuzzleflashEffectDestroyTime = 0.5f;
+    [SerializeField] float MuzzleflashEffectDestroyTime = 0.5f;
 
     //左マズルフラッシュエフェクトのプレファブ
     public GameObject LeftMuzzleflashEffectPrefab;
     private Vector3 LeftMuzzleflashEffectPosition;
-    public float LeftMuzzleflashEffectDestroyTime = 0.5f;
 
     //体力
-    private int HP = 100;
+    [SerializeField] int hp = 100;
 
-    //ゲームオーバータイム
+    //ゲームオーバー
     public bool isGameOverTrigger = false;
     private const float GameOverDelay = 2.0f;
 
@@ -97,8 +96,8 @@ public class Player3D : MonoBehaviour
     private Vector3 HealEffectPosition;
     public float HealEffectDestroyTime;
     public bool b_HealEffect;
-    private float HealTimeDefine = 0.2f;
-    private float HealTime;
+    readonly float healTimeDefine = 0.2f;
+    float HealTime;
 
     //回転
     bool rot = true;
@@ -108,14 +107,11 @@ public class Player3D : MonoBehaviour
     //カメラ
     CameraController cameraController;
 
-    private void Start()
+    void Start()
     {
         //ジャンプ
-        rigid = GetComponent<Rigidbody>();
-        JumpTime = JumpTimeDefine;//ジャンプの再使用までのロードタイム
-
-        //体力
-        HP = 100;
+        rigid = this.GetComponent<Rigidbody>();
+        jumpLoadTime = jumpTimeDefine;//ジャンプの再使用までのロードタイム
 
         //ダメージエフェクト
         DamageEffectimg = GameObject.Find("PlayerDamageImage").GetComponent<Image>();
@@ -127,32 +123,15 @@ public class Player3D : MonoBehaviour
         Firstaidkitimg.color = Color.clear;
         //ヒールエフェクト
         b_HealEffect = false;
-        HealTime = HealTimeDefine;
-
-        //回転
-        rot = true;
+        HealTime = healTimeDefine;
 
         //アニメーション
-        anim = GetComponent<Animator>();//アニメーションのコンポーネントを探す
-        b_animJump = false;
-        b_animReload = false;
-        b_animDie = false;
-        b_animRun = false;
-        b_animIdle = false;
-        IdleTimeDefine = 2.0f;
-
-        //弾発射のSE
-        BulletSE_Endtime = 1.0f;
+        anim = this.GetComponent<Animator>();//アニメーションのコンポーネントを探す
 
         //弾数
-        Magazine = MagazineDefine;//残弾数
+        Magazine = magazineDefine;//残弾数
         b_ReloadTimeActive = false;//リロードのオン/オフ
         ReloadTime = 0.0f;//リロードタイム
-        ReloadTimeDefine = 1.5f;
-
-        //マズルフラッシュデストロイタイム
-        RightMuzzleflashEffectDestroyTime = 0.5f;
-        LeftMuzzleflashEffectDestroyTime = 0.5f;
 
         hidables = GameObject.Find("Hidable").GetComponentsInChildren<IHidable>();
 
@@ -160,11 +139,25 @@ public class Player3D : MonoBehaviour
         cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
     }
 
-    private void Update()
+    void Update()
     {
-        if (isGameOverTrigger) return;
-        rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
+        if (isGameOverTrigger) { return; }
 
+        Jump();
+
+        Move();
+
+        Shoot();
+
+        Reload();
+
+        HP();
+
+        Hide();
+    }
+
+    void Move()
+    {
         //現在のアニメーション（"Speed"）の値を持ってくる
         float current_speed = anim.GetFloat("Speed");
 
@@ -181,139 +174,149 @@ public class Player3D : MonoBehaviour
         }
 
         //移動
-        if (!isGameOverTrigger)
+        if (Input.GetKey("d") && isGameOverTrigger == false)
         {
-            if (Input.GetKey("d"))
+            //待機アニメーション
+            isAnimIdle = false;
+            anim.SetBool("b_Idle", isAnimIdle);
+            idleTime = 0.0f;
+
+            //回転
+            rot = true;
+
+            if (rot)
             {
-                //待機アニメーション
-                b_animIdle = false;
-                anim.SetBool("b_Idle", b_animIdle);
-                IdleTime = 0.0f;
-
-                //回転
-                rot = true;
-
-                if (rot)
-                {
-                    // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
-                    var rot = Quaternion.Euler(0, 90, 0);
-                    transform.rotation = rot;
-                }
-                else if (rot == false)
-                {
-                    // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
-                    var rot = Quaternion.Euler(0, 270, 0);
-                    transform.rotation = rot;
-                }
-
-                b_animRun = true;
-                anim.SetFloat("Speed", current_speed + Time.deltaTime * 1.0f);
-
-                //移動
-                if (speedX < speed)
-                {
-                    rigid.AddForce(moveForce * Vector3.right);
-                }
-                //transform.position += transform.forward * speed * Time.deltaTime;
-
+                // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
+                var rot = Quaternion.Euler(0, 90, 0);
+                transform.rotation = rot;
+            }
+            else if (rot == false)
+            {
+                // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
+                var rot = Quaternion.Euler(0, 270, 0);
+                transform.rotation = rot;
             }
 
-            if (Input.GetKey("a"))
+            isAnimRun = true;
+            anim.SetFloat("Speed", current_speed + Time.deltaTime * 1.0f);
+
+            //移動
+            if (speedX < speed)
             {
-                //待機アニメーション
-                b_animIdle = false;
-                anim.SetBool("b_Idle", b_animIdle);
-                IdleTime = 0.0f;
-
-                //回転
-                rot = false;
-
-                if (rot)
-                {
-                    // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
-                    var rot = Quaternion.Euler(0, 90, 0);
-                    transform.rotation = rot;
-                }
-                else if (rot == false)
-                {
-                    // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
-                    var rot = Quaternion.Euler(0, 270, 0);
-                    transform.rotation = rot;
-                }
-
-                b_animRun = true;
-                anim.SetFloat("Speed", current_speed + Time.deltaTime * 1.0f);
-
-                //移動
-                if (speedX > -speed)
-                {
-                    rigid.AddForce(moveForce * Vector3.left);
-                }
-                //transform.position += transform.forward * speed * Time.deltaTime;
-
+                rigid.AddForce(moveForce * Vector3.right);
             }
+            //transform.position += transform.forward * speed * Time.deltaTime;
         }
 
-        if (b_animRun == false)
+        if (Input.GetKey("a") && isGameOverTrigger == false)
+        {
+            //待機アニメーション
+            isAnimIdle = false;
+            anim.SetBool("b_Idle", isAnimIdle);
+            idleTime = 0.0f;
+
+            //回転
+            rot = false;
+
+            if (rot)
+            {
+                // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
+                var rot = Quaternion.Euler(0, 90, 0);
+                transform.rotation = rot;
+            }
+            else if (rot == false)
+            {
+                // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
+                var rot = Quaternion.Euler(0, 270, 0);
+                transform.rotation = rot;
+            }
+
+            isAnimRun = true;
+            anim.SetFloat("Speed", current_speed + Time.deltaTime * 1.0f);
+
+            //移動
+            if (speedX > -speed)
+            {
+                rigid.AddForce(moveForce * Vector3.left);
+            }
+            //transform.position += transform.forward * speed * Time.deltaTime;
+        }
+
+        if (isAnimRun == false)
         {
             anim.SetFloat("Speed", current_speed - Time.deltaTime * 1.0f);
         }
 
+        isAnimRun = false;//アニメーションの移動をFalseにする
+
+        //待機アニメーション
+        if (idleTimeDefine <= idleTime)
+        {
+            isAnimIdle = true;
+            anim.SetBool("b_Idle", isAnimIdle);
+            idleTime = 0.0f;
+        }
+
+        if (isAnimIdle == false)
+        {
+            idleTime += Time.deltaTime;
+        }
+    }
+
+    void Jump()
+    {
+        rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
+
         //ジャンプ
-        if (Input.GetKeyDown(KeyCode.Space) && JumpTimeDefine <= JumpTime && isGameOverTrigger == false)
+        if (Input.GetKeyDown(KeyCode.Space) && jumpTimeDefine <= jumpLoadTime && isGameOverTrigger == false)
         {
             //アニメーション
-            b_animJump = true;
-            anim.SetBool("b_Jump", b_animJump);
-
+            isAnimJump = true;
+            anim.SetBool("b_Jump", isAnimJump);
 
             rigid.AddForce(transform.up * jumpForce);
-            JumpTime = 0.0f;
+            jumpLoadTime = 0.0f;
         }
 
-        if (JumpTime <= JumpTimeDefine)
+        if (jumpLoadTime <= jumpTimeDefine)
         {
-            JumpTime += Time.deltaTime;
+            jumpLoadTime += Time.deltaTime;
         }
 
-        if (JumpTime >= 0.1f)
+        if (jumpLoadTime >= 0.1f)
         {
-            b_animJump = false;
+            isAnimJump = false;
         }
-        anim.SetBool("b_Jump", b_animJump);
+        anim.SetBool("b_Jump", isAnimJump);
+    }
 
-        //Debug.Log("ジャンプタイム" + JumpTime);
-
+    void Shoot()
+    {
         //弾
         if ((Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(0)) && (Magazine != 0) && b_ReloadTimeActive == false && isGameOverTrigger == false)
         {
             //待機アニメーション
-            b_animIdle = false;
-            anim.SetBool("b_Idle", b_animIdle);
-            IdleTime = 0.0f;
+            isAnimIdle = false;
+            anim.SetBool("b_Idle", isAnimIdle);
+            idleTime = 0.0f;
 
             Magazine = Magazine - 1;//残弾数を-1する
 
             //SEオブジェクトを生成する
-            var SE = Instantiate(BulletSEPrefab, gameObject.transform.position, Quaternion.identity);
-            Destroy(SE, BulletSE_Endtime);//SEをSE_Endtime後削除
+            var se = Instantiate(BulletSEPrefab, gameObject.transform.position, Quaternion.identity);
+            Destroy(se, bulletSEDestroyTime);//SEをSE_Endtime後削除
 
             var PositionX = gameObject.transform.position.x;
             var PositionY = gameObject.transform.position.y;
             var PositionZ = gameObject.transform.position.z;
+
             if (rot)
             {
 
                 //マズルフラッシュエフェクトオブジェクトを生成する	
                 RightMuzzleflashEffectPosition = new Vector3(PositionX + 1.75f, PositionY + 1.1f, PositionZ);
-                var Effect = Instantiate(RightMuzzleflashEffectPrefab, RightMuzzleflashEffectPosition, Quaternion.identity);
-                Destroy(Effect, RightMuzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
-
-                //1.newBulletを生成
-                //2.newBulletの中でダミーバレットを作成
-                //3.ダミーバレットはプレイヤーキャラクターの座標位置から発射される
-                //4.数秒後にバレットが敵とのあたり判定をする
-                //5.バレットの消失と共にダミーバレットもデストロイされる
+                var effect = Instantiate(RightMuzzleflashEffectPrefab, RightMuzzleflashEffectPosition, Quaternion.identity);
+                Destroy(effect, MuzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
 
                 var v3_Position = new Vector3(PositionX + 1.75f, PositionY + 1.1f, PositionZ);
                 var newBullet = Instantiate(Bullet, v3_Position, transform.rotation);
@@ -332,8 +335,8 @@ public class Player3D : MonoBehaviour
 
                 //マズルフラッシュエフェクトオブジェクトを生成する	
                 LeftMuzzleflashEffectPosition = new Vector3(PositionX - 1.6f, PositionY + 1.0f, PositionZ);
-                var Effect = Instantiate(LeftMuzzleflashEffectPrefab, LeftMuzzleflashEffectPosition, Quaternion.identity);
-                Destroy(Effect, LeftMuzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+                var effect = Instantiate(LeftMuzzleflashEffectPrefab, LeftMuzzleflashEffectPosition, Quaternion.identity);
+                Destroy(effect, MuzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
 
                 var v3_Position = new Vector3(PositionX - 1.8f, PositionY + 0.9f, PositionZ);
                 var newBullet = Instantiate(Bullet, v3_Position, transform.rotation);
@@ -347,9 +350,11 @@ public class Player3D : MonoBehaviour
                 newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
                 Destroy(newCartridge, CartridgeDestroyTime);//DestroyTime後削除
             }
-
         }
+    }
 
+    void Reload()
+    {
         //リロードシステム
         if (Magazine == 0 || (Magazine != 20 && Input.GetKey(KeyCode.R)) && isGameOverTrigger == false)
         {
@@ -361,40 +366,41 @@ public class Player3D : MonoBehaviour
             if (ReloadTime == 0)
             {
                 //待機アニメーション
-                b_animIdle = false;
-                anim.SetBool("b_Idle", b_animIdle);
-                IdleTime = 0.0f;
+                isAnimIdle = false;
+                anim.SetBool("b_Idle", isAnimIdle);
+                idleTime = 0.0f;
 
                 //SEオブジェクトを生成する
                 var ReloadSE = Instantiate(ReloadSEPrefab, gameObject.transform.position, Quaternion.identity);
                 Destroy(ReloadSE, ReloadSE_Endtime);//SEをSE_Endtime後削除
 
                 //アニメーション
-                b_animReload = true;
-                anim.SetBool("b_Reload", b_animReload);
+                isAnimReload = true;
+                anim.SetBool("b_Reload", isAnimReload);
             }
             //リロード中画像
             ReloadTime += Time.deltaTime;//リロードタイムをプラス
             //Debug.Log("リロードタイム" + Riro);
-            if (ReloadTimeDefine <= ReloadTime)//リロードタイムが10以上になったら
+            if (reloadTimeDefine <= ReloadTime)//リロードタイムが10以上になったら
             {
-                Magazine = MagazineDefine;//弾リセット
+                Magazine = magazineDefine;//弾リセット
                 ReloadTime = 0.0f;//リロードタイムをリセット
                 b_ReloadTimeActive = false;//リロードのオフ
-                b_animReload = false;//リロードアニメーションのオフ
-                anim.SetBool("b_Reload", b_animReload);
+                isAnimReload = false;//リロードアニメーションのオフ
+                anim.SetBool("b_Reload", isAnimReload);
             }
         }
         //リロードシステム
+    }
 
-        b_animRun = false;//アニメーションの移動をFalseにする
-
+    void HP()
+    {
         //体力
-        if (!isGameOverTrigger && HP <= 0)
+        if (!isGameOverTrigger && hp <= 0)
         {
             //アニメーション
-            b_animDie = true;
-            anim.SetBool("b_Die", b_animDie);
+            isAnimDie = true;
+            anim.SetBool("b_Die", isAnimDie);
             isGameOverTrigger = true;
             StageSceneController.GameOver(GameOverDelay);
         }
@@ -436,46 +442,30 @@ public class Player3D : MonoBehaviour
 
         b_Firstaidkit = false;
 
-        //Debug.Log(HP);
-
         if (b_HealEffect)
         {
-            //ヒールエフェクトオブジェクトを生成する	
-            //ヒールエフェクト座標
             HealEffectPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1.0f, gameObject.transform.position.z - 1.0f);
 
-            var HealEffect = Instantiate(HealEffectPrefab, HealEffectPosition, Quaternion.identity);
-            Destroy(HealEffect, HealEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+            var healEffect = Instantiate(HealEffectPrefab, HealEffectPosition, Quaternion.identity);
+            Destroy(healEffect, HealEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
         }
 
-        if (HealTime <= HealTimeDefine)
+        if (HealTime <= healTimeDefine)
         {
             b_HealEffect = true;
         }
 
 
-        if (HealTimeDefine <= HealTime)
+        if (healTimeDefine <= HealTime)
         {
             b_HealEffect = false;
         }
 
         HealTime += Time.deltaTime;
-        //Debug.Log("ヒールタイム" + HealTime);
+    }
 
-        //待機アニメーション
-        if (IdleTimeDefine <= IdleTime)
-        {
-            b_animIdle = true;
-            anim.SetBool("b_Idle", b_animIdle);
-            IdleTime = 0.0f;
-        }
-
-        if (b_animIdle == false)
-        {
-            IdleTime += Time.deltaTime;
-            //Debug.Log(IdleTime);
-        }
-
+    void Hide()
+    {
         foreach (var hidable in hidables)
         {
             if (Input.GetKeyDown(hidable.HideKey()) && hidable.IsAccessable(gameObject))
@@ -486,31 +476,27 @@ public class Player3D : MonoBehaviour
         }
     }
 
-    //↓Set関数
-
-    public void SetPlayerDamage(int Damage)
+    public void SetPlayerDamage(int damage)
     {
-        HP = HP - Damage;
-        if (HP <= 0)
+        hp = hp - damage;
+        if (hp <= 0)
         {
-            HP = 0;
+            hp = 0;
         }
     }
 
-    public void SetPlayerHeal(int Heal)
+    public void SetPlayerHeal(int heal)
     {
-        HP = HP + Heal;
-        if (100 <= HP)
+        hp = hp + heal;
+        if (100 <= hp)
         {
-            HP = 100;
+            hp = 100;
         }
     }
-
-    //↓Get関数
 
     public int GetPlayerHP()
     {
-        return HP;
+        return hp;
     }
 
     public float GetPlayerPositionX()
@@ -518,16 +504,14 @@ public class Player3D : MonoBehaviour
         return this.transform.position.x;
     }
 
-    //↓当たり判定
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("EnemyBullet") && isGameOverTrigger == false || other.CompareTag("Mine") && isGameOverTrigger == false)
         {
             if (PlayerDamageTimeDefine <= PlayerDamageTime)
             {
-                //SEオブジェクトを生成する
                 var SE = Instantiate(PlayerDamageSEPrefab, gameObject.transform.position, Quaternion.identity);
-                Destroy(SE, PlayerDamageSE_Endtime);//SEをSE_Endtime後削除
+                Destroy(SE, PlayerDamageSE_Endtime);
 
                 PlayerDamageTime = 0.0f;
             }
@@ -535,15 +519,12 @@ public class Player3D : MonoBehaviour
             b_DamageEffect = true;
 
             //cameraController.Shake(0.25f, 0.1f);
-
-            //SetPlayerDamage(50);
         }
 
-        if (other.CompareTag("First aid kit") && HP < 100 && isGameOverTrigger == false)
+        if (other.CompareTag("First aid kit") && hp < 100 && isGameOverTrigger == false)
         {
-            //SEオブジェクトを生成する
             var SE = Instantiate(HealSEPrefab, gameObject.transform.position, Quaternion.identity);
-            Destroy(SE, HealSE_Endtime);//SEをSE_Endtime後削除
+            Destroy(SE, HealSE_Endtime);
 
             b_Firstaidkit = true;
             SetPlayerHeal(100);
