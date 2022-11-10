@@ -87,14 +87,14 @@ namespace UI_Controller
                 //sliderBarがmax以下の時の計算
                 if (slider.value < 0.9f)
                 {
-                    Debug.Log("<color=yellow>seconds : " + this.seconds + "</color>");
+                    //Debug.Log("<color=yellow>seconds : " + this.seconds + "</color>");
                     slider.value = seconds;
                 }
 
                 //sliderBarがmaxになった時の計算
                 if (0.9f <= slider.value)
                 {
-                    Debug.Log("<color=green>seconds : " + this.seconds + "</color>");
+                    //Debug.Log("<color=green>seconds : " + this.seconds + "</color>");
                     slider.value = 0.9f;
                 }
 
