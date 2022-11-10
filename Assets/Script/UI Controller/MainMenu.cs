@@ -18,57 +18,40 @@ namespace UI_Controller
 
         GameObject selectedButton;
 
-        //bool isFade = false;
+        [SerializeField] Slider slider;
+        float seconds = 0.0f;
 
-        //float alfa = 0.0f;
-        //[SerializeField] float speed = 0.025f;
-        //float red, green, blue;
-    
-        private void Start()
+        void Start()
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
 
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(startButton);
-
-            //red = fadeToGame.GetComponent<Image>().color.r;
-            //green = fadeToGame.GetComponent<Image>().color.g;
-            //blue = fadeToGame.GetComponent<Image>().color.b;
         }
 
-        private void Update()
+        void Update()
         {
             selectedButton = EventSystem.current.currentSelectedGameObject;
-            if(selectedButton == null)
+            if (selectedButton == null)
             {
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(startButton);
             }
-
-            //if (isFade)
-            //{
-            //    fadeToGame.GetComponent<Image>().color = new Color(red, green, blue, alfa);
-            //    alfa += speed * Time.deltaTime;
-            //}
-            //if (alfa >= 1)
-            //{
-            //    //ステージ１シーンへ
-            //    //SceneManager.LoadScene("StageScene1");
-            //    isFade = false;
-            //}
         }
 
         public void PlayGame()
         {
             buttons.SetActive(false);
-            loadingImage.SetActive(true);
-            StartCoroutine(LoadSceneBackground("StageScene1"));
+            //loadingImage.SetActive(true);
+            //StartCoroutine(LoadSceneBackground("StageScene1"));
+            StartCoroutine(LoadScene("StageScene1"));
         }
 
         public void ShowCredits()
         {
-            SceneManager.LoadScene("Credits");
+            //SceneManager.LoadScene("Credits");
+            StartCoroutine(LoadScene("Credits"));
         }
 
         public void QuitGame()
@@ -80,13 +63,50 @@ namespace UI_Controller
 #endif
         }
 
-        private IEnumerator LoadSceneBackground(string sceneName)
+        IEnumerator LoadSceneBackground(string sceneName)
         {
             var load = SceneManager.LoadSceneAsync(sceneName);
             while (!load.isDone)
             {
                 loadingImage.transform.localPosition = new Vector3(-750 + 1500 * load.progress / 0.9f, -338.0f, 0);
                 yield return new WaitForEndOfFrame();
+            }
+        }
+
+        IEnumerator LoadScene(string sceneName)
+        {
+            slider.value = 0.0f;
+
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+            asyncLoad.allowSceneActivation = false;//シーン遷移を不許可
+
+            while (slider.value < 1.0f)
+            {
+                seconds = seconds + (Time.deltaTime * 0.1f);
+
+                //sliderBarがmax以下の時の計算
+                if (slider.value < 0.9f)
+                {
+                    Debug.Log("<color=yellow>seconds : " + this.seconds + "</color>");
+                    slider.value = seconds;
+                }
+
+                //sliderBarがmaxになった時の計算
+                if (0.9f <= slider.value)
+                {
+                    Debug.Log("<color=green>seconds : " + this.seconds + "</color>");
+                    slider.value = 0.9f;
+                }
+
+                //シーン遷移と終了処理
+                if (0.9f <= asyncLoad.progress)
+                {
+                    slider.value = 1.0f;
+
+                    yield return null;
+
+                    asyncLoad.allowSceneActivation = true;//シーン遷移を許可
+                }
             }
         }
     }
