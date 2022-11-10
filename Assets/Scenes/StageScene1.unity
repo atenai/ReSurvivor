@@ -1489,7 +1489,7 @@ PrefabInstance:
     - target: {fileID: 6282823297070500302, guid: f96593d2dbe197f4fa87834f7238f0a2,
         type: 3}
       propertyPath: minute
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6282823297070500302, guid: f96593d2dbe197f4fa87834f7238f0a2,
         type: 3}
@@ -1499,7 +1499,7 @@ PrefabInstance:
     - target: {fileID: 6282823297070500302, guid: f96593d2dbe197f4fa87834f7238f0a2,
         type: 3}
       propertyPath: seconds
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f96593d2dbe197f4fa87834f7238f0a2, type: 3}

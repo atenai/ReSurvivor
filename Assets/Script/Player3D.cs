@@ -9,7 +9,7 @@ public class Player3D : MonoBehaviour
     bool isAnimJump = false;
     bool isAnimReload = false;
     bool isAnimDie = false;
-    bool isAnimRun = false;
+    bool isAnimationMove = false;
     bool isAnimIdle = false;
     readonly float idleTimeDefine = 2.0f;//待機アニメーションへ行こうする時間
     float idleTime;
@@ -65,7 +65,7 @@ public class Player3D : MonoBehaviour
 
     //ゲームオーバー
     public bool isGameOverTrigger = false;
-    const float GameOverDelay = 2.0f;
+    public readonly float GameOverDelay = 2.0f;
 
     //プレイヤーダメージSE
     public GameObject PlayerDamageSEPrefab;
@@ -152,18 +152,18 @@ public class Player3D : MonoBehaviour
     void Move()
     {
         //現在のアニメーション（"Speed"）の値を持ってくる
-        float current_speed = anim.GetFloat("Speed");
+        float animationCurrentPlayerMoveSpeed = anim.GetFloat("Speed");
 
-        //アニメーションの値が１以上なら１にする
-        if (1.0f <= current_speed)
+        //アニメーションの値が1以上なら1にする
+        if (1.0f <= animationCurrentPlayerMoveSpeed)
         {
-            current_speed = 1.0f;
+            animationCurrentPlayerMoveSpeed = 1.0f;
         }
 
-        //アニメーションの値が０以下なら０にする
-        if (current_speed <= 0.0f)
+        //アニメーションの値が0以下なら0にする
+        if (animationCurrentPlayerMoveSpeed <= 0.0f)
         {
-            current_speed = 0.0f;
+            animationCurrentPlayerMoveSpeed = 0.0f;
         }
 
         //移動
@@ -190,8 +190,9 @@ public class Player3D : MonoBehaviour
                 transform.rotation = rot;
             }
 
-            isAnimRun = true;
-            anim.SetFloat("Speed", current_speed + Time.deltaTime * 1.0f);
+            isAnimationMove = true;
+            //移動アニメーションを徐々に「歩き」状態にする
+            anim.SetFloat("Speed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
             //移動
             if (speedX < speed)
@@ -224,8 +225,9 @@ public class Player3D : MonoBehaviour
                 transform.rotation = rot;
             }
 
-            isAnimRun = true;
-            anim.SetFloat("Speed", current_speed + Time.deltaTime * 1.0f);
+            isAnimationMove = true;
+            //移動アニメーションを徐々に「歩き」状態にする
+            anim.SetFloat("Speed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
             //移動
             if (speedX > -speed)
@@ -235,12 +237,13 @@ public class Player3D : MonoBehaviour
             //transform.position += transform.forward * speed * Time.deltaTime;
         }
 
-        if (isAnimRun == false)
+        if (isAnimationMove == false)
         {
-            anim.SetFloat("Speed", current_speed - Time.deltaTime * 1.0f);
+            //移動アニメーションを徐々に「立ち」状態にする
+            anim.SetFloat("Speed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
         }
 
-        isAnimRun = false;//アニメーションの移動をFalseにする
+        isAnimationMove = false;//アニメーションの移動をFalseにする
 
         //待機アニメーション
         if (idleTimeDefine <= idleTime)
