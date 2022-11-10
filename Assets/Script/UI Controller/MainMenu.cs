@@ -9,12 +9,12 @@ namespace UI_Controller
 {
     public class MainMenu : MonoBehaviour
     {
-        public GameObject startButton;
-        public GameObject creditsButton;
-        public GameObject quitButton;
-        public GameObject fadeToGame;
-        public GameObject loadingImage;
-        public GameObject buttons;
+        [SerializeField] GameObject startButton;
+        [SerializeField] GameObject creditsButton;
+        [SerializeField] GameObject quitButton;
+        [SerializeField] GameObject fadeToGame;
+        [SerializeField] GameObject loadingImageIcon;
+        [SerializeField] GameObject buttons;
 
         GameObject selectedButton;
 
@@ -44,7 +44,7 @@ namespace UI_Controller
         {
             buttons.SetActive(false);
             //loadingImage.SetActive(true);
-            //StartCoroutine(LoadSceneBackground("StageScene1"));
+            //StartCoroutine(LoadSceneIcon("StageScene1"));
             StartCoroutine(LoadScene("StageScene1"));
         }
 
@@ -63,12 +63,12 @@ namespace UI_Controller
 #endif
         }
 
-        IEnumerator LoadSceneBackground(string sceneName)
+        IEnumerator LoadSceneIcon(string sceneName)
         {
             var load = SceneManager.LoadSceneAsync(sceneName);
             while (!load.isDone)
             {
-                loadingImage.transform.localPosition = new Vector3(-750 + 1500 * load.progress / 0.9f, -338.0f, 0);
+                loadingImageIcon.transform.localPosition = new Vector3(-750 + 1500 * load.progress / 0.9f, -338.0f, 0);
                 yield return new WaitForEndOfFrame();
             }
         }
