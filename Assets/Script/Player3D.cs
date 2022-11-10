@@ -15,9 +15,9 @@ public class Player3D : MonoBehaviour
     float idleTime;
 
     //移動
-    public float speed = 4.0f;
-    float moveForce = 50.0f;
-    float speedX => rigid.velocity.x;
+    float speed = 4.0f;
+    //float moveForce = 50.0f;//リジッドボディによる移動
+    //float speedX => rigid.velocity.x;//リジッドボディによる移動
 
     //ジャンプ
     Rigidbody rigid;
@@ -321,12 +321,14 @@ public class Player3D : MonoBehaviour
             //移動アニメーションを徐々に「歩き」状態にする
             anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
-            //移動
-            if (speedX < speed)
-            {
-                rigid.AddForce(moveForce * Vector3.right);
-            }
-            //transform.position += transform.forward * speed * Time.deltaTime;
+            //リジッドボディによる移動
+            //if (speedX < speed)
+            //{
+            //    rigid.AddForce(moveForce * Vector3.right);
+            //}
+
+            //座標による移動
+            transform.position += transform.forward * speed * Time.deltaTime;
         }
     }
 
@@ -359,12 +361,14 @@ public class Player3D : MonoBehaviour
             //移動アニメーションを徐々に「歩き」状態にする
             anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
-            //移動
-            if (speedX > -speed)
-            {
-                rigid.AddForce(moveForce * Vector3.left);
-            }
-            //transform.position += transform.forward * speed * Time.deltaTime;
+            //リジッドボディによる移動
+            //if (speedX > -speed)
+            //{
+            //    rigid.AddForce(moveForce * Vector3.left);
+            //}
+
+            //座標による移動
+            transform.position += transform.forward * speed * Time.deltaTime;
         }
 
     }
