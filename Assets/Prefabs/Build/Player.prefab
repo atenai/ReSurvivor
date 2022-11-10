@@ -330,7 +330,7 @@ MonoBehaviour:
   imageHeal: {fileID: 0}
   HealSEPrefab: {fileID: 487633246165827512, guid: 571d9e79ce35d6247aad0cc73b6151f2,
     type: 3}
-  HealEffectPrefab: {fileID: 2074689200564775272, guid: c75bea83f70bf2545b106049132e7b96,
+  healEffectPrefab: {fileID: 8092618984650722138, guid: 6d423cecc396b004b976773bd7608780,
     type: 3}
 --- !u!1 &2917360798976039350
 GameObject:

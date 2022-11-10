@@ -91,8 +91,8 @@ public class Player3D : MonoBehaviour
     float healSEDestroyTime = 1.0f;
 
     //ヒールエフェクトのプレファブ
-    public GameObject HealEffectPrefab;
-    Vector3 HealEffectPosition;
+    [SerializeField] GameObject healEffectPrefab;
+    Vector3 healEffectPosition;
     float HealEffectDestroyTime = 1.0f;
     bool isHealEffect = false;
     readonly float healTimeDefine = 0.2f;
@@ -440,10 +440,10 @@ public class Player3D : MonoBehaviour
 
         if (isHealEffect)
         {
-            HealEffectPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1.0f, gameObject.transform.position.z - 1.0f);
+            healEffectPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1.0f, gameObject.transform.position.z - 1.0f);
 
-            var healEffect = Instantiate(HealEffectPrefab, HealEffectPosition, Quaternion.identity);
-            Destroy(healEffect, HealEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+            var healEffect = Instantiate(healEffectPrefab, healEffectPosition, Quaternion.identity);
+            Destroy(healEffect, HealEffectDestroyTime);
         }
 
         if (HealTime <= healTimeDefine)

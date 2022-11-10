@@ -1607,8 +1607,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Operation\nK or LeftClick : Shoot\nSpace : Jump\nA\u30FBD : Move\nR :
-    Reload\nESC : Exit"
+  m_Text: "Operation\nEnter or LeftClick : Shoot\nSpace : Jump\nA\u30FBD : Move\nR
+    : Reload\nESC : Exit"
 --- !u!114 &5656529056550168418
 MonoBehaviour:
   m_ObjectHideFlags: 0
