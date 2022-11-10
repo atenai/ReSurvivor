@@ -89,9 +89,9 @@ public class UI : MonoBehaviour
             timerTMP.text = "00" + ":" + "00";
             player.isGameOverTrigger = true;
             //現在のアニメーション（"Speed"）の値を持ってくる
-            float animationCurrentPlayerMoveSpeed = player.anim.GetFloat("Speed");
+            float animationCurrentPlayerMoveSpeed = player.anim.GetFloat("f_CurrentPlayerMoveSpeed");
             //移動アニメーションを徐々に「立ち」状態にする
-            player.anim.SetFloat("Speed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
+            player.anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
             StageSceneController.GameOver(player.GameOverDelay);
         }
         else

@@ -152,7 +152,7 @@ public class Player3D : MonoBehaviour
     void Move()
     {
         //現在のアニメーション（"Speed"）の値を持ってくる
-        float animationCurrentPlayerMoveSpeed = anim.GetFloat("Speed");
+        float animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");
 
         //アニメーションの値が1以上なら1にする
         if (1.0f <= animationCurrentPlayerMoveSpeed)
@@ -192,7 +192,7 @@ public class Player3D : MonoBehaviour
 
             isAnimationMove = true;
             //移動アニメーションを徐々に「歩き」状態にする
-            anim.SetFloat("Speed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
+            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
             //移動
             if (speedX < speed)
@@ -227,7 +227,7 @@ public class Player3D : MonoBehaviour
 
             isAnimationMove = true;
             //移動アニメーションを徐々に「歩き」状態にする
-            anim.SetFloat("Speed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
+            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
             //移動
             if (speedX > -speed)
@@ -240,7 +240,7 @@ public class Player3D : MonoBehaviour
         if (isAnimationMove == false)
         {
             //移動アニメーションを徐々に「立ち」状態にする
-            anim.SetFloat("Speed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
+            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
         }
 
         isAnimationMove = false;//アニメーションの移動をFalseにする
