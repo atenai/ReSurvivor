@@ -133,21 +133,11 @@ public class Player3D : MonoBehaviour
     {
         if (isGameOverTrigger) { return; }
 
+
         Jump();
 
-        Move();
 
-        Shoot();
-
-        Reload();
-
-        HP();
-
-        Hide();
-    }
-
-    void Move()
-    {
+        //Move();
         //現在のアニメーション（"Speed"）の値を持ってくる
         float animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");
 
@@ -163,8 +153,148 @@ public class Player3D : MonoBehaviour
             animationCurrentPlayerMoveSpeed = 0.0f;
         }
 
-        //移動
-        if (Input.GetKey("d") && isGameOverTrigger == false)
+        if (Input.GetKey("d"))
+        {
+            MoveRight(animationCurrentPlayerMoveSpeed);
+        }
+
+        if (Input.GetKey("a"))
+        {
+            MoveLeft(animationCurrentPlayerMoveSpeed);
+        }
+
+        if (isAnimationMove == false)
+        {
+            //移動アニメーションを徐々に「立ち」状態にする
+            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
+        }
+
+        isAnimationMove = false;//アニメーションの移動をFalseにする
+
+        Idle();
+
+        Shoot();
+
+        Reload();
+
+        HP();
+
+        Hide();
+    }
+
+    //void Move()
+    //{
+    //    //現在のアニメーション（"Speed"）の値を持ってくる
+    //    float animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");
+
+    //    //アニメーションの値が1以上なら1にする
+    //    if (1.0f <= animationCurrentPlayerMoveSpeed)
+    //    {
+    //        animationCurrentPlayerMoveSpeed = 1.0f;
+    //    }
+
+    //    //アニメーションの値が0以下なら0にする
+    //    if (animationCurrentPlayerMoveSpeed <= 0.0f)
+    //    {
+    //        animationCurrentPlayerMoveSpeed = 0.0f;
+    //    }
+
+    //    //移動
+    //    if (Input.GetKey("d") && isGameOverTrigger == false)
+    //    {
+    //        //待機アニメーション
+    //        isAnimIdle = false;
+    //        anim.SetBool("b_Idle", isAnimIdle);
+    //        idleTime = 0.0f;
+
+    //        //回転
+    //        rot = true;
+
+    //        if (rot)
+    //        {
+    //            // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
+    //            var rot = Quaternion.Euler(0, 90, 0);
+    //            transform.rotation = rot;
+    //        }
+    //        else if (rot == false)
+    //        {
+    //            // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
+    //            var rot = Quaternion.Euler(0, 270, 0);
+    //            transform.rotation = rot;
+    //        }
+
+    //        isAnimationMove = true;
+    //        //移動アニメーションを徐々に「歩き」状態にする
+    //        anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
+
+    //        //移動
+    //        if (speedX < speed)
+    //        {
+    //            rigid.AddForce(moveForce * Vector3.right);
+    //        }
+    //        //transform.position += transform.forward * speed * Time.deltaTime;
+    //    }
+
+    //    if (Input.GetKey("a") && isGameOverTrigger == false)
+    //    {
+    //        //待機アニメーション
+    //        isAnimIdle = false;
+    //        anim.SetBool("b_Idle", isAnimIdle);
+    //        idleTime = 0.0f;
+
+    //        //回転
+    //        rot = false;
+
+    //        if (rot)
+    //        {
+    //            // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
+    //            var rot = Quaternion.Euler(0, 90, 0);
+    //            transform.rotation = rot;
+    //        }
+    //        else if (rot == false)
+    //        {
+    //            // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
+    //            var rot = Quaternion.Euler(0, 270, 0);
+    //            transform.rotation = rot;
+    //        }
+
+    //        isAnimationMove = true;
+    //        //移動アニメーションを徐々に「歩き」状態にする
+    //        anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
+
+    //        //移動
+    //        if (speedX > -speed)
+    //        {
+    //            rigid.AddForce(moveForce * Vector3.left);
+    //        }
+    //        //transform.position += transform.forward * speed * Time.deltaTime;
+    //    }
+
+    //    if (isAnimationMove == false)
+    //    {
+    //        //移動アニメーションを徐々に「立ち」状態にする
+    //        anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
+    //    }
+
+    //    isAnimationMove = false;//アニメーションの移動をFalseにする
+
+    //    //待機アニメーション
+    //    if (idleTimeDefine <= idleTime)
+    //    {
+    //        isAnimIdle = true;
+    //        anim.SetBool("b_Idle", isAnimIdle);
+    //        idleTime = 0.0f;
+    //    }
+
+    //    if (isAnimIdle == false)
+    //    {
+    //        idleTime += Time.deltaTime;
+    //    }
+    //}
+
+    void MoveRight(float animationCurrentPlayerMoveSpeed)
+    {
+        if (isGameOverTrigger == false)
         {
             //待機アニメーション
             isAnimIdle = false;
@@ -198,8 +328,11 @@ public class Player3D : MonoBehaviour
             }
             //transform.position += transform.forward * speed * Time.deltaTime;
         }
+    }
 
-        if (Input.GetKey("a") && isGameOverTrigger == false)
+    void MoveLeft(float animationCurrentPlayerMoveSpeed)
+    {
+        if (isGameOverTrigger == false)
         {
             //待機アニメーション
             isAnimIdle = false;
@@ -234,14 +367,10 @@ public class Player3D : MonoBehaviour
             //transform.position += transform.forward * speed * Time.deltaTime;
         }
 
-        if (isAnimationMove == false)
-        {
-            //移動アニメーションを徐々に「立ち」状態にする
-            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
-        }
+    }
 
-        isAnimationMove = false;//アニメーションの移動をFalseにする
-
+    void Idle()
+    {
         //待機アニメーション
         if (idleTimeDefine <= idleTime)
         {
