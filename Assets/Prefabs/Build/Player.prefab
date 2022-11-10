@@ -332,6 +332,7 @@ MonoBehaviour:
     type: 3}
   healEffectPrefab: {fileID: 8092618984650722138, guid: 6d423cecc396b004b976773bd7608780,
     type: 3}
+  cameraController: {fileID: 0}
 --- !u!1 &2917360798976039350
 GameObject:
   m_ObjectHideFlags: 0
