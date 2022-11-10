@@ -289,7 +289,7 @@ public class Player3D : MonoBehaviour
     void Shoot()
     {
         //弾
-        if ((Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(0)) && (magazine != 0) && isReloadTimeActive == false && isGameOverTrigger == false)
+        if ((Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)) && (magazine != 0) && isReloadTimeActive == false && isGameOverTrigger == false)
         {
             //待機アニメーション
             isAnimIdle = false;

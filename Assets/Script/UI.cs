@@ -4,10 +4,11 @@ using TMPro;
 
 public class UI : MonoBehaviour
 {
+    [SerializeField] Player3D player;
+
     //リロード画像
     Color reloadColor = new Color(255.0f, 255.0f, 255.0f, 0.0f);
     [SerializeField] GameObject imageReload;
-    [SerializeField] Player3D player;
     float RotateSpeed = -500.0f;
 
     //弾数
@@ -21,6 +22,11 @@ public class UI : MonoBehaviour
     /// totalTImeは秒で集計されている
     /// </summary>
     float totalTime = 0.0f;
+
+    //HP
+    [SerializeField] Slider sliderHP;
+    int hp;
+
 
     void Start()
     {
@@ -36,6 +42,8 @@ public class UI : MonoBehaviour
         LateUpdateTextMagazine();
 
         LateUpdateTimerSystem();
+
+        LateUpdateHP();
     }
 
     void StartImageReload()
@@ -98,5 +106,24 @@ public class UI : MonoBehaviour
         {
             timerTMP.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00");
         }
+    }
+
+    void StartHP()
+    {
+        hp = player.GetPlayerHP();
+    }
+
+    void LateUpdateHP()
+    {
+        hp = player.GetPlayerHP();
+
+        //hp -= 1;
+        if (hp <= 0)
+        {
+            hp = 0;
+        }
+
+        // HPゲージに値を設定
+        sliderHP.value = hp;
     }
 }
