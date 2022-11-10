@@ -104,7 +104,7 @@ public class Player3D : MonoBehaviour
     IHidable[] hidables;
 
     //カメラ
-    CameraController cameraController;
+    [SerializeField] CameraController cameraController;
 
     void Start()
     {
@@ -127,9 +127,6 @@ public class Player3D : MonoBehaviour
         magazine = magazineDefine;//残弾数
 
         hidables = GameObject.Find("Hidable").GetComponentsInChildren<IHidable>();
-
-        //カメラ
-        cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
     }
 
     void Update()
@@ -514,7 +511,7 @@ public class Player3D : MonoBehaviour
 
             isImageDamage = true;
 
-            //cameraController.Shake(0.25f, 0.1f);
+            cameraController.Shake(0.25f, 0.1f);
         }
 
         if (other.CompareTag("First aid kit") && hp < 100 && isGameOverTrigger == false)

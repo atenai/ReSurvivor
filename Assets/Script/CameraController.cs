@@ -5,12 +5,12 @@ public class CameraController : MonoBehaviour
 {
     GameObject player;
     GameObject goalPlane;
-    float pullBackSpeed;
+    float pullBackSpeed = 5.0f;
+    [SerializeField] Transform cam;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        pullBackSpeed = 5.0f;
     }
 
     void Update()
@@ -38,10 +38,9 @@ public class CameraController : MonoBehaviour
         StartCoroutine(DoShake(duration, magnitude));
     }
 
-    //スクリプトの修正が必要
-    private IEnumerator DoShake(float duration, float magnitude)
+    private IEnumerator DoShake(float duration = 0.25f, float magnitude = 0.1f)
     {
-        var pos = transform.localPosition;
+        var pos = cam.transform.localPosition;
 
         var elapsed = 0f;
 
@@ -50,13 +49,13 @@ public class CameraController : MonoBehaviour
             var x = pos.x + Random.Range(-1f, 1f) * magnitude;
             var y = pos.y + Random.Range(-1f, 1f) * magnitude;
 
-            transform.localPosition = new Vector3(x, y, pos.z);
+            cam.transform.localPosition = new Vector3(x, y, pos.z);
 
             elapsed += Time.deltaTime;
 
             yield return null;
         }
 
-        transform.localPosition = pos;
+        cam.transform.localPosition = pos;
     }
 }
