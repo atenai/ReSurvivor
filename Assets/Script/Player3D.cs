@@ -13,6 +13,7 @@ public class Player3D : MonoBehaviour
     bool isAnimIdle = false;
     readonly float idleTimeDefine = 2.0f;//待機アニメーションへ行こうする時間
     float idleTime;
+    float animationCurrentPlayerMoveSpeed;
 
     //移動
     float speed = 4.0f;
@@ -122,6 +123,8 @@ public class Player3D : MonoBehaviour
 
         //アニメーション
         anim = this.GetComponent<Animator>();//アニメーションのコンポーネントを探す
+        //現在のアニメーション（"Speed"）の値を持ってくる
+        float animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");
 
         //弾数
         magazine = magazineDefine;//残弾数
@@ -131,15 +134,15 @@ public class Player3D : MonoBehaviour
 
     void Update()
     {
-        if (isGameOverTrigger) { return; }
+        if (isGameOverTrigger == true) { return; }
 
 
-        Jump();
-
+        //Jump();
+        JumpLoadTouch();
 
         //Move();
         //現在のアニメーション（"Speed"）の値を持ってくる
-        float animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");
+        animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");
 
         //アニメーションの値が1以上なら1にする
         if (1.0f <= animationCurrentPlayerMoveSpeed)
@@ -155,12 +158,12 @@ public class Player3D : MonoBehaviour
 
         if (Input.GetKey("d"))
         {
-            MoveRight(animationCurrentPlayerMoveSpeed);
+            //MoveRight();
         }
 
         if (Input.GetKey("a"))
         {
-            MoveLeft(animationCurrentPlayerMoveSpeed);
+            //MoveLeft();
         }
 
         if (isAnimationMove == false)
@@ -173,9 +176,14 @@ public class Player3D : MonoBehaviour
 
         Idle();
 
-        Shoot();
+        //Shoot();
 
-        Reload();
+
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+        ReloadKeyboard();
+#endif
+
+        ReloadUpdateSystem();
 
         HP();
 
@@ -292,7 +300,7 @@ public class Player3D : MonoBehaviour
     //    }
     //}
 
-    void MoveRight(float animationCurrentPlayerMoveSpeed)
+    public void MoveRight()
     {
         if (isGameOverTrigger == false)
         {
@@ -332,7 +340,7 @@ public class Player3D : MonoBehaviour
         }
     }
 
-    void MoveLeft(float animationCurrentPlayerMoveSpeed)
+    public void MoveLeft()
     {
         if (isGameOverTrigger == false)
         {
@@ -389,19 +397,59 @@ public class Player3D : MonoBehaviour
         }
     }
 
+    //android用Jump関数
+    public void JumpButtonTouch()
+    {
+        if (jumpLoadTimeDefine <= jumpLoadTime)
+        {
+            if (isGameOverTrigger == false)
+            {
+                //アニメーション
+                isAnimJump = true;
+                anim.SetBool("b_Jump", isAnimJump);
+
+                rigid.AddForce(transform.up * jumpForce);
+                jumpLoadTime = 0.0f;
+            }
+        }
+    }
+
+    //android用Jump関数
+    void JumpLoadTouch()
+    {
+        rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
+
+        if (jumpLoadTime <= jumpLoadTimeDefine)
+        {
+            jumpLoadTime += Time.deltaTime;
+        }
+
+        if (jumpLoadTime >= 0.1f)
+        {
+            isAnimJump = false;
+        }
+        anim.SetBool("b_Jump", isAnimJump);
+    }
+
     void Jump()
     {
         rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
 
         //ジャンプ
-        if (Input.GetKeyDown(KeyCode.Space) && jumpLoadTimeDefine <= jumpLoadTime && isGameOverTrigger == false)
+        //if (Input.GetKeyDown(KeyCode.Space) && jumpLoadTimeDefine <= jumpLoadTime && isGameOverTrigger == false)
         {
-            //アニメーション
-            isAnimJump = true;
-            anim.SetBool("b_Jump", isAnimJump);
+            if (jumpLoadTimeDefine <= jumpLoadTime)
+            {
+                if (isGameOverTrigger == false)
+                {
+                    //アニメーション
+                    isAnimJump = true;
+                    anim.SetBool("b_Jump", isAnimJump);
 
-            rigid.AddForce(transform.up * jumpForce);
-            jumpLoadTime = 0.0f;
+                    rigid.AddForce(transform.up * jumpForce);
+                    jumpLoadTime = 0.0f;
+                }
+            }
         }
 
         if (jumpLoadTime <= jumpLoadTimeDefine)
@@ -416,73 +464,165 @@ public class Player3D : MonoBehaviour
         anim.SetBool("b_Jump", isAnimJump);
     }
 
-    void Shoot()
+    public void ShootTouchButton()
     {
-        //弾
-        if ((Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)) && (magazine != 0) && isReloadTimeActive == false && isGameOverTrigger == false)
+        if ((magazine != 0))
         {
-            //待機アニメーション
-            isAnimIdle = false;
-            anim.SetBool("b_Idle", isAnimIdle);
-            idleTime = 0.0f;
-
-            magazine = magazine - 1;//残弾数を-1する
-
-            //SEオブジェクトを生成する
-            var se = Instantiate(BulletSEPrefab, gameObject.transform.position, Quaternion.identity);
-            Destroy(se, bulletSEDestroyTime);//SEをSE_Endtime後削除
-
-            var PositionX = gameObject.transform.position.x;
-            var PositionY = gameObject.transform.position.y;
-            var PositionZ = gameObject.transform.position.z;
-
-            if (rot)
+            if (isReloadTimeActive == false)
             {
+                if (isGameOverTrigger == false)
+                {
+                    //待機アニメーション
+                    isAnimIdle = false;
+                    anim.SetBool("b_Idle", isAnimIdle);
+                    idleTime = 0.0f;
 
-                //マズルフラッシュエフェクトオブジェクトを生成する	
-                RightMuzzleflashEffectPosition = new Vector3(PositionX + 1.75f, PositionY + 1.1f, PositionZ);
-                var effect = Instantiate(RightMuzzleflashEffectPrefab, RightMuzzleflashEffectPosition, Quaternion.identity);
-                Destroy(effect, MuzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+                    magazine = magazine - 1;//残弾数を-1する
 
-                var v3_Position = new Vector3(PositionX + 1.75f, PositionY + 1.1f, PositionZ);
-                var newBullet = Instantiate(Bullet, v3_Position, transform.rotation);
-                //右方向に飛ばす 
-                newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 2500.0f);//速すぎるとすり抜けてしまう
+                    //SEオブジェクトを生成する
+                    var se = Instantiate(BulletSEPrefab, gameObject.transform.position, Quaternion.identity);
+                    Destroy(se, bulletSEDestroyTime);//SEをSE_Endtime後削除
 
-                var v3_CartridgePosition = new Vector3(PositionX + 0.4f, PositionY + 0.8f, PositionZ);
-                var newCartridge = Instantiate(Cartridge, v3_CartridgePosition, transform.rotation);
-                //右方向に飛ばす 
-                newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);//速すぎるとすり抜けてしまう
-                newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
-                Destroy(newCartridge, CartridgeDestroyTime);//DestroyTime後削除
-            }
-            else if (rot == false)
-            {
+                    var PositionX = gameObject.transform.position.x;
+                    var PositionY = gameObject.transform.position.y;
+                    var PositionZ = gameObject.transform.position.z;
 
-                //マズルフラッシュエフェクトオブジェクトを生成する	
-                LeftMuzzleflashEffectPosition = new Vector3(PositionX - 1.6f, PositionY + 1.0f, PositionZ);
-                var effect = Instantiate(LeftMuzzleflashEffectPrefab, LeftMuzzleflashEffectPosition, Quaternion.identity);
-                Destroy(effect, MuzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+                    if (rot)
+                    {
 
-                var v3_Position = new Vector3(PositionX - 1.8f, PositionY + 0.9f, PositionZ);
-                var newBullet = Instantiate(Bullet, v3_Position, transform.rotation);
-                //左方向に飛ばす 
-                newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 2500.0f);//速すぎるとすり抜けてしまう
+                        //マズルフラッシュエフェクトオブジェクトを生成する	
+                        RightMuzzleflashEffectPosition = new Vector3(PositionX + 1.75f, PositionY + 1.1f, PositionZ);
+                        var effect = Instantiate(RightMuzzleflashEffectPrefab, RightMuzzleflashEffectPosition, Quaternion.identity);
+                        Destroy(effect, MuzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
 
-                var v3_CartridgePosition = new Vector3(PositionX + 0.4f, PositionY + 0.8f, PositionZ);
-                var newCartridge = Instantiate(Cartridge, v3_CartridgePosition, transform.rotation);
-                //右方向に飛ばす 
-                newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);//速すぎるとすり抜けてしまう
-                newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
-                Destroy(newCartridge, CartridgeDestroyTime);//DestroyTime後削除
+                        var v3_Position = new Vector3(PositionX + 1.75f, PositionY + 1.1f, PositionZ);
+                        var newBullet = Instantiate(Bullet, v3_Position, transform.rotation);
+                        //右方向に飛ばす 
+                        newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 2500.0f);//速すぎるとすり抜けてしまう
+
+                        var v3_CartridgePosition = new Vector3(PositionX + 0.4f, PositionY + 0.8f, PositionZ);
+                        var newCartridge = Instantiate(Cartridge, v3_CartridgePosition, transform.rotation);
+                        //右方向に飛ばす 
+                        newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);//速すぎるとすり抜けてしまう
+                        newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
+                        Destroy(newCartridge, CartridgeDestroyTime);//DestroyTime後削除
+                    }
+                    else if (rot == false)
+                    {
+
+                        //マズルフラッシュエフェクトオブジェクトを生成する	
+                        LeftMuzzleflashEffectPosition = new Vector3(PositionX - 1.6f, PositionY + 1.0f, PositionZ);
+                        var effect = Instantiate(LeftMuzzleflashEffectPrefab, LeftMuzzleflashEffectPosition, Quaternion.identity);
+                        Destroy(effect, MuzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+
+                        var v3_Position = new Vector3(PositionX - 1.8f, PositionY + 0.9f, PositionZ);
+                        var newBullet = Instantiate(Bullet, v3_Position, transform.rotation);
+                        //左方向に飛ばす 
+                        newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 2500.0f);//速すぎるとすり抜けてしまう
+
+                        var v3_CartridgePosition = new Vector3(PositionX + 0.4f, PositionY + 0.8f, PositionZ);
+                        var newCartridge = Instantiate(Cartridge, v3_CartridgePosition, transform.rotation);
+                        //右方向に飛ばす 
+                        newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);//速すぎるとすり抜けてしまう
+                        newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
+                        Destroy(newCartridge, CartridgeDestroyTime);//DestroyTime後削除
+                    }
+                }
             }
         }
     }
 
-    void Reload()
+    public void ShootUpdateSystem()
     {
-        //リロードシステム
-        if (magazine == 0 || (magazine != 20 && Input.GetKey(KeyCode.R)) && isGameOverTrigger == false)
+        //弾
+        //if ((Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)) && (magazine != 0) && isReloadTimeActive == false && isGameOverTrigger == false)
+        {
+            if ((magazine != 0))
+            {
+                if (isReloadTimeActive == false)
+                {
+                    if (isGameOverTrigger == false)
+                    {
+                        //待機アニメーション
+                        isAnimIdle = false;
+                        anim.SetBool("b_Idle", isAnimIdle);
+                        idleTime = 0.0f;
+
+                        magazine = magazine - 1;//残弾数を-1する
+
+                        //SEオブジェクトを生成する
+                        var se = Instantiate(BulletSEPrefab, gameObject.transform.position, Quaternion.identity);
+                        Destroy(se, bulletSEDestroyTime);//SEをSE_Endtime後削除
+
+                        var PositionX = gameObject.transform.position.x;
+                        var PositionY = gameObject.transform.position.y;
+                        var PositionZ = gameObject.transform.position.z;
+
+                        if (rot)
+                        {
+
+                            //マズルフラッシュエフェクトオブジェクトを生成する	
+                            RightMuzzleflashEffectPosition = new Vector3(PositionX + 1.75f, PositionY + 1.1f, PositionZ);
+                            var effect = Instantiate(RightMuzzleflashEffectPrefab, RightMuzzleflashEffectPosition, Quaternion.identity);
+                            Destroy(effect, MuzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+
+                            var v3_Position = new Vector3(PositionX + 1.75f, PositionY + 1.1f, PositionZ);
+                            var newBullet = Instantiate(Bullet, v3_Position, transform.rotation);
+                            //右方向に飛ばす 
+                            newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 2500.0f);//速すぎるとすり抜けてしまう
+
+                            var v3_CartridgePosition = new Vector3(PositionX + 0.4f, PositionY + 0.8f, PositionZ);
+                            var newCartridge = Instantiate(Cartridge, v3_CartridgePosition, transform.rotation);
+                            //右方向に飛ばす 
+                            newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);//速すぎるとすり抜けてしまう
+                            newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
+                            Destroy(newCartridge, CartridgeDestroyTime);//DestroyTime後削除
+                        }
+                        else if (rot == false)
+                        {
+
+                            //マズルフラッシュエフェクトオブジェクトを生成する	
+                            LeftMuzzleflashEffectPosition = new Vector3(PositionX - 1.6f, PositionY + 1.0f, PositionZ);
+                            var effect = Instantiate(LeftMuzzleflashEffectPrefab, LeftMuzzleflashEffectPosition, Quaternion.identity);
+                            Destroy(effect, MuzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+
+                            var v3_Position = new Vector3(PositionX - 1.8f, PositionY + 0.9f, PositionZ);
+                            var newBullet = Instantiate(Bullet, v3_Position, transform.rotation);
+                            //左方向に飛ばす 
+                            newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 2500.0f);//速すぎるとすり抜けてしまう
+
+                            var v3_CartridgePosition = new Vector3(PositionX + 0.4f, PositionY + 0.8f, PositionZ);
+                            var newCartridge = Instantiate(Cartridge, v3_CartridgePosition, transform.rotation);
+                            //右方向に飛ばす 
+                            newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);//速すぎるとすり抜けてしまう
+                            newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
+                            Destroy(newCartridge, CartridgeDestroyTime);//DestroyTime後削除
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void ReloadTouchButton()
+    {
+        if (magazine != 20 && isGameOverTrigger == false)
+        {
+            isReloadTimeActive = true;//リロードのオン
+        }
+    }
+
+    public void ReloadKeyboard()
+    {
+        if (Input.GetKey(KeyCode.R) && magazine != 20 && isGameOverTrigger == false)
+        {
+            isReloadTimeActive = true;//リロードのオン
+        }
+    }
+
+    void ReloadUpdateSystem()
+    {
+        if (magazine == 0 && isGameOverTrigger == false)
         {
             isReloadTimeActive = true;//リロードのオン
         }
@@ -516,7 +656,6 @@ public class Player3D : MonoBehaviour
                 anim.SetBool("b_Reload", isAnimReload);
             }
         }
-        //リロードシステム
     }
 
     void HP()
