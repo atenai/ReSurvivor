@@ -305,7 +305,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 9136381156797500576}
-  speed: 3
   gravityScale: 2
   Bullet: {fileID: 8896390708366579688, guid: 97bf0210de421a442a5c28de333b9567, type: 3}
   BulletSEPrefab: {fileID: 7745047431966298687, guid: 1f3f20138ad2b7440a2dc8a58cd3b05c,
@@ -333,6 +332,7 @@ MonoBehaviour:
   healEffectPrefab: {fileID: 8092618984650722138, guid: 6d423cecc396b004b976773bd7608780,
     type: 3}
   cameraController: {fileID: 0}
+  adsInterstitial: {fileID: 0}
 --- !u!1 &2917360798976039350
 GameObject:
   m_ObjectHideFlags: 0

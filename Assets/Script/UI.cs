@@ -27,6 +27,8 @@ public class UI : MonoBehaviour
     [SerializeField] Slider sliderHP;
     int hp;
 
+    //ADS
+    [SerializeField] AdsInterstitial adsInterstitial;
 
     void Start()
     {
@@ -100,6 +102,7 @@ public class UI : MonoBehaviour
             float animationCurrentPlayerMoveSpeed = player.anim.GetFloat("f_CurrentPlayerMoveSpeed");
             //移動アニメーションを徐々に「立ち」状態にする
             player.anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
+            adsInterstitial.ShowAd();
             StageSceneController.GameOver(player.GameOverDelay);
         }
         else

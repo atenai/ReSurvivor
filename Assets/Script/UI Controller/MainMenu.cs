@@ -23,8 +23,10 @@ namespace UI_Controller
 
         void Start()
         {
+#if UNITY_STANDALONE_WIN//端末がPCだった場合の処理
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+#endif //終了
 
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(startButton);

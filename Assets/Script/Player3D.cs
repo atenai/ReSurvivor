@@ -108,6 +108,9 @@ public class Player3D : MonoBehaviour
     //カメラ
     [SerializeField] CameraController cameraController;
 
+    //広告
+    [SerializeField] AdsInterstitial adsInterstitial;
+
     void Start()
     {
         //ジャンプ
@@ -200,7 +203,7 @@ public class Player3D : MonoBehaviour
         }
 
         var leftStickValue = current.leftStick.x.ReadValue();
-        Debug.Log("xの移動量 : " + leftStickValue);
+        //Debug.Log("xの移動量 : " + leftStickValue);
 
         if (0.2f <= leftStickValue && isGameOverTrigger == false)
         {
@@ -635,6 +638,7 @@ public class Player3D : MonoBehaviour
             isAnimDie = true;
             anim.SetBool("b_Die", isAnimDie);
             isGameOverTrigger = true;
+            adsInterstitial.ShowAd();
             StageSceneController.GameOver(GameOverDelay);
         }
 

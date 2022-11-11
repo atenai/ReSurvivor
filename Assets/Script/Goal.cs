@@ -13,7 +13,9 @@ public class Goal : MonoBehaviour
 
     public GameObject arrow;
 
-    private void Start()
+    [SerializeField] AdsInterstitial adsInterstitial;
+
+    void Start()
     {
         //Componentを取得
         audioSource = GetComponent<AudioSource>();
@@ -26,21 +28,13 @@ public class Goal : MonoBehaviour
         ResultTime = 0.0f;
     }
 
-    private void Update()
+    void Update()
     {
         if (isGOAL)
         {
             //Debug.Log("ゴール当たっているよ");
             ResultTime -= Time.deltaTime;
         }
-
-        //　制限時間が0秒以下なら何もしない
-        //if (ResultTime <= -0.5f)
-        //{
-        //    //リザルトへ
-        //    StageSceneController.GameClear();
-
-        //}
     }
 
 
@@ -60,6 +54,7 @@ public class Goal : MonoBehaviour
                 isGOAL = true;
             }
             other.gameObject.SetActive(false);
+            adsInterstitial.ShowAd();
         }
     }
 

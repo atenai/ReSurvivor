@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GOALSound: {fileID: 8300000, guid: 7f45d52b21b06e54ca37000fb0e51303, type: 3}
   arrow: {fileID: 5696527191692122950}
+  adsInterstitial: {fileID: 0}
 --- !u!82 &5443203828108789545
 AudioSource:
   m_ObjectHideFlags: 0
