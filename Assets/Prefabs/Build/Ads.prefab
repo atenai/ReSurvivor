@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5003961529089488380}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _androidGameId: 5015617
   _iOSGameId: 5015616
-  _testMode: 1
+  _testMode: 0
   adsInterstitialButton: {fileID: 5003961529089488382}
 --- !u!114 &5003961529089488382
 MonoBehaviour:
