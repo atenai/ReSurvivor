@@ -1,6 +1,7 @@
 ﻿using Model;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Player3D : MonoBehaviour
 {
@@ -136,7 +137,7 @@ public class Player3D : MonoBehaviour
     {
         if (isGameOverTrigger == true) { return; }
 
-
+        //#if UNITY_STANDALONE_WIN || UNITY_EDITOR
 #if UNITY_STANDALONE_WIN
         JumpKeyboard();
 #endif
@@ -144,9 +145,10 @@ public class Player3D : MonoBehaviour
 
         MoveBefoerUpdateSystem();
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+#if UNITY_STANDALONE_WIN
         MoveKeyboard();
 #endif
+        MoveLeftStick();
 
         MoveAfterUpdateSystem();
 
@@ -265,6 +267,94 @@ public class Player3D : MonoBehaviour
         if (animationCurrentPlayerMoveSpeed <= 0.0f)
         {
             animationCurrentPlayerMoveSpeed = 0.0f;
+        }
+    }
+
+    //android用Move関数
+    void MoveLeftStick()
+    {
+        var current = Gamepad.current;
+
+        if (current == null)
+        {
+            return;
+        }
+
+        var leftStickValue = current.leftStick.x.ReadValue();
+        Debug.Log("xの移動量 : " + leftStickValue);
+
+        if (0.5 < leftStickValue && isGameOverTrigger == false)
+        {
+            //待機アニメーション
+            isAnimIdle = false;
+            anim.SetBool("b_Idle", isAnimIdle);
+            idleTime = 0.0f;
+
+            //回転
+            rot = true;
+
+            if (rot)
+            {
+                // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
+                var rot = Quaternion.Euler(0, 90, 0);
+                transform.rotation = rot;
+            }
+            else if (rot == false)
+            {
+                // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
+                var rot = Quaternion.Euler(0, 270, 0);
+                transform.rotation = rot;
+            }
+
+            isAnimationMove = true;
+            //移動アニメーションを徐々に「歩き」状態にする
+            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
+
+            //リジッドボディによる移動
+            //if (speedX < speed)
+            //{
+            //    rigid.AddForce(moveForce * Vector3.right);
+            //}
+
+            //座標による移動
+            transform.position += transform.forward * speed * Time.deltaTime;
+        }
+
+        if (leftStickValue < -0.5 && isGameOverTrigger == false)
+        {
+            //待機アニメーション
+            isAnimIdle = false;
+            anim.SetBool("b_Idle", isAnimIdle);
+            idleTime = 0.0f;
+
+            //回転
+            rot = false;
+
+            if (rot)
+            {
+                // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
+                var rot = Quaternion.Euler(0, 90, 0);
+                transform.rotation = rot;
+            }
+            else if (rot == false)
+            {
+                // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
+                var rot = Quaternion.Euler(0, 270, 0);
+                transform.rotation = rot;
+            }
+
+            isAnimationMove = true;
+            //移動アニメーションを徐々に「歩き」状態にする
+            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
+
+            //リジッドボディによる移動
+            //if (speedX > -speed)
+            //{
+            //    rigid.AddForce(moveForce * Vector3.left);
+            //}
+
+            //座標による移動
+            transform.position += transform.forward * speed * Time.deltaTime;
         }
     }
 
