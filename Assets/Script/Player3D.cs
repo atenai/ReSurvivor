@@ -18,8 +18,8 @@ public class Player3D : MonoBehaviour
 
     //移動
     float speed = 4.0f;
-    //float moveForce = 50.0f;//リジッドボディによる移動
-    //float speedX => rigid.velocity.x;//リジッドボディによる移動
+    float moveForce = 50.0f;//リジッドボディによる移動
+    float speedX => rigid.velocity.x;//リジッドボディによる移動
 
     //ジャンプ
     Rigidbody rigid;
@@ -137,28 +137,31 @@ public class Player3D : MonoBehaviour
     {
         if (isGameOverTrigger == true) { return; }
 
-        //#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-#if UNITY_STANDALONE_WIN
-        JumpKeyboard();
-#endif
-        JumpUpdateSystem();
+        rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
 
         MoveBefoerUpdateSystem();
 
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
         MoveKeyboard();
 #endif
+#if UNITY_ANDROID//端末がAndroidだった場合の処理
         MoveLeftStick();
+#endif
 
         MoveAfterUpdateSystem();
 
         Idle();
 
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+        JumpKeyboard();
+#endif
+        JumpUpdateSystem();
+
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
         ShootKeyboard();
 #endif
 
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
         ReloadKeyboard();
 #endif
         ReloadUpdateSystem();
@@ -166,90 +169,6 @@ public class Player3D : MonoBehaviour
         HP();
 
         Hide();
-    }
-
-
-    //android用Move関数
-    public void MoveRightTouchButton()
-    {
-        if (isGameOverTrigger == false)
-        {
-            //待機アニメーション
-            isAnimIdle = false;
-            anim.SetBool("b_Idle", isAnimIdle);
-            idleTime = 0.0f;
-
-            //回転
-            rot = true;
-
-            if (rot)
-            {
-                // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
-                var rot = Quaternion.Euler(0, 90, 0);
-                transform.rotation = rot;
-            }
-            else if (rot == false)
-            {
-                // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
-                var rot = Quaternion.Euler(0, 270, 0);
-                transform.rotation = rot;
-            }
-
-            isAnimationMove = true;
-            //移動アニメーションを徐々に「歩き」状態にする
-            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
-
-            //リジッドボディによる移動
-            //if (speedX < speed)
-            //{
-            //    rigid.AddForce(moveForce * Vector3.right);
-            //}
-
-            //座標による移動
-            transform.position += transform.forward * speed * Time.deltaTime;
-        }
-    }
-
-    //android用Move関数
-    public void MoveLeftTouchButton()
-    {
-        if (isGameOverTrigger == false)
-        {
-            //待機アニメーション
-            isAnimIdle = false;
-            anim.SetBool("b_Idle", isAnimIdle);
-            idleTime = 0.0f;
-
-            //回転
-            rot = false;
-
-            if (rot)
-            {
-                // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
-                var rot = Quaternion.Euler(0, 90, 0);
-                transform.rotation = rot;
-            }
-            else if (rot == false)
-            {
-                // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
-                var rot = Quaternion.Euler(0, 270, 0);
-                transform.rotation = rot;
-            }
-
-            isAnimationMove = true;
-            //移動アニメーションを徐々に「歩き」状態にする
-            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
-
-            //リジッドボディによる移動
-            //if (speedX > -speed)
-            //{
-            //    rigid.AddForce(moveForce * Vector3.left);
-            //}
-
-            //座標による移動
-            transform.position += transform.forward * speed * Time.deltaTime;
-        }
-
     }
 
     void MoveBefoerUpdateSystem()
@@ -283,7 +202,7 @@ public class Player3D : MonoBehaviour
         var leftStickValue = current.leftStick.x.ReadValue();
         Debug.Log("xの移動量 : " + leftStickValue);
 
-        if (0.5 < leftStickValue && isGameOverTrigger == false)
+        if (0.2f <= leftStickValue && isGameOverTrigger == false)
         {
             //待機アニメーション
             isAnimIdle = false;
@@ -311,16 +230,16 @@ public class Player3D : MonoBehaviour
             anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
             //リジッドボディによる移動
-            //if (speedX < speed)
-            //{
-            //    rigid.AddForce(moveForce * Vector3.right);
-            //}
+            if (speedX < speed)
+            {
+                rigid.AddForce(moveForce * Vector3.right);
+            }
 
             //座標による移動
-            transform.position += transform.forward * speed * Time.deltaTime;
+            //transform.position += transform.forward * speed * Time.deltaTime;
         }
 
-        if (leftStickValue < -0.5 && isGameOverTrigger == false)
+        if (leftStickValue <= -0.2f && isGameOverTrigger == false)
         {
             //待機アニメーション
             isAnimIdle = false;
@@ -348,13 +267,13 @@ public class Player3D : MonoBehaviour
             anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
             //リジッドボディによる移動
-            //if (speedX > -speed)
-            //{
-            //    rigid.AddForce(moveForce * Vector3.left);
-            //}
+            if (speedX > -speed)
+            {
+                rigid.AddForce(moveForce * Vector3.left);
+            }
 
             //座標による移動
-            transform.position += transform.forward * speed * Time.deltaTime;
+            //transform.position += transform.forward * speed * Time.deltaTime;
         }
     }
 
@@ -388,13 +307,13 @@ public class Player3D : MonoBehaviour
             anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
             //リジッドボディによる移動
-            //if (speedX < speed)
-            //{
-            //    rigid.AddForce(moveForce * Vector3.right);
-            //}
+            if (speedX < speed)
+            {
+                rigid.AddForce(moveForce * Vector3.right);
+            }
 
             //座標による移動
-            transform.position += transform.forward * speed * Time.deltaTime;
+            //transform.position += transform.forward * speed * Time.deltaTime;
         }
 
         if (Input.GetKey("a") && isGameOverTrigger == false)
@@ -425,13 +344,13 @@ public class Player3D : MonoBehaviour
             anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
             //リジッドボディによる移動
-            //if (speedX > -speed)
-            //{
-            //    rigid.AddForce(moveForce * Vector3.left);
-            //}
+            if (speedX > -speed)
+            {
+                rigid.AddForce(moveForce * Vector3.left);
+            }
 
             //座標による移動
-            transform.position += transform.forward * speed * Time.deltaTime;
+            //transform.position += transform.forward * speed * Time.deltaTime;
         }
     }
 
@@ -500,8 +419,6 @@ public class Player3D : MonoBehaviour
 
     void JumpUpdateSystem()
     {
-        rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
-
         if (jumpLoadTime <= jumpLoadTimeDefine)
         {
             jumpLoadTime += Time.deltaTime;

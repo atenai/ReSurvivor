@@ -58,7 +58,7 @@ namespace UI_Controller
         {
 #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
-#elif UNITY_STANDALONE
+#elif UNITY_STANDALONE || UNITY_ANDROID
                               UnityEngine.Application.Quit();
 #endif
         }
