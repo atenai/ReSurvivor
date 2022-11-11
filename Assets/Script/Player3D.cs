@@ -137,52 +137,28 @@ public class Player3D : MonoBehaviour
         if (isGameOverTrigger == true) { return; }
 
 
-        //Jump();
-        JumpLoadTouch();
+#if UNITY_STANDALONE_WIN
+        JumpKeyboard();
+#endif
+        JumpUpdateSystem();
 
-        //Move();
-        //現在のアニメーション（"Speed"）の値を持ってくる
-        animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");
+        MoveBefoerUpdateSystem();
 
-        //アニメーションの値が1以上なら1にする
-        if (1.0f <= animationCurrentPlayerMoveSpeed)
-        {
-            animationCurrentPlayerMoveSpeed = 1.0f;
-        }
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+        MoveKeyboard();
+#endif
 
-        //アニメーションの値が0以下なら0にする
-        if (animationCurrentPlayerMoveSpeed <= 0.0f)
-        {
-            animationCurrentPlayerMoveSpeed = 0.0f;
-        }
-
-        if (Input.GetKey("d"))
-        {
-            //MoveRight();
-        }
-
-        if (Input.GetKey("a"))
-        {
-            //MoveLeft();
-        }
-
-        if (isAnimationMove == false)
-        {
-            //移動アニメーションを徐々に「立ち」状態にする
-            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
-        }
-
-        isAnimationMove = false;//アニメーションの移動をFalseにする
+        MoveAfterUpdateSystem();
 
         Idle();
 
-        //Shoot();
-
-
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-        ReloadKeyboard();
+#if UNITY_STANDALONE_WIN
+        ShootKeyboard();
 #endif
 
+#if UNITY_STANDALONE_WIN
+        ReloadKeyboard();
+#endif
         ReloadUpdateSystem();
 
         HP();
@@ -190,117 +166,9 @@ public class Player3D : MonoBehaviour
         Hide();
     }
 
-    //void Move()
-    //{
-    //    //現在のアニメーション（"Speed"）の値を持ってくる
-    //    float animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");
 
-    //    //アニメーションの値が1以上なら1にする
-    //    if (1.0f <= animationCurrentPlayerMoveSpeed)
-    //    {
-    //        animationCurrentPlayerMoveSpeed = 1.0f;
-    //    }
-
-    //    //アニメーションの値が0以下なら0にする
-    //    if (animationCurrentPlayerMoveSpeed <= 0.0f)
-    //    {
-    //        animationCurrentPlayerMoveSpeed = 0.0f;
-    //    }
-
-    //    //移動
-    //    if (Input.GetKey("d") && isGameOverTrigger == false)
-    //    {
-    //        //待機アニメーション
-    //        isAnimIdle = false;
-    //        anim.SetBool("b_Idle", isAnimIdle);
-    //        idleTime = 0.0f;
-
-    //        //回転
-    //        rot = true;
-
-    //        if (rot)
-    //        {
-    //            // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
-    //            var rot = Quaternion.Euler(0, 90, 0);
-    //            transform.rotation = rot;
-    //        }
-    //        else if (rot == false)
-    //        {
-    //            // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
-    //            var rot = Quaternion.Euler(0, 270, 0);
-    //            transform.rotation = rot;
-    //        }
-
-    //        isAnimationMove = true;
-    //        //移動アニメーションを徐々に「歩き」状態にする
-    //        anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
-
-    //        //移動
-    //        if (speedX < speed)
-    //        {
-    //            rigid.AddForce(moveForce * Vector3.right);
-    //        }
-    //        //transform.position += transform.forward * speed * Time.deltaTime;
-    //    }
-
-    //    if (Input.GetKey("a") && isGameOverTrigger == false)
-    //    {
-    //        //待機アニメーション
-    //        isAnimIdle = false;
-    //        anim.SetBool("b_Idle", isAnimIdle);
-    //        idleTime = 0.0f;
-
-    //        //回転
-    //        rot = false;
-
-    //        if (rot)
-    //        {
-    //            // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
-    //            var rot = Quaternion.Euler(0, 90, 0);
-    //            transform.rotation = rot;
-    //        }
-    //        else if (rot == false)
-    //        {
-    //            // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
-    //            var rot = Quaternion.Euler(0, 270, 0);
-    //            transform.rotation = rot;
-    //        }
-
-    //        isAnimationMove = true;
-    //        //移動アニメーションを徐々に「歩き」状態にする
-    //        anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
-
-    //        //移動
-    //        if (speedX > -speed)
-    //        {
-    //            rigid.AddForce(moveForce * Vector3.left);
-    //        }
-    //        //transform.position += transform.forward * speed * Time.deltaTime;
-    //    }
-
-    //    if (isAnimationMove == false)
-    //    {
-    //        //移動アニメーションを徐々に「立ち」状態にする
-    //        anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
-    //    }
-
-    //    isAnimationMove = false;//アニメーションの移動をFalseにする
-
-    //    //待機アニメーション
-    //    if (idleTimeDefine <= idleTime)
-    //    {
-    //        isAnimIdle = true;
-    //        anim.SetBool("b_Idle", isAnimIdle);
-    //        idleTime = 0.0f;
-    //    }
-
-    //    if (isAnimIdle == false)
-    //    {
-    //        idleTime += Time.deltaTime;
-    //    }
-    //}
-
-    public void MoveRight()
+    //android用Move関数
+    public void MoveRightTouchButton()
     {
         if (isGameOverTrigger == false)
         {
@@ -340,7 +208,8 @@ public class Player3D : MonoBehaviour
         }
     }
 
-    public void MoveLeft()
+    //android用Move関数
+    public void MoveLeftTouchButton()
     {
         if (isGameOverTrigger == false)
         {
@@ -381,6 +250,112 @@ public class Player3D : MonoBehaviour
 
     }
 
+    void MoveBefoerUpdateSystem()
+    {
+        //現在のアニメーション（"Speed"）の値を持ってくる
+        animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");
+
+        //アニメーションの値が1以上なら1にする
+        if (1.0f <= animationCurrentPlayerMoveSpeed)
+        {
+            animationCurrentPlayerMoveSpeed = 1.0f;
+        }
+
+        //アニメーションの値が0以下なら0にする
+        if (animationCurrentPlayerMoveSpeed <= 0.0f)
+        {
+            animationCurrentPlayerMoveSpeed = 0.0f;
+        }
+    }
+
+    void MoveKeyboard()
+    {
+        if (Input.GetKey("d") && isGameOverTrigger == false)
+        {
+            //待機アニメーション
+            isAnimIdle = false;
+            anim.SetBool("b_Idle", isAnimIdle);
+            idleTime = 0.0f;
+
+            //回転
+            rot = true;
+
+            if (rot)
+            {
+                // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
+                var rot = Quaternion.Euler(0, 90, 0);
+                transform.rotation = rot;
+            }
+            else if (rot == false)
+            {
+                // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
+                var rot = Quaternion.Euler(0, 270, 0);
+                transform.rotation = rot;
+            }
+
+            isAnimationMove = true;
+            //移動アニメーションを徐々に「歩き」状態にする
+            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
+
+            //リジッドボディによる移動
+            //if (speedX < speed)
+            //{
+            //    rigid.AddForce(moveForce * Vector3.right);
+            //}
+
+            //座標による移動
+            transform.position += transform.forward * speed * Time.deltaTime;
+        }
+
+        if (Input.GetKey("a") && isGameOverTrigger == false)
+        {
+            //待機アニメーション
+            isAnimIdle = false;
+            anim.SetBool("b_Idle", isAnimIdle);
+            idleTime = 0.0f;
+
+            //回転
+            rot = false;
+
+            if (rot)
+            {
+                // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
+                var rot = Quaternion.Euler(0, 90, 0);
+                transform.rotation = rot;
+            }
+            else if (rot == false)
+            {
+                // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
+                var rot = Quaternion.Euler(0, 270, 0);
+                transform.rotation = rot;
+            }
+
+            isAnimationMove = true;
+            //移動アニメーションを徐々に「歩き」状態にする
+            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
+
+            //リジッドボディによる移動
+            //if (speedX > -speed)
+            //{
+            //    rigid.AddForce(moveForce * Vector3.left);
+            //}
+
+            //座標による移動
+            transform.position += transform.forward * speed * Time.deltaTime;
+        }
+    }
+
+    void MoveAfterUpdateSystem()
+    {
+        if (isAnimationMove == false)
+        {
+            //移動アニメーションを徐々に「立ち」状態にする
+            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
+        }
+
+        isAnimationMove = false;//アニメーションの移動をFalseにする
+    }
+
     void Idle()
     {
         //待機アニメーション
@@ -398,7 +373,7 @@ public class Player3D : MonoBehaviour
     }
 
     //android用Jump関数
-    public void JumpButtonTouch()
+    public void JumpTouchButton()
     {
         if (jumpLoadTimeDefine <= jumpLoadTime)
         {
@@ -414,29 +389,9 @@ public class Player3D : MonoBehaviour
         }
     }
 
-    //android用Jump関数
-    void JumpLoadTouch()
+    void JumpKeyboard()
     {
-        rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
-
-        if (jumpLoadTime <= jumpLoadTimeDefine)
-        {
-            jumpLoadTime += Time.deltaTime;
-        }
-
-        if (jumpLoadTime >= 0.1f)
-        {
-            isAnimJump = false;
-        }
-        anim.SetBool("b_Jump", isAnimJump);
-    }
-
-    void Jump()
-    {
-        rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
-
-        //ジャンプ
-        //if (Input.GetKeyDown(KeyCode.Space) && jumpLoadTimeDefine <= jumpLoadTime && isGameOverTrigger == false)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (jumpLoadTimeDefine <= jumpLoadTime)
             {
@@ -451,6 +406,11 @@ public class Player3D : MonoBehaviour
                 }
             }
         }
+    }
+
+    void JumpUpdateSystem()
+    {
+        rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
 
         if (jumpLoadTime <= jumpLoadTimeDefine)
         {
@@ -464,6 +424,7 @@ public class Player3D : MonoBehaviour
         anim.SetBool("b_Jump", isAnimJump);
     }
 
+    //android用Shoot関数
     public void ShootTouchButton()
     {
         if ((magazine != 0))
@@ -532,10 +493,9 @@ public class Player3D : MonoBehaviour
         }
     }
 
-    public void ShootUpdateSystem()
+    void ShootKeyboard()
     {
-        //弾
-        //if ((Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)) && (magazine != 0) && isReloadTimeActive == false && isGameOverTrigger == false)
+        if (Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
         {
             if ((magazine != 0))
             {
@@ -604,6 +564,7 @@ public class Player3D : MonoBehaviour
         }
     }
 
+    //android用Reload関数
     public void ReloadTouchButton()
     {
         if (magazine != 20 && isGameOverTrigger == false)
@@ -612,7 +573,7 @@ public class Player3D : MonoBehaviour
         }
     }
 
-    public void ReloadKeyboard()
+    void ReloadKeyboard()
     {
         if (Input.GetKey(KeyCode.R) && magazine != 20 && isGameOverTrigger == false)
         {

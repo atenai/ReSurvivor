@@ -14,7 +14,7 @@ public class ScreenSetting : MonoBehaviour
         
 #endif //終了
 
-#if UNITY_STANDALONE//端末がPCだった場合の処理
+#if UNITY_STANDALONE_WIN//端末がPCだった場合の処理
 
         Screen.SetResolution(1920, 1080, true, 60);
 
