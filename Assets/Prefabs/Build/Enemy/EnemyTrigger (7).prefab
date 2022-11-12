@@ -377,6 +377,12 @@ PrefabInstance:
       propertyPath: roundInterval
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3842051902277195285, guid: ff184c7d85a814aab8811f24bbf92005,
+        type: 3}
+      propertyPath: cartridgePrefab
+      value: 
+      objectReference: {fileID: 8432168509019524890, guid: 0b90fa4732ef6134e9629700c3e02d80,
+        type: 3}
     - target: {fileID: 4587923246528068911, guid: ff184c7d85a814aab8811f24bbf92005,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
