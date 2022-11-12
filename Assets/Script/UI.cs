@@ -102,7 +102,9 @@ public class UI : MonoBehaviour
             float animationCurrentPlayerMoveSpeed = player.anim.GetFloat("f_CurrentPlayerMoveSpeed");
             //移動アニメーションを徐々に「立ち」状態にする
             player.anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
-            adsInterstitial.ShowAd();
+#if UNITY_ANDROID//端末がAndroidだった場合の処理
+            adsInterstitial.ShowAd();//広告表示
+#endif
             StageSceneController.GameOver(player.GameOverDelay);
         }
         else

@@ -638,7 +638,9 @@ public class Player3D : MonoBehaviour
             isAnimDie = true;
             anim.SetBool("b_Die", isAnimDie);
             isGameOverTrigger = true;
-            adsInterstitial.ShowAd();
+#if UNITY_ANDROID//端末がAndroidだった場合の処理
+            adsInterstitial.ShowAd();//広告表示
+#endif
             StageSceneController.GameOver(GameOverDelay);
         }
 

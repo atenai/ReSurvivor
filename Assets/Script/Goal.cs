@@ -54,7 +54,10 @@ public class Goal : MonoBehaviour
                 isGOAL = true;
             }
             other.gameObject.SetActive(false);
-            adsInterstitial.ShowAd();
+
+#if UNITY_ANDROID//端末がAndroidだった場合の処理
+            adsInterstitial.ShowAd();//広告表示
+#endif
         }
     }
 
