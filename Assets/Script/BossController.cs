@@ -54,7 +54,7 @@ public class BossController : EnemyController
     /// 被弾可能の間隔
     /// </summary>
     protected float HitInterval { get; set; }
-    
+
 
     /// <summary>
     /// 垂直速さ
@@ -116,7 +116,7 @@ public class BossController : EnemyController
         protected internal override void Update()
         {
             // 自動移動
-            Context.AutoMove();            
+            Context.AutoMove();
         }
 
         protected internal override void Exit()
@@ -252,7 +252,7 @@ public class BossController : EnemyController
     /// </summary>
     private void OnPhase3Enter()
     {
-        MoveForce = 15.0f; 
+        MoveForce = 15.0f;
         MAXSpeed = 8.0f;
         StartCoroutine(DistanceRandomizer(ChangeInterval));
         JumpDelay = 2.5f;
@@ -264,6 +264,7 @@ public class BossController : EnemyController
     /// </summary>
     protected IEnumerator WaitToJump()
     {
+        Debug.Log("<color=red>①jumpDelay後上へ跳び、跳ぶイベントを送信</color>");
         return WaitToJump(JumpDelay);
     }
     /// <summary>
@@ -271,6 +272,7 @@ public class BossController : EnemyController
     /// </summary>
     protected IEnumerator WaitToJump(float jumpDelay)
     {
+        Debug.Log("<color=red>②jumpDelay後上へ跳び、跳ぶイベントを送信</color>");
         yield return new WaitForSeconds(jumpDelay);
         Rigid.AddForce(JumpForce * Vector3.up);
         _ = _stateMachine.SendEvent((int)EventID.Jump);
@@ -279,8 +281,9 @@ public class BossController : EnemyController
     /// <summary>
     /// 空中の発砲タイマー
     /// </summary>
-    protected  IEnumerator JumpFireTimer()
+    protected IEnumerator JumpFireTimer()
     {
+        Debug.Log("<color=blue>③空中の発砲タイマー</color>");
         return JumpFireTimer(JumpFireDelay, JumpFireInterval);
     }
     /// <summary>
@@ -288,7 +291,8 @@ public class BossController : EnemyController
     /// </summary>
     protected IEnumerator JumpFireTimer(float jumpFireDelay, float jumpFireInterval)
     {
-        yield return new WaitForSeconds(jumpFireDelay);
+        Debug.Log("<color=blue>④空中の発砲タイマー</color>");
+        yield return new WaitForSeconds(jumpFireDelay);//ここが問題かもしれない
         yield return RoundFireTimer(JumpShot, jumpFireInterval, FireDirection.TowardsPlayer);
     }
 
@@ -297,6 +301,7 @@ public class BossController : EnemyController
     /// </summary>
     protected IEnumerator GroundFireTimer()
     {
+        Debug.Log("<color=yellow>⑤地上の発砲タイマー</color>");
         return GroundFireTimer(RoundInterval);
     }
     /// <summary>
@@ -304,7 +309,8 @@ public class BossController : EnemyController
     /// </summary>
     protected IEnumerator GroundFireTimer(float roundInterval)
     {
-        while(true)
+        Debug.Log("<color=yellow>⑥地上の発砲タイマー</color>");
+        while (true)
         {
             yield return RoundFireTimer(Shot);
             yield return new WaitForSeconds(roundInterval);
@@ -317,6 +323,7 @@ public class BossController : EnemyController
     /// <param name="changeInterval">距離変更の間隔</param>
     protected IEnumerator DistanceRandomizer(float changeInterval)
     {
+        Debug.Log("<color=green>⑦ランダムの距離を維持</color>");
         while (true)
         {
             TurnThreshold = 1.0f;
