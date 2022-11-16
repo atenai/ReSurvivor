@@ -1,5 +1,6 @@
-Assertion failed on expression: 'VCCache::instance != NULL'
-UnityEditor.VersionControl.Provider:PromptAndCheckoutIfNeeded(String[], String, ChangeSet)
-UnityEditorInternal.VR.XRProjectSettings:Internal_SaveSettings() (at C:/buildslave/unity/build/Modules/VREditor/Mono/XRPackageSettings.cs:101)
-UnityEditorInternal.VR.XRProjectSettings:OnDisable() (at C:/buildslave/unity/build/Modules/VREditor/Mono/XRPackageSettings.cs:61)
-のエラーはGitHubに上げる前からあったエラーで問題は無いから気にしなくて大丈夫！
+修正箇所
+・androidでボスキャラクターの動きが止まるバグの修正
+・UIのスティックの見た目を改善
+・デバイスシミュレーターでUIの位置を確認
+・ADSボタンを非表示
+・android用の操作UIをandroidのみで表示するように修正
