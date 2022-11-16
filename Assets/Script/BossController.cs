@@ -328,7 +328,7 @@ public class BossController : EnemyController
         {
             TurnThreshold = 1.0f;
             WithdrawalRange = Random.Range(6.0f, 12.0f);
-            yield return new WaitForSeconds(changeInterval);
+            yield return new WaitForSeconds(changeInterval);//ここが問題かもしれない
         }
     }
 
