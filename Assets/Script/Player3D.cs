@@ -205,7 +205,7 @@ public class Player3D : MonoBehaviour
         var leftStickValue = current.leftStick.x.ReadValue();
         //Debug.Log("xの移動量 : " + leftStickValue);
 
-        if (0.2f <= leftStickValue && isGameOverTrigger == false)
+        if (0.1f <= leftStickValue)
         {
             //待機アニメーション
             isAnimIdle = false;
@@ -242,7 +242,7 @@ public class Player3D : MonoBehaviour
             //transform.position += transform.forward * speed * Time.deltaTime;
         }
 
-        if (leftStickValue <= -0.2f && isGameOverTrigger == false)
+        if (leftStickValue <= -0.1f)
         {
             //待機アニメーション
             isAnimIdle = false;
@@ -282,7 +282,7 @@ public class Player3D : MonoBehaviour
 
     void MoveKeyboard()
     {
-        if (Input.GetKey("d") && isGameOverTrigger == false)
+        if (Input.GetKey("d"))
         {
             //待機アニメーション
             isAnimIdle = false;
@@ -319,7 +319,7 @@ public class Player3D : MonoBehaviour
             //transform.position += transform.forward * speed * Time.deltaTime;
         }
 
-        if (Input.GetKey("a") && isGameOverTrigger == false)
+        if (Input.GetKey("a"))
         {
             //待機アニメーション
             isAnimIdle = false;
@@ -389,15 +389,12 @@ public class Player3D : MonoBehaviour
     {
         if (jumpLoadTimeDefine <= jumpLoadTime)
         {
-            if (isGameOverTrigger == false)
-            {
                 //アニメーション
                 isAnimJump = true;
                 anim.SetBool("b_Jump", isAnimJump);
 
                 rigid.AddForce(transform.up * jumpForce);
                 jumpLoadTime = 0.0f;
-            }
         }
     }
 
@@ -407,15 +404,12 @@ public class Player3D : MonoBehaviour
         {
             if (jumpLoadTimeDefine <= jumpLoadTime)
             {
-                if (isGameOverTrigger == false)
-                {
                     //アニメーション
                     isAnimJump = true;
                     anim.SetBool("b_Jump", isAnimJump);
 
                     rigid.AddForce(transform.up * jumpForce);
                     jumpLoadTime = 0.0f;
-                }
             }
         }
     }
@@ -441,8 +435,6 @@ public class Player3D : MonoBehaviour
         {
             if (isReloadTimeActive == false)
             {
-                if (isGameOverTrigger == false)
-                {
                     //待機アニメーション
                     isAnimIdle = false;
                     anim.SetBool("b_Idle", isAnimIdle);
@@ -498,7 +490,6 @@ public class Player3D : MonoBehaviour
                         newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
                         Destroy(newCartridge, CartridgeDestroyTime);//DestroyTime後削除
                     }
-                }
             }
         }
     }
@@ -511,8 +502,6 @@ public class Player3D : MonoBehaviour
             {
                 if (isReloadTimeActive == false)
                 {
-                    if (isGameOverTrigger == false)
-                    {
                         //待機アニメーション
                         isAnimIdle = false;
                         anim.SetBool("b_Idle", isAnimIdle);
@@ -568,7 +557,6 @@ public class Player3D : MonoBehaviour
                             newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
                             Destroy(newCartridge, CartridgeDestroyTime);//DestroyTime後削除
                         }
-                    }
                 }
             }
         }
@@ -577,7 +565,7 @@ public class Player3D : MonoBehaviour
     //android用Reload関数
     public void ReloadTouchButton()
     {
-        if (magazine != 20 && isGameOverTrigger == false)
+        if (magazine != 20)
         {
             isReloadTimeActive = true;//リロードのオン
         }
@@ -585,7 +573,7 @@ public class Player3D : MonoBehaviour
 
     void ReloadKeyboard()
     {
-        if (Input.GetKey(KeyCode.R) && magazine != 20 && isGameOverTrigger == false)
+        if (Input.GetKey(KeyCode.R) && magazine != 20)
         {
             isReloadTimeActive = true;//リロードのオン
         }
@@ -593,7 +581,7 @@ public class Player3D : MonoBehaviour
 
     void ReloadUpdateSystem()
     {
-        if (magazine == 0 && isGameOverTrigger == false)
+        if (magazine == 0)
         {
             isReloadTimeActive = true;//リロードのオン
         }
@@ -632,7 +620,7 @@ public class Player3D : MonoBehaviour
     void HP()
     {
         //体力
-        if (isGameOverTrigger == false && hp <= 0)
+        if (hp <= 0)
         {
             //アニメーション
             isAnimDie = true;
@@ -745,7 +733,7 @@ public class Player3D : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EnemyBullet") && isGameOverTrigger == false || other.CompareTag("Mine") && isGameOverTrigger == false)
+        if (other.CompareTag("EnemyBullet") || other.CompareTag("Mine"))
         {
             if (PlayerDamageTimeDefine <= PlayerDamageTime)
             {
@@ -768,7 +756,7 @@ public class Player3D : MonoBehaviour
             #endif
         }
 
-        if (other.CompareTag("First aid kit") && hp < 100 && isGameOverTrigger == false)
+        if (other.CompareTag("First aid kit") && hp < 100)
         {
             var se = Instantiate(HealSEPrefab, gameObject.transform.position, Quaternion.identity);
             Destroy(se, healSEDestroyTime);
