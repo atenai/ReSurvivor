@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 79384238}
   - component: {fileID: 79384237}
   - component: {fileID: 79384236}
+  - component: {fileID: 1726116158}
   m_Layer: 5
   m_Name: Button_Reload
   m_TagString: Untagged
@@ -212,6 +213,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1726116158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79384234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7e27dcc3b64a948a83ea36553c8062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &377309705
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,6 +288,7 @@ GameObject:
   - component: {fileID: 419527272}
   - component: {fileID: 419527271}
   - component: {fileID: 419527270}
+  - component: {fileID: 2110714853}
   m_Layer: 5
   m_Name: Button_Ads
   m_TagString: Untagged
@@ -396,6 +410,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2110714853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419527268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7e27dcc3b64a948a83ea36553c8062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &750162532
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,6 +524,7 @@ GameObject:
   - component: {fileID: 753447520}
   - component: {fileID: 753447519}
   - component: {fileID: 753447518}
+  - component: {fileID: 1213137573}
   m_Layer: 5
   m_Name: Button_Shoot
   m_TagString: Untagged
@@ -619,6 +646,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1213137573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753447516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7e27dcc3b64a948a83ea36553c8062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &796459096
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,6 +669,7 @@ GameObject:
   - component: {fileID: 796459097}
   - component: {fileID: 796459099}
   - component: {fileID: 796459098}
+  - component: {fileID: 1383509750}
   m_Layer: 5
   m_Name: Image_Move
   m_TagString: Untagged
@@ -695,6 +735,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1383509750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796459096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7e27dcc3b64a948a83ea36553c8062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &907777605
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,6 +759,7 @@ GameObject:
   - component: {fileID: 907777609}
   - component: {fileID: 907777608}
   - component: {fileID: 907777607}
+  - component: {fileID: 1708859693}
   m_Layer: 5
   m_Name: Button_Jump
   m_TagString: Untagged
@@ -828,6 +881,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1708859693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907777605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7e27dcc3b64a948a83ea36553c8062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1221094165
 GameObject:
   m_ObjectHideFlags: 0

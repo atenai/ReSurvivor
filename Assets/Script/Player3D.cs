@@ -144,10 +144,10 @@ public class Player3D : MonoBehaviour
 
         MoveBefoerUpdateSystem();
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR//ビルドセッティングがWindowsまたはUnityエディターだった場合の時のみ中身を処理する
         MoveKeyboard();
 #endif
-#if UNITY_ANDROID//端末がAndroidだった場合の処理
+#if UNITY_ANDROID//ビルドセッティングがAndroidだった場合の時のみ中身を処理する
         MoveLeftStick();
 #endif
 
@@ -632,7 +632,7 @@ public class Player3D : MonoBehaviour
     void HP()
     {
         //体力
-        if (!isGameOverTrigger && hp <= 0)
+        if (isGameOverTrigger == false && hp <= 0)
         {
             //アニメーション
             isAnimDie = true;
@@ -758,6 +758,14 @@ public class Player3D : MonoBehaviour
             isImageDamage = true;
 
             cameraController.Shake(0.25f, 0.1f);
+
+            #if UNITY_ANDROID
+            //android端末を振動させる(0.5秒程度の振動が1回だけ行われる)
+            if(SystemInfo.supportsVibration)
+            {
+                Handheld.Vibrate();
+            }
+            #endif
         }
 
         if (other.CompareTag("First aid kit") && hp < 100 && isGameOverTrigger == false)
