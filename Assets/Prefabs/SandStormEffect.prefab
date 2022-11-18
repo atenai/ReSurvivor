@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 370205441633428930}
   m_Layer: 0
-  m_Name: SandStorm
+  m_Name: SandStormEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
