@@ -693,12 +693,15 @@ public class Player3D : MonoBehaviour
 
     void Hide()
     {
-        foreach (var hidable in hidables)
+        if(hidables != null)
         {
-            if (Input.GetKeyDown(hidable.HideKey()) && hidable.IsAccessable(gameObject))
+            foreach (var hidable in hidables)
             {
-                hidable.Hide(gameObject);
-                break;
+                if ((Input.GetKeyDown(hidable.HideKey()) || Input.GetKeyDown(KeyCode.W))&& hidable.IsAccessable(gameObject))
+                {
+                    hidable.Hide(gameObject);
+                    break;
+                }
             }
         }
     }
