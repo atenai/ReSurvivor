@@ -23,11 +23,6 @@ namespace UI_Controller
 
         void Start()
         {
-#if UNITY_STANDALONE_WIN//端末がPCだった場合の処理
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-#endif //終了
-
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(startButton);
         }
@@ -61,7 +56,7 @@ namespace UI_Controller
 #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
 #elif UNITY_STANDALONE || UNITY_ANDROID
-                              UnityEngine.Application.Quit();
+            UnityEngine.Application.Quit();
 #endif
         }
 
