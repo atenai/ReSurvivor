@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class EnemyTriggerController : MonoBehaviour
 {
-    public List<GameObject> enemyGameObjects;
+    [SerializeField] List<GameObject> enemyGameObjects;
 
-    private void Awake()
+    bool isOneHit = false;
+
+    void Awake()
     {
         var meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
@@ -13,15 +15,16 @@ public class EnemyTriggerController : MonoBehaviour
         SetActiveAll(false);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && isOneHit == false)
         {
+            isOneHit = true;
             SetActiveAll(true);
         }
     }
 
-    private void SetActiveAll(bool value)
+    void SetActiveAll(bool value)
     {
         foreach (Transform child in transform)
         {
