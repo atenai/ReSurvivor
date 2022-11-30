@@ -7,8 +7,9 @@ using UnityEngine.UI;
 [RequireComponent(typeof(RectTransform))]//RectTransformをアタッチしていなかったらアタッチする
 public class TargetIndicator : MonoBehaviour
 {
-    [SerializeField] Transform target;//ターゲット(玉orアイテム)の座標
-    [SerializeField] Image arrow;//向きの画像
+    [SerializeField] Transform target;//ターゲット(玉orアイテムor敵)の座標
+    [SerializeField] Image arrow;//矢印の画像
+    [SerializeField] Image icon;//アイコンの画像
 
     Camera mainCamera;
     RectTransform rectTransform;
@@ -78,5 +79,8 @@ public class TargetIndicator : MonoBehaviour
         {
             arrow.rectTransform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(-targetIndicatorPos.x, targetIndicatorPos.y) * Mathf.Rad2Deg);//矢印を回転させてあげる処理をしている
         }
+
+        icon.enabled = isOffscreen;//敵が画面内ならアイコンを消す、画面外ならアイコンを表示する
+        icon.rectTransform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);//アイコンが回転しないようにする
     }
 }
