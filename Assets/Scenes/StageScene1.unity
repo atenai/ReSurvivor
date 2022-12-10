@@ -1976,6 +1976,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2258865218401676218, guid: c74b009f666d1b7498dc03ddf82fd5ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2271395878524943820, guid: c74b009f666d1b7498dc03ddf82fd5ac,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2121,6 +2126,11 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 8082555157973160777}
+    - target: {fileID: 9218210139267545240, guid: c74b009f666d1b7498dc03ddf82fd5ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9218210139267545242, guid: c74b009f666d1b7498dc03ddf82fd5ac,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

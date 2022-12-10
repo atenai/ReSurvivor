@@ -37,6 +37,12 @@
             "name": "jp.co.sharp.android.launcher3",
             "processId": 2693,
             "exited": false
+        },
+        {
+            "deviceId": "354962112054336",
+            "name": "com.GameMechanicsLab.ReSurvivor",
+            "processId": 18163,
+            "exited": false
         }
     ],
     "m_Tags": {
