@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "354962112054336",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "354962112054336",
+        "name": "com.GameMechanicsLab.ReSurvivor",
+        "processId": 6119,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -42,6 +42,12 @@
             "deviceId": "354962112054336",
             "name": "com.GameMechanicsLab.ReSurvivor",
             "processId": 18163,
+            "exited": false
+        },
+        {
+            "deviceId": "354962112054336",
+            "name": "com.GameMechanicsLab.ReSurvivor",
+            "processId": 6119,
             "exited": false
         }
     ],
