@@ -2113,6 +2113,11 @@ PrefabInstance:
       objectReference: {fileID: 803707397}
     - target: {fileID: 7408922452455437362, guid: c74b009f666d1b7498dc03ddf82fd5ac,
         type: 3}
+      propertyPath: minute
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7408922452455437362, guid: c74b009f666d1b7498dc03ddf82fd5ac,
+        type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 803707397}

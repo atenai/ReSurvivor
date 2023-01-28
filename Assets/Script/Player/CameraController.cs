@@ -3,21 +3,20 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
-    GameObject player;
     GameObject goalPlane;
     float pullBackSpeed = 5.0f;
     [SerializeField] Transform cam;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     void Update()
     {
         if (!Goal.isGOAL)
         {
-            var playerPos = player.transform.position;
+            var playerPos = Player.singletonInstance.transform.position;
             var cameraParentPosX = playerPos.x + 5.0f;
             this.transform.position = new Vector3(cameraParentPosX, 3.0f, -10.0f);
         }
@@ -38,7 +37,7 @@ public class CameraController : MonoBehaviour
         StartCoroutine(DoShake(duration, magnitude));
     }
 
-    private IEnumerator DoShake(float duration = 0.25f, float magnitude = 0.1f)
+    IEnumerator DoShake(float duration = 0.25f, float magnitude = 0.1f)
     {
         var pos = cam.transform.localPosition;
 
