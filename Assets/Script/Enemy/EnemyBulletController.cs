@@ -95,7 +95,7 @@ public class EnemyBulletController : MonoBehaviour
             case "Player":
                 if (Player == null) break;
                 //プレイヤーのHPを減らす
-                Player.GetComponent<Player3D>().SetPlayerDamage(Attack);
+                Player.GetComponent<Player>().SetPlayerDamage(Attack);
                 DestroyWithEffect(gameObject);
                 break;
 

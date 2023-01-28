@@ -6,12 +6,12 @@ public class Firstaidkit : MonoBehaviour
 
     void Start()
     {
-        hp = GameObject.Find("Player").GetComponent<Player3D>().GetPlayerHP();
+        hp = GameObject.Find("Player").GetComponent<Player>().GetPlayerHP();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        hp = GameObject.Find("Player").GetComponent<Player3D>().GetPlayerHP();
+        hp = GameObject.Find("Player").GetComponent<Player>().GetPlayerHP();
 
         if (other.CompareTag("Player") && hp < 100)
         {

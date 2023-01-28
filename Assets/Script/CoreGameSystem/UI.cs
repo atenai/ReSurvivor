@@ -4,7 +4,7 @@ using TMPro;
 
 public class UI : MonoBehaviour
 {
-    [SerializeField] Player3D player;
+    [SerializeField] Player player;
 
     //リロード画像
     Color reloadColor = new Color(255.0f, 255.0f, 255.0f, 0.0f);
@@ -105,7 +105,7 @@ public class UI : MonoBehaviour
 #if UNITY_ANDROID//端末がAndroidだった場合の処理
             adsInterstitial.ShowAd();//広告表示
 #endif
-            StageSceneController.GameOver(player.GameOverDelay);
+            StageSceneController.GameOver(player.gameOverDelay);
         }
         else
         {

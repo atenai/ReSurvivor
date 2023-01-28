@@ -29,7 +29,7 @@ public class Zirai : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,7 +45,7 @@ public class Zirai : MonoBehaviour
             //エフェクトオブジェクトを生成する	
             var smokeEffect = Instantiate(ziraiSmokeEffectPrefab, gameObject.transform.position, Quaternion.identity);
             Destroy(smokeEffect, ziraiSmokeEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
-            Player.GetComponent<Player3D>().SetPlayerDamage(50);
+            Player.GetComponent<Player>().SetPlayerDamage(50);
             Destroy(gameObject);//このオブジェクトを削除
         }
     }

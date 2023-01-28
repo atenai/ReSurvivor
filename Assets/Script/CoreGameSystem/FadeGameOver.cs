@@ -5,7 +5,7 @@ public class FadeGameOver : MonoBehaviour
 {
     float alfa = 0.0f;
     [SerializeField] float fadeSpeed = 0.4f;
-    [SerializeField] Player3D player;
+    [SerializeField] Player player;
 
     void Update()
     {
