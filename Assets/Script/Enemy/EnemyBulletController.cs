@@ -61,8 +61,6 @@ public class EnemyBulletController : MonoBehaviour
     /// </summary>
     protected bool CanBeDestroyed { get; set; }
 
-    protected GameObject Player { get; set; }
-
     protected virtual void Awake()
     {
         Attack = 20;
@@ -72,17 +70,13 @@ public class EnemyBulletController : MonoBehaviour
         SetParameters();
     }
 
-    // Start is called before the first frame update
     protected virtual void Start()
     {
         AudioSource = GetComponent<AudioSource>();
 
-        Player = GameObject.Find("Player");
-
         Destroy(gameObject, Duration);
     }
 
-    // Update is called once per frame
     protected virtual void Update()
     {
 
@@ -93,9 +87,9 @@ public class EnemyBulletController : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Player":
-                if (Player == null) break;
+                if (Player.singletonInstance == null) break;
                 //プレイヤーのHPを減らす
-                Player.GetComponent<Player>().SetPlayerDamage(Attack);
+                Player.singletonInstance.SetPlayerDamage(Attack);
                 DestroyWithEffect(gameObject);
                 break;
 

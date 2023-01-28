@@ -4,8 +4,6 @@ using TMPro;
 
 public class UI : MonoBehaviour
 {
-    [SerializeField] Player player;
-
     //リロード画像
     Color reloadColor = new Color(255.0f, 255.0f, 255.0f, 0.0f);
     [SerializeField] GameObject imageReload;
@@ -57,7 +55,7 @@ public class UI : MonoBehaviour
     {
         imageReload.GetComponent<RectTransform>().transform.Rotate(0.0f, 0.0f, RotateSpeed * Time.deltaTime);
 
-        if (player.isReloadTimeActive == true)
+        if (Player.singletonInstance.isReloadTimeActive == true)
         {
             if (reloadColor.a <= 1)
             {
@@ -66,7 +64,7 @@ public class UI : MonoBehaviour
             }
         }
 
-        if (player.isReloadTimeActive == false)
+        if (Player.singletonInstance.isReloadTimeActive == false)
         {
             if (reloadColor.a >= 0)
             {
@@ -78,12 +76,12 @@ public class UI : MonoBehaviour
 
     void StartTextMagazine()
     {
-        textMagazine.text = player.magazine.ToString();
+        textMagazine.text = Player.singletonInstance.magazine.ToString();
     }
 
     void LateUpdateTextMagazine()
     {
-        textMagazine.text = player.magazine.ToString();
+        textMagazine.text = Player.singletonInstance.magazine.ToString();
     }
 
     void LateUpdateTimerSystem()
@@ -97,15 +95,15 @@ public class UI : MonoBehaviour
         if (minute <= 0 && seconds <= 0.0f)
         {
             timerTMP.text = "00" + ":" + "00";
-            player.isGameOverTrigger = true;
+            Player.singletonInstance.isGameOverTrigger = true;
             //現在のアニメーション（"Speed"）の値を持ってくる
-            float animationCurrentPlayerMoveSpeed = player.anim.GetFloat("f_CurrentPlayerMoveSpeed");
+            float animationCurrentPlayerMoveSpeed = Player.singletonInstance.anim.GetFloat("f_CurrentPlayerMoveSpeed");
             //移動アニメーションを徐々に「立ち」状態にする
-            player.anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
+            Player.singletonInstance.anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
 #if UNITY_ANDROID//端末がAndroidだった場合の処理
             adsInterstitial.ShowAd();//広告表示
 #endif
-            StageSceneController.GameOver(player.gameOverDelay);
+            StageSceneController.GameOver(Player.singletonInstance.gameOverDelay);
         }
         else
         {
@@ -115,12 +113,12 @@ public class UI : MonoBehaviour
 
     void StartHP()
     {
-        hp = player.GetPlayerHP();
+        hp = Player.singletonInstance.GetPlayerHP();
     }
 
     void LateUpdateHP()
     {
-        hp = player.GetPlayerHP();
+        hp = Player.singletonInstance.GetPlayerHP();
 
         //hp -= 1;
         if (hp <= 0)
