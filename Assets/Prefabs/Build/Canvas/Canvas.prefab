@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2258865218401676219
 RectTransform:
   m_ObjectHideFlags: 0
@@ -489,13 +489,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b9b87bbbbff544e8bc6d8952ac07ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   imageReload: {fileID: 8565466779943168735}
   textMagazine: {fileID: 7408922452187848824}
   timerTMP: {fileID: 3594106936073605491}
   minute: 10
   seconds: 0
   sliderHP: {fileID: 2271395878736627979}
+  imageDamage: {fileID: 8605565656642934273}
+  imageHeal: {fileID: 4879262704248052730}
   adsInterstitial: {fileID: 0}
 --- !u!114 &3561694733055070854
 MonoBehaviour:
@@ -1384,7 +1385,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeSpeed: 0.4
-  player: {fileID: 0}
 --- !u!1 &7408922452187848823
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,7 +1760,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9218210139267545241
 RectTransform:
   m_ObjectHideFlags: 0

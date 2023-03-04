@@ -205,11 +205,9 @@ MonoBehaviour:
   isGameOverTrigger: 0
   playerDamageSEPrefab: {fileID: 6230833164883063529, guid: 558ffb0d698e0e74183cbe0ac778dd47,
     type: 3}
-  isImageDamage: 0
-  imageDamage: {fileID: 0}
+  isDamage: 0
   bloodEffectPrefab: {fileID: 3269373705177894080, guid: 135f480b730dfb84f8fe208174fb766b,
     type: 3}
-  imageHeal: {fileID: 0}
   healSEPrefab: {fileID: 487633246165827512, guid: 571d9e79ce35d6247aad0cc73b6151f2,
     type: 3}
   healEffectPrefab: {fileID: 8092618984650722138, guid: 6d423cecc396b004b976773bd7608780,

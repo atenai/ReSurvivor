@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    public static Player singletonInstance = null;//シングルトンで作成（ゲーム中に１つのみにする）
+    //シングルトンで作成（ゲーム中に１つのみにする）
+    public static Player singletonInstance = null;
 
     //アニメーション
     public Animator anim;//Unityアニメーション用変数
@@ -78,8 +79,7 @@ public class Player : MonoBehaviour
     float playerDamageTimeDefine = 1.0f;
 
     //ダメージ画像
-    public bool isImageDamage = false;
-    [SerializeField] Image imageDamage;
+    public bool isDamage = false;
 
     //血エフェクト
     public GameObject bloodEffectPrefab;
@@ -87,8 +87,7 @@ public class Player : MonoBehaviour
     float bloodEffectDestroyTime = 1.0f;
 
     //ヒール画像
-    bool isImageHeal;
-    [SerializeField] Image imageHeal;
+    bool isHeal;
 
     //ヒールSE
     public GameObject healSEPrefab;
@@ -132,11 +131,6 @@ public class Player : MonoBehaviour
         rigid = this.GetComponent<Rigidbody>();
         jumpLoadTime = jumpLoadTimeDefine;//ジャンプの再使用までのロードタイム
 
-        //ダメージ画像
-        imageDamage.color = Color.clear;
-
-        //ヒール画像
-        imageHeal.color = Color.clear;
         //ヒールエフェクト
         healTime = healTimeDefine;
 
@@ -651,10 +645,10 @@ public class Player : MonoBehaviour
         playerDamageTime += Time.deltaTime;
         //Debug.Log("プレイヤーダメージSE" + PlayerDamageTime);
 
-        //ダメージ画像
-        if (isImageDamage)
+        //ダメージ
+        if (isDamage == true)
         {
-            imageDamage.color = new Color(0.5f, 0f, 0f, 0.5f);
+            UI.singletonInstance.imageDamage.color = new Color(0.5f, 0f, 0f, 0.5f);
             //血エフェクトオブジェクトを生成する	
             //血エフェクト座標
             bloodEffectPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1.0f, gameObject.transform.position.z);
@@ -662,27 +656,27 @@ public class Player : MonoBehaviour
             Destroy(effect, bloodEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
         }
 
-        if (isImageDamage == false)
+        if (isDamage == false)
         {
-            imageDamage.color = Color.Lerp(imageDamage.color, Color.clear, Time.deltaTime);
+            UI.singletonInstance.imageDamage.color = Color.Lerp(UI.singletonInstance.imageDamage.color, Color.clear, Time.deltaTime);
         }
 
-        isImageDamage = false;
+        isDamage = false;
 
         //救急箱エフェクト
-        if (isImageHeal)
+        if (isHeal == true)
         {
-            imageHeal.color = new Color(0f, 0.5f, 0f, 0.5f);
+            UI.singletonInstance.imageHeal.color = new Color(0f, 0.5f, 0f, 0.5f);
 
             healTime = 0.0f;
         }
 
-        if (isImageHeal == false)
+        if (isHeal == false)
         {
-            imageHeal.color = Color.Lerp(imageHeal.color, Color.clear, Time.deltaTime);
+            UI.singletonInstance.imageHeal.color = Color.Lerp(UI.singletonInstance.imageHeal.color, Color.clear, Time.deltaTime);
         }
 
-        isImageHeal = false;
+        isHeal = false;
 
         if (isHealEffect)
         {
@@ -761,7 +755,7 @@ public class Player : MonoBehaviour
                 playerDamageTime = 0.0f;
             }
 
-            isImageDamage = true;
+            isDamage = true;
 
             cameraController.Shake(0.25f, 0.1f);
 
@@ -779,7 +773,7 @@ public class Player : MonoBehaviour
             var se = Instantiate(healSEPrefab, gameObject.transform.position, Quaternion.identity);
             Destroy(se, healSEDestroyTime);
 
-            isImageHeal = true;
+            isHeal = true;
             SetPlayerHeal(100);
         }
     }

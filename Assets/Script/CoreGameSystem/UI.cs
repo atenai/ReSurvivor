@@ -4,6 +4,9 @@ using TMPro;
 
 public class UI : MonoBehaviour
 {
+    //シングルトンで作成（ゲーム中に１つのみにする）
+    public static UI singletonInstance = null;
+
     //リロード画像
     Color reloadColor = new Color(255.0f, 255.0f, 255.0f, 0.0f);
     [SerializeField] GameObject imageReload;
@@ -25,14 +28,39 @@ public class UI : MonoBehaviour
     [SerializeField] Slider sliderHP;
     int hp;
 
-    //ADS
+    //ダメージ画像
+    [SerializeField] public Image imageDamage;
+
+    //ヒール画像
+    [SerializeField] public Image imageHeal;
+
+    //広告
     [SerializeField] AdsInterstitial adsInterstitial;
+
+    void Awake()
+    {
+        //staticな変数instanceはメモリ領域は確保されていますが、初回では中身が入っていないので、中身を入れます。
+        if (singletonInstance == null)
+        {
+            singletonInstance = this;//thisというのは自分自身のインスタンスという意味になります。この場合、Playerのインスタンスという意味になります。
+        }
+        else
+        {
+            Destroy(this.gameObject);//中身がすでに入っていた場合、自身のインスタンスがくっついているゲームオブジェクトを破棄します。
+        }
+    }
 
     void Start()
     {
         StartImageReload();
 
         StartTextMagazine();
+
+        //ダメージ画像
+        imageDamage.color = Color.clear;
+
+        //ヒール画像
+        imageHeal.color = Color.clear;
     }
 
     void LateUpdate()
