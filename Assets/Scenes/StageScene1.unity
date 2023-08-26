@@ -2087,61 +2087,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1715398814}
-    - target: {fileID: 9218210139306724432, guid: c74b009f666d1b7498dc03ddf82fd5ac,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ReloadTouchButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 9218210139306724432, guid: c74b009f666d1b7498dc03ddf82fd5ac,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Player, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 9218210139552142523, guid: c74b009f666d1b7498dc03ddf82fd5ac,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1715398814}
-    - target: {fileID: 9218210139552142523, guid: c74b009f666d1b7498dc03ddf82fd5ac,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: JumpTouchButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 9218210139552142523, guid: c74b009f666d1b7498dc03ddf82fd5ac,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Player, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 9218210139974922402, guid: c74b009f666d1b7498dc03ddf82fd5ac,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1715398814}
-    - target: {fileID: 9218210139974922402, guid: c74b009f666d1b7498dc03ddf82fd5ac,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShootTouchButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 9218210139974922402, guid: c74b009f666d1b7498dc03ddf82fd5ac,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Player, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 9218210139977666714, guid: c74b009f666d1b7498dc03ddf82fd5ac,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.60784316
-      objectReference: {fileID: 0}
-    - target: {fileID: 9218210139977666714, guid: c74b009f666d1b7498dc03ddf82fd5ac,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.60784316
-      objectReference: {fileID: 0}
-    - target: {fileID: 9218210139977666714, guid: c74b009f666d1b7498dc03ddf82fd5ac,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.60784316
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c74b009f666d1b7498dc03ddf82fd5ac, type: 3}
 --- !u!1001 &8057762691480540716

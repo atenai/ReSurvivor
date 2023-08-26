@@ -34,6 +34,9 @@ public class UI : MonoBehaviour
     //ヒール画像
     [SerializeField] public Image imageHeal;
 
+    //操作方法テキスト
+    [SerializeField] GameObject textOperation;
+
     //広告
     [SerializeField] AdsInterstitial adsInterstitial;
 
@@ -61,6 +64,8 @@ public class UI : MonoBehaviour
 
         //ヒール画像
         imageHeal.color = Color.clear;
+
+        StartOperation();
     }
 
     void LateUpdate()
@@ -156,5 +161,16 @@ public class UI : MonoBehaviour
 
         // HPゲージに値を設定
         sliderHP.value = hp;
+    }
+
+    void StartOperation()
+    {
+#if UNITY_ANDROID
+        textOperation.gameObject.SetActive(false);
+#endif
+
+#if UNITY_STANDALONE_WIN
+        textOperation.gameObject.SetActive(true);
+#endif
     }
 }
