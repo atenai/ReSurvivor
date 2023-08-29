@@ -70,6 +70,8 @@ public class UI : MonoBehaviour
         imageHeal.color = Color.clear;
 
         StartOperation();
+
+        StartAndroidInputButton();
     }
 
     void LateUpdate()

@@ -3,51 +3,45 @@
     "m_SelectedPackage": {
         "deviceId": "354962112054336",
         "name": "com.GameMechanicsLab.ReSurvivor",
-        "processId": 28428,
+        "processId": 17354,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "354962112054336",
-            "name": "com.YuutaKashiwabara.ReSurvivor",
-            "processId": 20902,
-            "exited": true
-        },
-        {
-            "deviceId": "354962112054336",
-            "name": "com.YuutaKashiwabara.ReSurvivor",
-            "processId": 22510,
-            "exited": true
-        },
-        {
-            "deviceId": "354962112054336",
-            "name": "com.GameMechanicsLab.ReSurvivor",
-            "processId": 24450,
-            "exited": true
-        },
-        {
-            "deviceId": "354962112054336",
-            "name": "com.GameMechanicsLab.ReSurvivor",
-            "processId": 26525,
-            "exited": true
-        },
-        {
-            "deviceId": "354962112054336",
             "name": "jp.co.sharp.android.launcher3",
             "processId": 2700,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "354962112054336",
             "name": "com.GameMechanicsLab.ReSurvivor",
             "processId": 27003,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "354962112054336",
             "name": "com.GameMechanicsLab.ReSurvivor",
             "processId": 28428,
+            "exited": true
+        },
+        {
+            "deviceId": "354962112054336",
+            "name": "com.GameMechanicsLab.ReSurvivor",
+            "processId": 16193,
+            "exited": true
+        },
+        {
+            "deviceId": "354962112054336",
+            "name": "jp.co.sharp.android.launcher3",
+            "processId": 2828,
+            "exited": false
+        },
+        {
+            "deviceId": "354962112054336",
+            "name": "com.GameMechanicsLab.ReSurvivor",
+            "processId": 17354,
             "exited": false
         }
     ],
