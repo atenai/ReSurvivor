@@ -37,6 +37,10 @@ public class UI : MonoBehaviour
     //操作方法テキスト
     [SerializeField] GameObject textOperation;
 
+    [SerializeField] Button shotButton;
+    [SerializeField] Button reloadButton;
+    [SerializeField] Button jumpButton;
+
     //広告
     [SerializeField] AdsInterstitial adsInterstitial;
 
@@ -172,5 +176,26 @@ public class UI : MonoBehaviour
 #if UNITY_STANDALONE_WIN
         textOperation.gameObject.SetActive(true);
 #endif
+    }
+
+    /// <summary>
+    /// android用のタッチ操作を追加する処理
+    /// </summary>
+    void StartAndroidInputButton()
+    {
+        shotButton.onClick.AddListener(() =>
+        {
+            Player.singletonInstance.ShootTouchButton();
+        });
+
+        reloadButton.onClick.AddListener(() =>
+        {
+            Player.singletonInstance.ReloadTouchButton();
+        });
+
+        jumpButton.onClick.AddListener(() =>
+        {
+            Player.singletonInstance.JumpTouchButton();
+        });
     }
 }
