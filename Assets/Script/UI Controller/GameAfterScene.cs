@@ -14,8 +14,7 @@ namespace UI_Controller
         private GameObject _selectedButton;
 
         private bool _allowSceneActivation;
-    
-        // Start is called before the first frame update
+
         private void Start()
         {
             EventSystem.current.SetSelectedGameObject(null);
@@ -23,11 +22,10 @@ namespace UI_Controller
             StartCoroutine(LoadScene());
         }
 
-        // Update is called once per frame
         private void Update()
         {
             _selectedButton = EventSystem.current.currentSelectedGameObject;
-            if(_selectedButton == null)
+            if (_selectedButton == null)
             {
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(clearScreenFirstButton);
@@ -38,7 +36,7 @@ namespace UI_Controller
         {
             _allowSceneActivation = true;
         }
-    
+
         public void Return()
         {
             SceneManager.LoadScene("Title");
