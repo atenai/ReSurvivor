@@ -3,7 +3,6 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
-    GameObject goalPlane;
     float pullBackSpeed = 5.0f;
     [SerializeField] Transform cam;
 
@@ -14,7 +13,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (!Goal.isGOAL)
+        if (Goal.isGOAL != true)
         {
             var playerPos = Player.singletonInstance.transform.position;
             var cameraParentPosX = playerPos.x + 5.0f;
