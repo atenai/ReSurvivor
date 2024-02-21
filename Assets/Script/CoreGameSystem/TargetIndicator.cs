@@ -1,23 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-//QlƒTƒCƒg
+//å‚è€ƒã‚µã‚¤ãƒˆ
 //https://qiita.com/o8que/items/46e486f62bdf05c29559
 
-[RequireComponent(typeof(RectTransform))]//RectTransform‚ğƒAƒ^ƒbƒ`‚µ‚Ä‚¢‚È‚©‚Á‚½‚çƒAƒ^ƒbƒ`‚·‚é
+[RequireComponent(typeof(RectTransform))]//RectTransformã‚’ã‚¢ã‚¿ãƒƒãƒã—ã¦ã„ãªã‹ã£ãŸã‚‰ã‚¢ã‚¿ãƒƒãƒã™ã‚‹
 public class TargetIndicator : MonoBehaviour
 {
-    [SerializeField] Transform target;//ƒ^[ƒQƒbƒg(‹ÊorƒAƒCƒeƒ€or“G)‚ÌÀ•W
-    [SerializeField] Image arrow;//–îˆó‚Ì‰æ‘œ
-    [SerializeField] Image icon;//ƒAƒCƒRƒ“‚Ì‰æ‘œ
+    [SerializeField] Transform target;//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ(ç‰orã‚¢ã‚¤ãƒ†ãƒ oræ•µ)ã®åº§æ¨™
+    [SerializeField] Image arrow;//çŸ¢å°ã®ç”»åƒ
+    [SerializeField] Image icon;//ã‚¢ã‚¤ã‚³ãƒ³ã®ç”»åƒ
 
     Camera mainCamera;
     RectTransform rectTransform;
 
     void Start()
     {
-        mainCamera = Camera.main;//ƒƒCƒ“ƒJƒƒ‰‚ğæ“¾
-        rectTransform = this.GetComponent<RectTransform>();//‚±‚ÌƒXƒNƒŠƒvƒg‚ğƒAƒ^ƒbƒ`‚µ‚Ä‚¢‚éƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ÌRectTransform‚ğæ“¾
+        mainCamera = Camera.main;//ãƒ¡ã‚¤ãƒ³ã‚«ãƒ¡ãƒ©ã‚’å–å¾—
+        rectTransform = this.GetComponent<RectTransform>();//ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ã‚¢ã‚¿ãƒƒãƒã—ã¦ã„ã‚‹ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®RectTransformã‚’å–å¾—
     }
 
     void LateUpdate()
@@ -32,37 +32,37 @@ public class TargetIndicator : MonoBehaviour
             transform.Find("Image_Arrow").gameObject.SetActive(true);
         }
 
-        //ƒ‹[ƒg(Canvas)‚ÌƒXƒP[ƒ‹’l‚ğæ“¾‚·‚é
+        //ãƒ«ãƒ¼ãƒˆ(Canvas)ã®ã‚¹ã‚±ãƒ¼ãƒ«å€¤ã‚’å–å¾—ã™ã‚‹
         float canvasScale = transform.root.localScale.z;
-        var screenCenter = 0.5f * new Vector3(Screen.width, Screen.height);//ƒXƒNƒŠ[ƒ“‚Ì’†S“_‘S‘Ì‚Ì’·‚³‚©‚ç0.5‚ğ‚©‚¯‚é‚±‚Æ‚Å‹‚ß‚é[i—á)2 * 0.5 = 1]
+        var screenCenter = 0.5f * new Vector3(Screen.width, Screen.height);//ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®ä¸­å¿ƒç‚¹å…¨ä½“ã®é•·ã•ã‹ã‚‰0.5ã‚’ã‹ã‘ã‚‹ã“ã¨ã§æ±‚ã‚ã‚‹[ï¼ˆä¾‹)2 * 0.5 = 1]
 
-        //(‰æ–Ê’†S‚ğŒ´“_(0,0)‚Æ‚µ‚½)ƒ^[ƒQƒbƒg‚ÌƒXƒNƒŠ[ƒ“À•W‚ğ‹‚ß‚é
-        var targetIndicatorPos = mainCamera.WorldToScreenPoint(target.position) - screenCenter;//ƒ[ƒ‹ƒhÀ•W@¨@ƒXƒNƒŠ[ƒ“À•W‚Ö
+        //(ç”»é¢ä¸­å¿ƒã‚’åŸç‚¹(0,0)ã¨ã—ãŸ)ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã‚’æ±‚ã‚ã‚‹
+        var targetIndicatorPos = mainCamera.WorldToScreenPoint(target.position) - screenCenter;//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã€€â†’ã€€ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã¸
 
-        //ƒJƒƒ‰Œã•û‚É‚ ‚éƒ^[ƒQƒbƒg‚ÌƒXƒNƒŠ[ƒ“À•W‚ÍA‰æ–ÊŠO‚ÉˆÚ“®‚·‚é
-        if (targetIndicatorPos.z < 0f)//ƒXƒNƒŠ[ƒ“À•W.z‚ª0ˆÈ‰º‚Ì’†g‚ğÀs‚·‚é
+        //ã‚«ãƒ¡ãƒ©å¾Œæ–¹ã«ã‚ã‚‹ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã¯ã€ç”»é¢å¤–ã«ç§»å‹•ã™ã‚‹
+        if (targetIndicatorPos.z < 0f)//ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™.zãŒ0ä»¥ä¸‹ã®æ™‚ä¸­èº«ã‚’å®Ÿè¡Œã™ã‚‹
         {
             targetIndicatorPos.x = -targetIndicatorPos.x;
             targetIndicatorPos.y = -targetIndicatorPos.y;
 
-            //ƒJƒƒ‰‚Æ…•½‚Èƒ^[ƒQƒbƒg‚ÌƒXƒNƒŠ[ƒ“À•W‚ğ•â³‚·‚é
-            //pos.y == 0f‚È‚çtrue
-            if (Mathf.Approximately(targetIndicatorPos.y, 0f) == true)//Mathf.Approximately‚Í•‚“®¬”“_”“¯m‚ª“™‚µ‚¢‚©‚Ç‚¤‚©‚ğ”äŠr‚µ‚½‚¢ê‡A—¼Ò‚Ì·‚ª‚ ‚éˆê’è’lˆÈ“à‚È‚ç‚Ù‚Ú“™‚µ‚¢
+            //ã‚«ãƒ¡ãƒ©ã¨æ°´å¹³ãªã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã‚’è£œæ­£ã™ã‚‹
+            //pos.y == 0fãªã‚‰true
+            if (Mathf.Approximately(targetIndicatorPos.y, 0f) == true)//Mathf.Approximatelyã¯æµ®å‹•å°æ•°ç‚¹æ•°åŒå£«ãŒç­‰ã—ã„ã‹ã©ã†ã‹ã‚’æ¯”è¼ƒã—ãŸã„å ´åˆã€ä¸¡è€…ã®å·®ãŒã‚ã‚‹ä¸€å®šå€¤ä»¥å†…ãªã‚‰ã»ã¼ç­‰ã—ã„
             {
                 targetIndicatorPos.y = -screenCenter.y;
             }
         }
 
-        //‰æ–Ê’[‚Ì•\¦ˆÊ’u‚ğ’²®‚·‚é
-        //UIÀ•WŒn‚Ì’l‚ğƒXƒNƒŠ[ƒ“À•WŒn‚Ì’l‚É•ÏŠ·‚·‚é
-        var halfSize = 0.5f * canvasScale * rectTransform.sizeDelta;//rectTransform‚ÌƒTƒCƒY‚Ì”¼•ª‚ğ‹‚ß‚é
+        //ç”»é¢ç«¯ã®è¡¨ç¤ºä½ç½®ã‚’èª¿æ•´ã™ã‚‹
+        //UIåº§æ¨™ç³»ã®å€¤ã‚’ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ç³»ã®å€¤ã«å¤‰æ›ã™ã‚‹
+        var halfSize = 0.5f * canvasScale * rectTransform.sizeDelta;//rectTransformã®ã‚µã‚¤ã‚ºã®åŠåˆ†ã‚’æ±‚ã‚ã‚‹
 
-        //Mathf.Max‚Íˆê”Ô‘å‚«‚¢”’l‚ğ•Ô‚·AMathf.Abs‚Íâ‘Î’l‚ğ•Ô‚·//‚Â‚Ü‚è‚±‚±‚Íâ‘Î’l‚Ì’†‚ÅÅ‚à‘å‚«‚¢”‚ğ‹‚ß‚é
-        //‰½ŒÌâ‘Î’l‚ğ‹‚ß‚é‚Ì‚©‚Æ‚¢‚¤‚Æ‰æ–Ê’[‚Í1‚©-1‚µ‚©‚È‚¢ˆ×A
-        float edgeOfScreen = Mathf.Max(Mathf.Abs(targetIndicatorPos.x / (screenCenter.x - halfSize.x)), Mathf.Abs(targetIndicatorPos.y / (screenCenter.y - halfSize.y)));//‰æ–Ê’[‚ÌƒeƒLƒXƒg•\¦ˆÊ’u‚ğ‹‚ß‚é
+        //Mathf.Maxã¯ä¸€ç•ªå¤§ãã„æ•°å€¤ã‚’è¿”ã™ã€Mathf.Absã¯çµ¶å¯¾å€¤ã‚’è¿”ã™//ã¤ã¾ã‚Šã“ã“ã¯çµ¶å¯¾å€¤ã®ä¸­ã§æœ€ã‚‚å¤§ãã„æ•°ã‚’æ±‚ã‚ã‚‹
+        //ä½•æ•…çµ¶å¯¾å€¤ã‚’æ±‚ã‚ã‚‹ã®ã‹ã¨ã„ã†ã¨ç”»é¢ç«¯ã¯1ã‹-1ã—ã‹ãªã„ç‚ºã€
+        float edgeOfScreen = Mathf.Max(Mathf.Abs(targetIndicatorPos.x / (screenCenter.x - halfSize.x)), Mathf.Abs(targetIndicatorPos.y / (screenCenter.y - halfSize.y)));//ç”»é¢ç«¯ã®ãƒ†ã‚­ã‚¹ãƒˆè¡¨ç¤ºä½ç½®ã‚’æ±‚ã‚ã‚‹
 
-        //ƒ^[ƒQƒbƒg‚ÌƒXƒNƒŠ[ƒ“À•W‚ª‰æ–ÊŠO‚È‚çA‰æ–Ê’[‚É‚È‚é‚æ‚¤‚É’²®‚·‚é
-        //‰æ–Ê’[‚ª1‚©-1‚È‚çtrue
+        //ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ãŒç”»é¢å¤–ãªã‚‰ã€ç”»é¢ç«¯ã«ãªã‚‹ã‚ˆã†ã«èª¿æ•´ã™ã‚‹
+        //ç”»é¢ç«¯ãŒ1ã‹-1ãªã‚‰true
         bool isOffscreen = (targetIndicatorPos.z < 0f || 1f < edgeOfScreen);
         if (isOffscreen == true)
         {
@@ -70,17 +70,17 @@ public class TargetIndicator : MonoBehaviour
             targetIndicatorPos.y = targetIndicatorPos.y / edgeOfScreen;
         }
 
-        //ƒXƒNƒŠ[ƒ“À•WŒn‚Ì’l‚ğUIÀ•WŒn‚Ì’l‚É•ÏŠ·‚·‚é
-        rectTransform.anchoredPosition = targetIndicatorPos / canvasScale;//ƒ^[ƒQƒbƒg‚ÌƒXƒNƒŠ[ƒ“À•W‚ğ‚±‚ÌUI‚ÌRectTransform‚É“ü‚ê‚é
+        //ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ç³»ã®å€¤ã‚’UIåº§æ¨™ç³»ã®å€¤ã«å¤‰æ›ã™ã‚‹
+        rectTransform.anchoredPosition = targetIndicatorPos / canvasScale;//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã‚’ã“ã®UIã®RectTransformã«å…¥ã‚Œã‚‹
 
-        //ƒ^[ƒQƒbƒg‚ÌƒXƒNƒŠ[ƒ“À•W‚ª‰æ–ÊŠO‚È‚çAƒ^[ƒQƒbƒg‚Ì•ûŒü‚ğw‚·–îˆó‚ğ•\¦‚·‚é
+        //ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ãŒç”»é¢å¤–ãªã‚‰ã€ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®æ–¹å‘ã‚’æŒ‡ã™çŸ¢å°ã‚’è¡¨ç¤ºã™ã‚‹
         arrow.enabled = isOffscreen;
         if (isOffscreen == true)
         {
-            arrow.rectTransform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(-targetIndicatorPos.x, targetIndicatorPos.y) * Mathf.Rad2Deg);//–îˆó‚ğ‰ñ“]‚³‚¹‚Ä‚ ‚°‚éˆ—‚ğ‚µ‚Ä‚¢‚é
+            arrow.rectTransform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(-targetIndicatorPos.x, targetIndicatorPos.y) * Mathf.Rad2Deg);//çŸ¢å°ã‚’å›è»¢ã•ã›ã¦ã‚ã’ã‚‹å‡¦ç†ã‚’ã—ã¦ã„ã‚‹
         }
 
-        icon.enabled = isOffscreen;//“G‚ª‰æ–Ê“à‚È‚çƒAƒCƒRƒ“‚ğÁ‚·A‰æ–ÊŠO‚È‚çƒAƒCƒRƒ“‚ğ•\¦‚·‚é
-        icon.rectTransform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);//ƒAƒCƒRƒ“‚ª‰ñ“]‚µ‚È‚¢‚æ‚¤‚É‚·‚é
+        icon.enabled = isOffscreen;//æ•µãŒç”»é¢å†…ãªã‚‰ã‚¢ã‚¤ã‚³ãƒ³ã‚’æ¶ˆã™ã€ç”»é¢å¤–ãªã‚‰ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¡¨ç¤ºã™ã‚‹
+        icon.rectTransform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);//ã‚¢ã‚¤ã‚³ãƒ³ãŒå›è»¢ã—ãªã„ã‚ˆã†ã«ã™ã‚‹
     }
 }
