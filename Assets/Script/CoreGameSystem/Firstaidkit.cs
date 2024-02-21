@@ -2,18 +2,14 @@
 
 public class Firstaidkit : MonoBehaviour
 {
-    int hp;
-
     void Start()
     {
-        hp = Player.singletonInstance.GetPlayerHP();
+
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider collider)
     {
-        hp = Player.singletonInstance.GetPlayerHP();
-
-        if (other.CompareTag("Player") && hp < 100)
+        if (collider.CompareTag("Player") && Player.singletonInstance.HP < 100)
         {
             Destroy(gameObject);//このオブジェクトを削除
         }

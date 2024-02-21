@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -42,9 +43,11 @@ public class Player : MonoBehaviour
     float bulletSEDestroyTime = 1.0f;
 
     //弾数
-    public int magazine;//残弾数
+    int magazine;//残弾数
+    public int Magazine => magazine;
     readonly int magazineDefine = 20;
-    public bool isReloadTimeActive = false;//リロードのオン・オフ
+    bool isReloadTimeActive = false;//リロードのオン・オフ
+    public bool IsReloadTimeActive => isReloadTimeActive;
     float reloadTime = 0.0f;
     readonly float reloadTimeDefine = 1.5f;//リロード時間の固定
 
@@ -67,9 +70,10 @@ public class Player : MonoBehaviour
 
     //体力
     int hp = 100;
+    public int HP => hp;
 
     //ゲームオーバー
-    public bool isGameOverTrigger = false;
+    [NonSerialized] public bool isGameOverTrigger = false;
     public readonly float gameOverDelay = 2.0f;
 
     //プレイヤーダメージSE
@@ -79,7 +83,7 @@ public class Player : MonoBehaviour
     float playerDamageTimeDefine = 1.0f;
 
     //ダメージ画像
-    public bool isDamage = false;
+    bool isDamage = false;
 
     //血エフェクト
     public GameObject bloodEffectPrefab;
@@ -102,7 +106,7 @@ public class Player : MonoBehaviour
     float healTime;
 
     //回転
-    bool rot = true;
+    bool isRotRight = true;
 
     IHidable[] hidables;
 
@@ -137,7 +141,7 @@ public class Player : MonoBehaviour
         //アニメーション
         anim = this.GetComponent<Animator>();//アニメーションのコンポーネントを探す
         //現在のアニメーション（"Speed"）の値を持ってくる
-        float animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");
+        float animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");//←使われている？？
 
         //弾数
         magazine = magazineDefine;//残弾数
@@ -147,7 +151,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (isGameOverTrigger == true) { return; }
+        if (isGameOverTrigger == true)
+        {
+            return;
+        }
 
         rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
 
@@ -178,7 +185,7 @@ public class Player : MonoBehaviour
 #endif
         ReloadUpdateSystem();
 
-        HP();
+        HPSystem();
 
         Hide();
     }
@@ -222,15 +229,15 @@ public class Player : MonoBehaviour
             idleTime = 0.0f;
 
             //回転
-            rot = true;
+            isRotRight = true;
 
-            if (rot)
+            if (isRotRight == true)
             {
                 // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
                 var rot = Quaternion.Euler(0, 90, 0);
                 transform.rotation = rot;
             }
-            else if (rot == false)
+            else if (isRotRight == false)
             {
                 // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
                 var rot = Quaternion.Euler(0, 270, 0);
@@ -246,9 +253,6 @@ public class Player : MonoBehaviour
             {
                 rigid.AddForce(moveForce * Vector3.right);
             }
-
-            //座標による移動
-            //transform.position += transform.forward * speed * Time.deltaTime;
         }
 
         if (leftStickValue <= -0.1f)
@@ -259,15 +263,15 @@ public class Player : MonoBehaviour
             idleTime = 0.0f;
 
             //回転
-            rot = false;
+            isRotRight = false;
 
-            if (rot)
+            if (isRotRight == true)
             {
                 // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
                 var rot = Quaternion.Euler(0, 90, 0);
                 transform.rotation = rot;
             }
-            else if (rot == false)
+            else if (isRotRight == false)
             {
                 // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
                 var rot = Quaternion.Euler(0, 270, 0);
@@ -283,9 +287,6 @@ public class Player : MonoBehaviour
             {
                 rigid.AddForce(moveForce * Vector3.left);
             }
-
-            //座標による移動
-            //transform.position += transform.forward * speed * Time.deltaTime;
         }
     }
 
@@ -299,15 +300,15 @@ public class Player : MonoBehaviour
             idleTime = 0.0f;
 
             //回転
-            rot = true;
+            isRotRight = true;
 
-            if (rot)
+            if (isRotRight == true)
             {
                 // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
                 var rot = Quaternion.Euler(0, 90, 0);
                 transform.rotation = rot;
             }
-            else if (rot == false)
+            else if (isRotRight == false)
             {
                 // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
                 var rot = Quaternion.Euler(0, 270, 0);
@@ -323,9 +324,6 @@ public class Player : MonoBehaviour
             {
                 rigid.AddForce(moveForce * Vector3.right);
             }
-
-            //座標による移動
-            //transform.position += transform.forward * speed * Time.deltaTime;
         }
 
         if (Input.GetKey("a"))
@@ -336,15 +334,15 @@ public class Player : MonoBehaviour
             idleTime = 0.0f;
 
             //回転
-            rot = false;
+            isRotRight = false;
 
-            if (rot)
+            if (isRotRight == true)
             {
                 // y軸を軸にして90度、回転させるQuaternionを作成（変数をrotとする）
                 var rot = Quaternion.Euler(0, 90, 0);
                 transform.rotation = rot;
             }
-            else if (rot == false)
+            else if (isRotRight == false)
             {
                 // y軸を軸にして270度、回転させるQuaternionを作成（変数をrotとする）
                 var rot = Quaternion.Euler(0, 270, 0);
@@ -360,9 +358,6 @@ public class Player : MonoBehaviour
             {
                 rigid.AddForce(moveForce * Vector3.left);
             }
-
-            //座標による移動
-            //transform.position += transform.forward * speed * Time.deltaTime;
         }
     }
 
@@ -440,7 +435,7 @@ public class Player : MonoBehaviour
     //android用Shoot関数
     public void ShootTouchButton()
     {
-        if ((magazine != 0))
+        if (magazine != 0)
         {
             if (isReloadTimeActive == false)
             {
@@ -459,7 +454,7 @@ public class Player : MonoBehaviour
                 var PositionY = gameObject.transform.position.y;
                 var PositionZ = gameObject.transform.position.z;
 
-                if (rot)
+                if (isRotRight == true)
                 {
 
                     //マズルフラッシュエフェクトオブジェクトを生成する	
@@ -479,7 +474,7 @@ public class Player : MonoBehaviour
                     newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
                     Destroy(newCartridge, cartridgeDestroyTime);//DestroyTime後削除
                 }
-                else if (rot == false)
+                else if (isRotRight == false)
                 {
 
                     //マズルフラッシュエフェクトオブジェクトを生成する	
@@ -507,7 +502,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
         {
-            if ((magazine != 0))
+            if (magazine != 0)
             {
                 if (isReloadTimeActive == false)
                 {
@@ -526,7 +521,7 @@ public class Player : MonoBehaviour
                     var PositionY = gameObject.transform.position.y;
                     var PositionZ = gameObject.transform.position.z;
 
-                    if (rot)
+                    if (isRotRight == true)
                     {
 
                         //マズルフラッシュエフェクトオブジェクトを生成する	
@@ -546,7 +541,7 @@ public class Player : MonoBehaviour
                         newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
                         Destroy(newCartridge, cartridgeDestroyTime);//DestroyTime後削除
                     }
-                    else if (rot == false)
+                    else if (isRotRight == false)
                     {
 
                         //マズルフラッシュエフェクトオブジェクトを生成する	
@@ -626,7 +621,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void HP()
+    void HPSystem()
     {
         //体力
         if (hp <= 0)
@@ -731,16 +726,6 @@ public class Player : MonoBehaviour
         {
             hp = 100;
         }
-    }
-
-    public int GetPlayerHP()
-    {
-        return hp;
-    }
-
-    public float GetPlayerPositionX()
-    {
-        return this.transform.position.x;
     }
 
     void OnTriggerEnter(Collider other)

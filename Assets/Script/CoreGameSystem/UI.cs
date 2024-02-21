@@ -72,6 +72,8 @@ public class UI : MonoBehaviour
         StartOperation();
 
         StartAndroidInputButton();
+
+        StartHP();
     }
 
     void LateUpdate()
@@ -94,7 +96,7 @@ public class UI : MonoBehaviour
     {
         imageReload.GetComponent<RectTransform>().transform.Rotate(0.0f, 0.0f, RotateSpeed * Time.deltaTime);
 
-        if (Player.singletonInstance.isReloadTimeActive == true)
+        if (Player.singletonInstance.IsReloadTimeActive == true)
         {
             if (reloadColor.a <= 1)
             {
@@ -103,7 +105,7 @@ public class UI : MonoBehaviour
             }
         }
 
-        if (Player.singletonInstance.isReloadTimeActive == false)
+        if (Player.singletonInstance.IsReloadTimeActive == false)
         {
             if (reloadColor.a >= 0)
             {
@@ -115,12 +117,12 @@ public class UI : MonoBehaviour
 
     void StartTextMagazine()
     {
-        textMagazine.text = Player.singletonInstance.magazine.ToString();
+        textMagazine.text = Player.singletonInstance.Magazine.ToString();
     }
 
     void LateUpdateTextMagazine()
     {
-        textMagazine.text = Player.singletonInstance.magazine.ToString();
+        textMagazine.text = Player.singletonInstance.Magazine.ToString();
     }
 
     void LateUpdateTimerSystem()
@@ -152,12 +154,12 @@ public class UI : MonoBehaviour
 
     void StartHP()
     {
-        hp = Player.singletonInstance.GetPlayerHP();
+        hp = Player.singletonInstance.HP;
     }
 
     void LateUpdateHP()
     {
-        hp = Player.singletonInstance.GetPlayerHP();
+        hp = Player.singletonInstance.HP;
 
         //hp -= 1;
         if (hp <= 0)

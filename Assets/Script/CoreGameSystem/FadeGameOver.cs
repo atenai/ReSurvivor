@@ -8,7 +8,7 @@ public class FadeGameOver : MonoBehaviour
 
     void Update()
     {
-        if (Player.singletonInstance.isGameOverTrigger)
+        if (Player.singletonInstance.isGameOverTrigger == true)
         {
             GetComponent<Image>().color = new Color(this.GetComponent<Image>().color.r, this.GetComponent<Image>().color.g, this.GetComponent<Image>().color.b, alfa);
             alfa += Time.deltaTime * fadeSpeed;
