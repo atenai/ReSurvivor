@@ -138,9 +138,9 @@ public class UI : MonoBehaviour
             timerTMP.text = "00" + ":" + "00";
             Player.singletonInstance.isGameOverTrigger = true;
             //現在のアニメーション（"Speed"）の値を持ってくる
-            float animationCurrentPlayerMoveSpeed = Player.singletonInstance.anim.GetFloat("f_CurrentPlayerMoveSpeed");
+            float animationCurrentPlayerMoveSpeed = Player.singletonInstance.Animator.GetFloat("f_CurrentPlayerMoveSpeed");
             //移動アニメーションを徐々に「立ち」状態にする
-            Player.singletonInstance.anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
+            Player.singletonInstance.Animator.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
 #if UNITY_ANDROID//端末がAndroidだった場合の処理
             adsInterstitial.ShowAd();//広告表示
 #endif

@@ -1,6 +1,5 @@
 ﻿using Model;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System;
 
@@ -10,7 +9,12 @@ public class Player : MonoBehaviour
     public static Player singletonInstance = null;
 
     //アニメーション
-    public Animator anim;//Unityアニメーション用変数
+    [SerializeField] Animator animator;//Unityアニメーション用変数
+    public Animator Animator
+    {
+        get { return animator; }
+        set { animator = value; }
+    }
     bool isAnimJump = false;
     bool isAnimReload = false;
     bool isAnimDie = false;
@@ -23,10 +27,10 @@ public class Player : MonoBehaviour
     //移動
     float speed = 4.0f;
     float moveForce = 50.0f;//リジッドボディによる移動
-    float speedX => rigid.velocity.x;//リジッドボディによる移動
+    float speedX => rb.velocity.x;//リジッドボディによる移動
 
     //ジャンプ
-    Rigidbody rigid;
+    [SerializeField] Rigidbody rb;
     float jumpForce = 570.0f;//ジャンプのy軸に加える力
     readonly float jumpLoadTimeDefine = 1.2f;
     float jumpLoadTime;//ジャンプの再使用までのロードタイム
@@ -131,22 +135,37 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        //ジャンプ
-        rigid = this.GetComponent<Rigidbody>();
-        jumpLoadTime = jumpLoadTimeDefine;//ジャンプの再使用までのロードタイム
+        InitJump();
 
-        //ヒールエフェクト
-        healTime = healTimeDefine;
+        InitHeal();
 
-        //アニメーション
-        anim = this.GetComponent<Animator>();//アニメーションのコンポーネントを探す
-        //現在のアニメーション（"Speed"）の値を持ってくる
-        float animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");//←使われている？？
-
-        //弾数
-        magazine = magazineDefine;//残弾数
+        InitMagazine();
 
         hidables = GameObject.Find("Hidable").GetComponentsInChildren<IHidable>();
+    }
+
+    /// <summary>
+    /// ジャンプの初期化処理
+    /// </summary>
+    void InitJump()
+    {
+        jumpLoadTime = jumpLoadTimeDefine;//ジャンプの再使用までのロードタイム
+    }
+
+    /// <summary>
+    /// ヒールエフェクトの初期化処理
+    /// </summary>
+    void InitHeal()
+    {
+        healTime = healTimeDefine;
+    }
+
+    /// <summary>
+    /// 弾数の初期化処理
+    /// </summary>
+    void InitMagazine()
+    {
+        magazine = magazineDefine;//残弾数
     }
 
     void Update()
@@ -156,7 +175,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        rigid.velocity += (gravityScale - 1) * Physics.gravity * Time.deltaTime;
+        rb.velocity = rb.velocity + (gravityScale - 1) * Physics.gravity * Time.deltaTime;
 
         MoveBefoerUpdateSystem();
 
@@ -193,7 +212,7 @@ public class Player : MonoBehaviour
     void MoveBefoerUpdateSystem()
     {
         //現在のアニメーション（"Speed"）の値を持ってくる
-        animationCurrentPlayerMoveSpeed = anim.GetFloat("f_CurrentPlayerMoveSpeed");
+        animationCurrentPlayerMoveSpeed = animator.GetFloat("f_CurrentPlayerMoveSpeed");
 
         //アニメーションの値が1以上なら1にする
         if (1.0f <= animationCurrentPlayerMoveSpeed)
@@ -225,7 +244,7 @@ public class Player : MonoBehaviour
         {
             //待機アニメーション
             isAnimIdle = false;
-            anim.SetBool("b_Idle", isAnimIdle);
+            animator.SetBool("b_Idle", isAnimIdle);
             idleTime = 0.0f;
 
             //回転
@@ -246,12 +265,12 @@ public class Player : MonoBehaviour
 
             isAnimationMove = true;
             //移動アニメーションを徐々に「歩き」状態にする
-            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
+            animator.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
             //リジッドボディによる移動
             if (speedX < speed)
             {
-                rigid.AddForce(moveForce * Vector3.right);
+                rb.AddForce(moveForce * Vector3.right);
             }
         }
 
@@ -259,7 +278,7 @@ public class Player : MonoBehaviour
         {
             //待機アニメーション
             isAnimIdle = false;
-            anim.SetBool("b_Idle", isAnimIdle);
+            animator.SetBool("b_Idle", isAnimIdle);
             idleTime = 0.0f;
 
             //回転
@@ -280,12 +299,12 @@ public class Player : MonoBehaviour
 
             isAnimationMove = true;
             //移動アニメーションを徐々に「歩き」状態にする
-            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
+            animator.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
             //リジッドボディによる移動
             if (speedX > -speed)
             {
-                rigid.AddForce(moveForce * Vector3.left);
+                rb.AddForce(moveForce * Vector3.left);
             }
         }
     }
@@ -296,7 +315,7 @@ public class Player : MonoBehaviour
         {
             //待機アニメーション
             isAnimIdle = false;
-            anim.SetBool("b_Idle", isAnimIdle);
+            animator.SetBool("b_Idle", isAnimIdle);
             idleTime = 0.0f;
 
             //回転
@@ -317,12 +336,12 @@ public class Player : MonoBehaviour
 
             isAnimationMove = true;
             //移動アニメーションを徐々に「歩き」状態にする
-            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
+            animator.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
             //リジッドボディによる移動
             if (speedX < speed)
             {
-                rigid.AddForce(moveForce * Vector3.right);
+                rb.AddForce(moveForce * Vector3.right);
             }
         }
 
@@ -330,7 +349,7 @@ public class Player : MonoBehaviour
         {
             //待機アニメーション
             isAnimIdle = false;
-            anim.SetBool("b_Idle", isAnimIdle);
+            animator.SetBool("b_Idle", isAnimIdle);
             idleTime = 0.0f;
 
             //回転
@@ -351,12 +370,12 @@ public class Player : MonoBehaviour
 
             isAnimationMove = true;
             //移動アニメーションを徐々に「歩き」状態にする
-            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
+            animator.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed + Time.deltaTime * 1.0f);
 
             //リジッドボディによる移動
             if (speedX > -speed)
             {
-                rigid.AddForce(moveForce * Vector3.left);
+                rb.AddForce(moveForce * Vector3.left);
             }
         }
     }
@@ -366,7 +385,7 @@ public class Player : MonoBehaviour
         if (isAnimationMove == false)
         {
             //移動アニメーションを徐々に「立ち」状態にする
-            anim.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
+            animator.SetFloat("f_CurrentPlayerMoveSpeed", animationCurrentPlayerMoveSpeed - Time.deltaTime * 1.0f);
         }
 
         isAnimationMove = false;//アニメーションの移動をFalseにする
@@ -378,7 +397,7 @@ public class Player : MonoBehaviour
         if (idleTimeDefine <= idleTime)
         {
             isAnimIdle = true;
-            anim.SetBool("b_Idle", isAnimIdle);
+            animator.SetBool("b_Idle", isAnimIdle);
             idleTime = 0.0f;
         }
 
@@ -395,9 +414,9 @@ public class Player : MonoBehaviour
         {
             //アニメーション
             isAnimJump = true;
-            anim.SetBool("b_Jump", isAnimJump);
+            animator.SetBool("b_Jump", isAnimJump);
 
-            rigid.AddForce(transform.up * jumpForce);
+            rb.AddForce(transform.up * jumpForce);
             jumpLoadTime = 0.0f;
         }
     }
@@ -410,9 +429,9 @@ public class Player : MonoBehaviour
             {
                 //アニメーション
                 isAnimJump = true;
-                anim.SetBool("b_Jump", isAnimJump);
+                animator.SetBool("b_Jump", isAnimJump);
 
-                rigid.AddForce(transform.up * jumpForce);
+                rb.AddForce(transform.up * jumpForce);
                 jumpLoadTime = 0.0f;
             }
         }
@@ -429,7 +448,7 @@ public class Player : MonoBehaviour
         {
             isAnimJump = false;
         }
-        anim.SetBool("b_Jump", isAnimJump);
+        animator.SetBool("b_Jump", isAnimJump);
     }
 
     //android用Shoot関数
@@ -441,7 +460,7 @@ public class Player : MonoBehaviour
             {
                 //待機アニメーション
                 isAnimIdle = false;
-                anim.SetBool("b_Idle", isAnimIdle);
+                animator.SetBool("b_Idle", isAnimIdle);
                 idleTime = 0.0f;
 
                 magazine = magazine - 1;//残弾数を-1する
@@ -508,7 +527,7 @@ public class Player : MonoBehaviour
                 {
                     //待機アニメーション
                     isAnimIdle = false;
-                    anim.SetBool("b_Idle", isAnimIdle);
+                    animator.SetBool("b_Idle", isAnimIdle);
                     idleTime = 0.0f;
 
                     magazine = magazine - 1;//残弾数を-1する
@@ -596,7 +615,7 @@ public class Player : MonoBehaviour
             {
                 //待機アニメーション
                 isAnimIdle = false;
-                anim.SetBool("b_Idle", isAnimIdle);
+                animator.SetBool("b_Idle", isAnimIdle);
                 idleTime = 0.0f;
 
                 //SEオブジェクトを生成する
@@ -605,7 +624,7 @@ public class Player : MonoBehaviour
 
                 //アニメーション
                 isAnimReload = true;
-                anim.SetBool("b_Reload", isAnimReload);
+                animator.SetBool("b_Reload", isAnimReload);
             }
             //リロード中画像
             reloadTime += Time.deltaTime;//リロードタイムをプラス
@@ -616,7 +635,7 @@ public class Player : MonoBehaviour
                 reloadTime = 0.0f;//リロードタイムをリセット
                 isReloadTimeActive = false;//リロードのオフ
                 isAnimReload = false;//リロードアニメーションのオフ
-                anim.SetBool("b_Reload", isAnimReload);
+                animator.SetBool("b_Reload", isAnimReload);
             }
         }
     }
@@ -628,7 +647,7 @@ public class Player : MonoBehaviour
         {
             //アニメーション
             isAnimDie = true;
-            anim.SetBool("b_Die", isAnimDie);
+            animator.SetBool("b_Die", isAnimDie);
             isGameOverTrigger = true;
 #if UNITY_ANDROID//端末がAndroidだった場合の処理
             adsInterstitial.ShowAd();//広告表示
