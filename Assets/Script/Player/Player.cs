@@ -65,12 +65,10 @@ public class Player : MonoBehaviour
 
     //右マズルフラッシュエフェクトのプレファブ
     public GameObject rightMuzzleflashEffectPrefab;
-    private Vector3 rightMuzzleflashEffectPosition;
     float muzzleflashEffectDestroyTime = 0.5f;
 
     //左マズルフラッシュエフェクトのプレファブ
     public GameObject leftMuzzleflashEffectPrefab;
-    private Vector3 leftMuzzleflashEffectPosition;
 
     //体力
     int hp = 100;
@@ -91,7 +89,6 @@ public class Player : MonoBehaviour
 
     //血エフェクト
     public GameObject bloodEffectPrefab;
-    Vector3 bloodEffectPosition;
     float bloodEffectDestroyTime = 1.0f;
 
     //ヒール画像
@@ -103,7 +100,6 @@ public class Player : MonoBehaviour
 
     //ヒールエフェクトのプレファブ
     [SerializeField] GameObject healEffectPrefab;
-    Vector3 healEffectPosition;
     float healEffectDestroyTime = 1.0f;
     bool isHealEffect = false;
     readonly float healTimeDefine = 0.2f;
@@ -466,51 +462,47 @@ public class Player : MonoBehaviour
                 magazine = magazine - 1;//残弾数を-1する
 
                 //SEオブジェクトを生成する
-                var se = Instantiate(bulletSEPrefab, gameObject.transform.position, Quaternion.identity);
+                UnityEngine.GameObject se = Instantiate(bulletSEPrefab, this.transform.position, Quaternion.identity);
                 Destroy(se, bulletSEDestroyTime);//SEをSE_Endtime後削除
-
-                var PositionX = gameObject.transform.position.x;
-                var PositionY = gameObject.transform.position.y;
-                var PositionZ = gameObject.transform.position.z;
 
                 if (isRotRight == true)
                 {
 
                     //マズルフラッシュエフェクトオブジェクトを生成する	
-                    rightMuzzleflashEffectPosition = new Vector3(PositionX + 1.75f, PositionY + 1.1f, PositionZ);
-                    var effect = Instantiate(rightMuzzleflashEffectPrefab, rightMuzzleflashEffectPosition, Quaternion.identity);
-                    Destroy(effect, muzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+                    Vector3 rightMuzzleflashEffectPosition = new Vector3(this.transform.position.x + 1.75f, this.transform.position.y + 1.1f, this.transform.position.z);
+                    UnityEngine.GameObject newEffect = Instantiate(rightMuzzleflashEffectPrefab, rightMuzzleflashEffectPosition, Quaternion.identity);
+                    Destroy(newEffect, muzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
 
-                    var v3_Position = new Vector3(PositionX + 1.75f, PositionY + 1.1f, PositionZ);
-                    var newBullet = Instantiate(bullet, v3_Position, transform.rotation);
-                    //右方向に飛ばす 
+                    //弾を生成する
+                    UnityEngine.Vector3 rightBulletPosition = new Vector3(this.transform.position.x + 1.75f, this.transform.position.y + 1.1f, this.transform.position.z);
+                    UnityEngine.GameObject newBullet = Instantiate(bullet, rightBulletPosition, this.transform.rotation);
                     newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 2500.0f);//速すぎるとすり抜けてしまう
 
-                    var v3_CartridgePosition = new Vector3(PositionX + 0.4f, PositionY + 0.8f, PositionZ);
-                    var newCartridge = Instantiate(cartridge, v3_CartridgePosition, transform.rotation);
-                    //右方向に飛ばす 
-                    newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);//速すぎるとすり抜けてしまう
-                    newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
+                    //薬莢を生成する
+                    UnityEngine.Vector3 rightCartridgePosition = new Vector3(this.transform.position.x + 0.4f, this.transform.position.y + 0.8f, this.transform.position.z);
+                    UnityEngine.GameObject newCartridge = Instantiate(cartridge, rightCartridgePosition, this.transform.rotation);
+                    newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);
+                    newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);
                     Destroy(newCartridge, cartridgeDestroyTime);//DestroyTime後削除
                 }
                 else if (isRotRight == false)
                 {
 
                     //マズルフラッシュエフェクトオブジェクトを生成する	
-                    leftMuzzleflashEffectPosition = new Vector3(PositionX - 1.6f, PositionY + 1.0f, PositionZ);
-                    var effect = Instantiate(leftMuzzleflashEffectPrefab, leftMuzzleflashEffectPosition, Quaternion.identity);
-                    Destroy(effect, muzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+                    Vector3 leftMuzzleflashEffectPosition = new Vector3(this.transform.position.x - 1.6f, this.transform.position.y + 1.0f, this.transform.position.z);
+                    UnityEngine.GameObject newEffect = Instantiate(leftMuzzleflashEffectPrefab, leftMuzzleflashEffectPosition, Quaternion.identity);
+                    Destroy(newEffect, muzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
 
-                    var v3_Position = new Vector3(PositionX - 1.8f, PositionY + 0.9f, PositionZ);
-                    var newBullet = Instantiate(bullet, v3_Position, transform.rotation);
-                    //左方向に飛ばす 
+                    //弾を生成する
+                    UnityEngine.Vector3 leftBulletPosition = new Vector3(this.transform.position.x - 1.8f, this.transform.position.y + 0.9f, this.transform.position.z);
+                    UnityEngine.GameObject newBullet = Instantiate(bullet, leftBulletPosition, this.transform.rotation);
                     newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 2500.0f);//速すぎるとすり抜けてしまう
 
-                    var v3_CartridgePosition = new Vector3(PositionX + 0.4f, PositionY + 0.8f, PositionZ);
-                    var newCartridge = Instantiate(cartridge, v3_CartridgePosition, transform.rotation);
-                    //右方向に飛ばす 
-                    newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);//速すぎるとすり抜けてしまう
-                    newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
+                    //薬莢を生成する
+                    UnityEngine.Vector3 leftCartridgePosition = new Vector3(this.transform.position.x + 0.4f, this.transform.position.y + 0.8f, this.transform.position.z);
+                    UnityEngine.GameObject newCartridge = Instantiate(cartridge, leftCartridgePosition, this.transform.rotation);
+                    newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);
+                    newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);
                     Destroy(newCartridge, cartridgeDestroyTime);//DestroyTime後削除
                 }
             }
@@ -533,51 +525,47 @@ public class Player : MonoBehaviour
                     magazine = magazine - 1;//残弾数を-1する
 
                     //SEオブジェクトを生成する
-                    var se = Instantiate(bulletSEPrefab, gameObject.transform.position, Quaternion.identity);
+                    UnityEngine.GameObject se = Instantiate(bulletSEPrefab, this.transform.position, Quaternion.identity);
                     Destroy(se, bulletSEDestroyTime);//SEをSE_Endtime後削除
-
-                    var PositionX = gameObject.transform.position.x;
-                    var PositionY = gameObject.transform.position.y;
-                    var PositionZ = gameObject.transform.position.z;
 
                     if (isRotRight == true)
                     {
 
                         //マズルフラッシュエフェクトオブジェクトを生成する	
-                        rightMuzzleflashEffectPosition = new Vector3(PositionX + 1.75f, PositionY + 1.1f, PositionZ);
-                        var effect = Instantiate(rightMuzzleflashEffectPrefab, rightMuzzleflashEffectPosition, Quaternion.identity);
-                        Destroy(effect, muzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+                        Vector3 rightMuzzleflashEffectPosition = new Vector3(this.transform.position.x + 1.75f, this.transform.position.y + 1.1f, this.transform.position.z);
+                        UnityEngine.GameObject newEffect = Instantiate(rightMuzzleflashEffectPrefab, rightMuzzleflashEffectPosition, Quaternion.identity);
+                        Destroy(newEffect, muzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
 
-                        var v3_Position = new Vector3(PositionX + 1.75f, PositionY + 1.1f, PositionZ);
-                        var newBullet = Instantiate(bullet, v3_Position, transform.rotation);
-                        //右方向に飛ばす 
+                        //弾を生成する
+                        UnityEngine.Vector3 rightBulletPosition = new Vector3(this.transform.position.x + 1.75f, this.transform.position.y + 1.1f, this.transform.position.z);
+                        UnityEngine.GameObject newBullet = Instantiate(bullet, rightBulletPosition, this.transform.rotation);
                         newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 2500.0f);//速すぎるとすり抜けてしまう
 
-                        var v3_CartridgePosition = new Vector3(PositionX + 0.4f, PositionY + 0.8f, PositionZ);
-                        var newCartridge = Instantiate(cartridge, v3_CartridgePosition, transform.rotation);
-                        //右方向に飛ばす 
-                        newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);//速すぎるとすり抜けてしまう
-                        newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
+                        //薬莢を生成する
+                        UnityEngine.Vector3 rightCartridgePosition = new Vector3(this.transform.position.x + 0.4f, this.transform.position.y + 0.8f, this.transform.position.z);
+                        UnityEngine.GameObject newCartridge = Instantiate(cartridge, rightCartridgePosition, this.transform.rotation);
+                        newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);
+                        newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);
                         Destroy(newCartridge, cartridgeDestroyTime);//DestroyTime後削除
                     }
                     else if (isRotRight == false)
                     {
 
                         //マズルフラッシュエフェクトオブジェクトを生成する	
-                        leftMuzzleflashEffectPosition = new Vector3(PositionX - 1.6f, PositionY + 1.0f, PositionZ);
-                        var effect = Instantiate(leftMuzzleflashEffectPrefab, leftMuzzleflashEffectPosition, Quaternion.identity);
-                        Destroy(effect, muzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+                        Vector3 leftMuzzleflashEffectPosition = new Vector3(this.transform.position.x - 1.6f, this.transform.position.y + 1.0f, this.transform.position.z);
+                        UnityEngine.GameObject newEffect = Instantiate(leftMuzzleflashEffectPrefab, leftMuzzleflashEffectPosition, Quaternion.identity);
+                        Destroy(newEffect, muzzleflashEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
 
-                        var v3_Position = new Vector3(PositionX - 1.8f, PositionY + 0.9f, PositionZ);
-                        var newBullet = Instantiate(bullet, v3_Position, transform.rotation);
-                        //左方向に飛ばす 
+                        //弾を生成する
+                        UnityEngine.Vector3 leftBulletPosition = new Vector3(this.transform.position.x - 1.8f, this.transform.position.y + 0.9f, this.transform.position.z);
+                        UnityEngine.GameObject newBullet = Instantiate(bullet, leftBulletPosition, this.transform.rotation);
                         newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 2500.0f);//速すぎるとすり抜けてしまう
 
-                        var v3_CartridgePosition = new Vector3(PositionX + 0.4f, PositionY + 0.8f, PositionZ);
-                        var newCartridge = Instantiate(cartridge, v3_CartridgePosition, transform.rotation);
-                        //右方向に飛ばす 
-                        newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);//速すぎるとすり抜けてしまう
-                        newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);//速すぎるとすり抜けてしまう
+                        //薬莢を生成する
+                        UnityEngine.Vector3 leftCartridgePosition = new Vector3(this.transform.position.x + 0.4f, this.transform.position.y + 0.8f, this.transform.position.z);
+                        UnityEngine.GameObject newCartridge = Instantiate(cartridge, leftCartridgePosition, this.transform.rotation);
+                        newCartridge.GetComponent<Rigidbody>().AddForce(transform.up * 100.0f);
+                        newCartridge.GetComponent<Rigidbody>().AddForce(transform.right * 300.0f);
                         Destroy(newCartridge, cartridgeDestroyTime);//DestroyTime後削除
                     }
                 }
@@ -609,7 +597,7 @@ public class Player : MonoBehaviour
             isReloadTimeActive = true;//リロードのオン
         }
 
-        if (isReloadTimeActive)//リロードがオンになったら
+        if (isReloadTimeActive == true)//リロードがオンになったら
         {
             if (reloadTime == 0)
             {
@@ -619,8 +607,8 @@ public class Player : MonoBehaviour
                 idleTime = 0.0f;
 
                 //SEオブジェクトを生成する
-                var ReloadSE = Instantiate(reloadSEPrefab, gameObject.transform.position, Quaternion.identity);
-                Destroy(ReloadSE, reloadSEDestroyTime);//SEをSE_Endtime後削除
+                UnityEngine.GameObject reloadSE = Instantiate(reloadSEPrefab, this.transform.position, Quaternion.identity);
+                Destroy(reloadSE, reloadSEDestroyTime);//SEをSE_Endtime後削除
 
                 //アニメーション
                 isAnimReload = true;
@@ -648,6 +636,7 @@ public class Player : MonoBehaviour
             //アニメーション
             isAnimDie = true;
             animator.SetBool("b_Die", isAnimDie);
+
             isGameOverTrigger = true;
 #if UNITY_ANDROID//端末がAndroidだった場合の処理
             adsInterstitial.ShowAd();//広告表示
@@ -663,11 +652,11 @@ public class Player : MonoBehaviour
         if (isDamage == true)
         {
             UI.singletonInstance.imageDamage.color = new Color(0.5f, 0f, 0f, 0.5f);
+
             //血エフェクトオブジェクトを生成する	
-            //血エフェクト座標
-            bloodEffectPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1.0f, gameObject.transform.position.z);
-            var effect = Instantiate(bloodEffectPrefab, bloodEffectPosition, Quaternion.identity);
-            Destroy(effect, bloodEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
+            Vector3 bloodEffectPosition = new Vector3(this.transform.position.x, this.transform.position.y + 1.0f, this.transform.position.z);
+            UnityEngine.GameObject newEffect = Instantiate(bloodEffectPrefab, bloodEffectPosition, Quaternion.identity);
+            Destroy(newEffect, bloodEffectDestroyTime);//エフェクトをEffectDestroyTime後削除
         }
 
         if (isDamage == false)
@@ -692,11 +681,11 @@ public class Player : MonoBehaviour
 
         isHeal = false;
 
-        if (isHealEffect)
+        if (isHealEffect == true)
         {
-            healEffectPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1.0f, gameObject.transform.position.z - 1.0f);
-
-            var healEffect = Instantiate(healEffectPrefab, healEffectPosition, Quaternion.identity);
+            //回復エフェクトを生成
+            Vector3 healEffectPosition = new Vector3(this.transform.position.x, this.transform.position.y + 1.0f, this.transform.position.z - 1.0f);
+            UnityEngine.GameObject healEffect = Instantiate(healEffectPrefab, healEffectPosition, Quaternion.identity);
             Destroy(healEffect, healEffectDestroyTime);
         }
 
@@ -704,7 +693,6 @@ public class Player : MonoBehaviour
         {
             isHealEffect = true;
         }
-
 
         if (healTimeDefine <= healTime)
         {
@@ -774,7 +762,7 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag("First aid kit") && hp < 100)
         {
-            var se = Instantiate(healSEPrefab, gameObject.transform.position, Quaternion.identity);
+            UnityEngine.GameObject se = Instantiate(healSEPrefab, this.transform.position, Quaternion.identity);
             Destroy(se, healSEDestroyTime);
 
             isHeal = true;
