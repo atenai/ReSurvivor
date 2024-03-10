@@ -40,14 +40,13 @@ namespace UI_Controller
         public void PlayGame()
         {
             buttons.SetActive(false);
-            //loadingImage.SetActive(true);
             //StartCoroutine(LoadSceneIcon("StageScene1"));
             StartCoroutine(LoadScene("StageScene1"));
         }
 
         public void ShowCredits()
         {
-            //SceneManager.LoadScene("Credits");
+            //StartCoroutine(LoadSceneIcon("Credits"));
             StartCoroutine(LoadScene("Credits"));
         }
 
@@ -62,6 +61,7 @@ namespace UI_Controller
 
         IEnumerator LoadSceneIcon(string sceneName)
         {
+            loadingImageIcon.SetActive(true);
             var load = SceneManager.LoadSceneAsync(sceneName);
             while (!load.isDone)
             {
@@ -72,38 +72,25 @@ namespace UI_Controller
 
         IEnumerator LoadScene(string sceneName)
         {
-            slider.value = 0.0f;
+            slider.value = float.MinValue;
 
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-            asyncLoad.allowSceneActivation = false;//シーン遷移を不許可
+            AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
+            async.allowSceneActivation = false;//シーン遷移を不許可
 
-            while (slider.value < 1.0f)
+            while (async.isDone == false)
             {
-                seconds = seconds + (Time.deltaTime * 0.1f);
+                slider.value = async.progress;
 
-                //sliderBarがmax以下の時の計算
-                if (slider.value < 0.9f)
+                if (0.9f <= async.progress)
                 {
-                    //Debug.Log("<color=yellow>seconds : " + this.seconds + "</color>");
-                    slider.value = seconds;
+                    slider.value = float.MaxValue;
+
+                    yield return new WaitForEndOfFrame();
+
+                    async.allowSceneActivation = true;//シーン遷移を許可
                 }
 
-                //sliderBarがmaxになった時の計算
-                if (0.9f <= slider.value)
-                {
-                    //Debug.Log("<color=green>seconds : " + this.seconds + "</color>");
-                    slider.value = 0.9f;
-                }
-
-                //シーン遷移と終了処理
-                if (0.9f <= asyncLoad.progress)
-                {
-                    slider.value = 1.0f;
-
-                    yield return null;
-
-                    asyncLoad.allowSceneActivation = true;//シーン遷移を許可
-                }
+                yield return null;
             }
         }
     }
