@@ -53,5 +53,5 @@
         "Temp/": true
     },
     "dotnet.preferCSharpExtension": true,
-    "dotnet.defaultSolution": "ReSurvivor1_Git.sln"
+    "dotnet.defaultSolution": "ReSurvivor_Git.sln"
 }
