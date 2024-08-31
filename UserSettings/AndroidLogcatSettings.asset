@@ -2,8 +2,8 @@
     "m_SelectedDeviceId": "354962112054336",
     "m_SelectedPackage": {
         "deviceId": "354962112054336",
-        "name": "com.GameMechanicsLab.ReSurvivor",
-        "processId": 24548,
+        "name": "com.YuutaKashiwabara.ReSurvivor",
+        "processId": 24433,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -48,6 +48,12 @@
             "deviceId": "354962112054336",
             "name": "com.GameMechanicsLab.ReSurvivor",
             "processId": 24548,
+            "exited": false
+        },
+        {
+            "deviceId": "354962112054336",
+            "name": "com.YuutaKashiwabara.ReSurvivor",
+            "processId": 24433,
             "exited": false
         }
     ],
