@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "354962112054336",
         "name": "com.YuutaKashiwabara.ReSurvivor",
-        "processId": 17284,
+        "processId": 13316,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -60,6 +60,12 @@
             "deviceId": "354962112054336",
             "name": "com.YuutaKashiwabara.ReSurvivor",
             "processId": 17284,
+            "exited": false
+        },
+        {
+            "deviceId": "354962112054336",
+            "name": "com.YuutaKashiwabara.ReSurvivor",
+            "processId": 13316,
             "exited": false
         }
     ],
